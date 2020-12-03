@@ -1,0 +1,2 @@
+GET /game/7776d647-766b-4e7f-a0e2-83cbad810733/start HTTP/1.1
+Host: localhost:3000

@@ -1,13 +1,12 @@
-import { Injectable } from '@nestjs/common';
 import Game from './game.entity';
 import { GameStorage } from './game.storage';
-import { PlayerId } from '../player/player.entity';
-import { throwIfTrue } from '../../utils/thorwIfTrue';
-import NotFoundException from '../../exceptions/NotFoundException'
+import { Injectable } from '@nestjs/common';
 import InvalidStateException from '../../exceptions/InvalidStateException';
-import { calculateTarget } from '../../utils/calculateTarget';
+import NotFoundException from '../../exceptions/NotFoundException';
+import { PlayerId } from '../player/player.entity';
 import { PlayerStorage } from '../player/player.storage';
-import { Transaction } from 'typeorm';
+import { calculateTarget } from '../../utils/calculateTarget';
+import { throwIfTrue } from '../../utils/thorwIfTrue';
 
 @Injectable()
 export class GameService {
@@ -30,11 +29,17 @@ export class GameService {
   async start(id: PlayerId): Promise<void> {
     const persisted = await this.storage.find(id);
     throwIfTrue(!persisted, new NotFoundException('GAME_NOT_FOUND'));
-    throwIfTrue(persisted.gameState !== 'INIT', new InvalidStateException('INVALID_GAME_STATE'));
+    throwIfTrue(
+      persisted.gameState !== 'INIT',
+      new InvalidStateException('INVALID_GAME_STATE'),
+    );
 
-    const players = [...persisted.players, persisted.playerState === 'ACTIVE' && persisted]
+    const players = [
+      ...persisted.players,
+      persisted.playerState === 'ACTIVE' && persisted,
+    ]
       .filter(Boolean)
-      .filter(player => player.playerState === 'ACTIVE')
+      .filter((player) => player.playerState === 'ACTIVE');
 
     calculateTarget(players);
 
@@ -48,10 +53,13 @@ export class GameService {
     });
   }
 
-  async update(game: Game): Promise<Game>  {
+  async update(game: Game): Promise<Game> {
     const persisted = await this.storage.find(game.id);
     throwIfTrue(!persisted, new NotFoundException('GAME_NOT_FOUND'));
-    throwIfTrue(persisted.gameState !== 'INIT', new InvalidStateException('INVALID_GAME_STATE'));
+    throwIfTrue(
+      persisted.gameState !== 'INIT',
+      new InvalidStateException('INVALID_GAME_STATE'),
+    );
 
     return this.storage.update({
       ...persisted,

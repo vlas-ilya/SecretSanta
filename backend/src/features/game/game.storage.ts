@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
 import Game, { RegistrationId } from './game.entity';
-import { PlayerId } from '../player/player.entity';
+
 import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
+import { PlayerId } from '../player/player.entity';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
@@ -23,14 +24,17 @@ export class GameStorage {
     });
   }
 
-  async findByRegistrationId(registrationId: RegistrationId): Promise<Game | undefined> {
+  async findByRegistrationId(
+    registrationId: RegistrationId,
+  ): Promise<Game | undefined> {
     return await this.repository.findOne({
-      registrationId
+      registrationId,
     });
   }
 
   async findByPlayerId(playerId: PlayerId): Promise<Game> {
-    return await this.repository.createQueryBuilder('game')
+    return await this.repository
+      .createQueryBuilder('game')
       .innerJoin('game.players', 'player')
       .where('player.id = :playerId', { playerId })
       .getOne();
@@ -41,7 +45,7 @@ export class GameStorage {
   }
 
   async update(game: Game): Promise<Game> {
-    const persisted = await this.find(game.id)
+    const persisted = await this.find(game.id);
 
     persisted.gameState = game.gameState;
     persisted.playerState = game.playerState;

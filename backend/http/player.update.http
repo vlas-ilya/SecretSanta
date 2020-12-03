@@ -1,0 +1,9 @@
+PUT /player/254ea5cd-40b8-4ffe-929e-463ad99b7260 HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{
+  "name": "test223444",
+  "wish": "testtt",
+  "dontWish": "tototo"
+}

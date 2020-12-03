@@ -1,16 +1,17 @@
+import Player, { PlayerId } from './player.entity';
+
+import { GameStorage } from '../game/game.storage';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { RegistrationId } from '../game/game.entity';
-import Player, { PlayerId } from './player.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
-import { GameStorage } from '../game/game.storage';
 
 @Injectable()
 export class PlayerStorage {
   constructor(
     @InjectRepository(Player) private repository: Repository<Player>,
-    private readonly gameStorage: GameStorage
+    private readonly gameStorage: GameStorage,
   ) {}
 
   async create(registrationId: RegistrationId): Promise<Player> {

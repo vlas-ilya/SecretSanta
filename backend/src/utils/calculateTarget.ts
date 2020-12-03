@@ -8,7 +8,7 @@ export const calculateTarget = (players: Player[]) => {
     ids.sort(() => 0.5 - Math.random());
   }
 
-  players.forEach((player, index) => player.targetId = ids[index])
+  players.forEach((player, index) => (player.targetId = ids[index]));
 };
 
 const existCoincidences = (ids: PlayerId[], players: Player[]): boolean =>

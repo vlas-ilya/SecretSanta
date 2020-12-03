@@ -1,20 +1,20 @@
 {
-  "name": "takeahint",
+  "name": "secret-santa",
   "version": "1.0.0",
-  "description": "Цифровая реализация настолькой игры \"Намек понял\"",
+  "description": "Тайный санта",
   "scripts": {
-    "prettier": "prettier-eslint --write \"$PWD/{takeahint-client,takeahint-server}/{src,test,public}/**/*.{js,jsx,ts,json,css,scss,md}\""
+    "prettier": "prettier-eslint --write \"$PWD/{frontend,backend}/{src,test,public}/**/*.{js,jsx,ts,json,css,scss,md}\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vlas-ilya/TakeAHint.git"
+    "url": "git+https://github.com/vlas-ilya/secret-santa.git"
   },
   "author": "vlas-ilya",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vlas-ilya/TakeAHint/issues"
+    "url": "https://github.com/vlas-ilya/secret-santa/issues"
   },
-  "homepage": "https://github.com/vlas-ilya/TakeAHint#readme",
+  "homepage": "https://github.com/vlas-ilya/secret-santa#readme",
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
       "parser": "typescript"

@@ -1,0 +1,2 @@
+GET /game/a9db99fe-4bac-47b1-9889-4966b0ce2726 HTTP/1.1
+Host: localhost:3000

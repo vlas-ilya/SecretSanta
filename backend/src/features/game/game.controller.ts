@@ -1,6 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { GameService } from './game.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+
 import Game from './game.entity';
+import { GameService } from './game.service';
 import { PlayerId } from '../player/player.entity';
 
 @Controller('game')
@@ -23,10 +32,7 @@ export class GameController {
   }
 
   @Put(':id')
-  async update(
-    @Param('id') id: PlayerId,
-    @Body() game: Game
-  ): Promise<Game> {
+  async update(@Param('id') id: PlayerId, @Body() game: Game): Promise<Game> {
     return await this.service.update({ ...game, id: id });
   }
 

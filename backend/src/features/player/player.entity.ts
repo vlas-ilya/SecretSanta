@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, TableInheritance, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  TableInheritance,
+} from 'typeorm';
+
 import Game from '../game/game.entity';
 
 export type PlayerId = string;
@@ -8,7 +17,7 @@ export type PlayerWish = string;
 export type PlayerDontWish = string;
 
 @Entity()
-@TableInheritance({ column: { type: "varchar", name: "type" }})
+@TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export default class Player {
   @PrimaryGeneratedColumn('uuid') id: PlayerId;
   @Column() playerState: PlayerState = 'INIT';
@@ -17,6 +26,6 @@ export default class Player {
   @Column() dontWish: PlayerDontWish = '';
   @Column() targetId: PlayerId;
 
-  @ManyToOne(() => Game, game => game.players)
+  @ManyToOne(() => Game, (game) => game.players)
   game: Game;
 }

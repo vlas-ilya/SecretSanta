@@ -1,0 +1,2 @@
+POST /player/register/f1ebca5c-1a6f-41a6-860b-56787468100f HTTP/1.1
+Host: localhost:3000

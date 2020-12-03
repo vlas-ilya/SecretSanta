@@ -1,0 +1,2 @@
+GET /player/8979d48d-367c-4be9-9232-4c764acc0c36 HTTP/1.1
+Host: localhost:3000

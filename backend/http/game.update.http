@@ -1,0 +1,11 @@
+PUT /game/a597b14c-665e-4e9d-9cc3-f7a0b8160e6d HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{
+  "gameState": "INIT",
+  "playerState": "ACTIVE",
+  "name": "ADMIN",
+  "wish": "Tort",
+  "dontWish": "Snake"
+}
