@@ -1,0 +1,14 @@
+{
+  "type": "sqlite",
+  "logging": ["error", "schema"],
+  "logger": "simple-console",
+  "database": "./db/game.sqlite3",
+  "entities": ["./dist/**/*.entity{.ts,.js}"],
+  "migrationsTableName": "migration_table",
+  "migrations": ["./dist/**/migrations/*{.ts,.js}"],
+  "migrationsRun": true,
+  "cli": {
+    "migrationsDir": "./dist/**/migrations/"
+  },
+  "synchronize": false
+}
