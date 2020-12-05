@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MatchIdentifiable } from 'model/Types';
 import Page from 'components/Page/Page';
 import { PlayerInfo } from 'features/player/components/PlayerInfo';
+import { PlayerChanges } from '../../model/Player';
 
 const PlayerPage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const PlayerPage = (props: MatchIdentifiable) => {
         name={player?.name}
         wish={player?.wish}
         dontWish={player?.dontWish}
-        change={(field, value) => dispatch(changePlayer({ field, value }))}
+        change={(changes: PlayerChanges) => dispatch(changePlayer(changes))}
         updatePlayer={() => dispatch(updatePlayer())}
       />
     </Page>

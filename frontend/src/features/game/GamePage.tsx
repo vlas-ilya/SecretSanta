@@ -14,6 +14,7 @@ import { GamePlayersPage } from 'features/game/components/GamePlayersPage';
 import { GameTitlePage } from 'features/game/components/GameTitlePage';
 import { MatchIdentifiable } from 'model/Types';
 import Page from 'components/Page/Page';
+import { GameChanges } from '../../model/Game';
 
 const GamePage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();
@@ -35,8 +36,7 @@ const GamePage = (props: MatchIdentifiable) => {
         gameState={game?.gameState}
         name={game?.name}
         info={game?.info}
-        changeName={(value) => dispatch(changeGame({ field: 'name', value }))}
-        changeGameInfo={(value) => dispatch(changeGame({ field: 'info', value }))}
+        change={(changes: GameChanges) => dispatch(changeGame(changes))}
         updateGame={() => dispatch(updateGame())}
         play={() => 2 + 2}
       />

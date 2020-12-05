@@ -1,8 +1,8 @@
-import { GameId, GameInfo, GameName, GameState, Object, RegistrationId } from './Types';
+import { GameId, GameInfo, GameName, GameState, RegistrationId } from './Types';
 
 import { Player } from './Player';
 
-export interface Game extends Object {
+export interface Game {
   id?: GameId;
   gameState?: GameState;
   registrationId?: RegistrationId;
@@ -12,4 +12,6 @@ export interface Game extends Object {
   players?: Player[];
 }
 
-export const mockGame: Game = {};
+export type GameChanges = { field: 'name'; value: GameName } | { field: 'info'; value: GameInfo };
+
+export const emptyGame: Game = {};

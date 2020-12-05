@@ -1,15 +1,16 @@
-import { Game, mockGame } from 'model/Game';
+import { Game, GameChanges, emptyGame } from 'model/Game';
 import { GameId, LoadingState } from 'model/Types';
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import fetch, { fetchAction } from 'utils/fetch';
 
 export interface State {
   loadingState: LoadingState;
-  game?: Game;
+  game: Game;
 }
 
 export const initialState: State = {
   loadingState: 'INIT',
+  game: emptyGame,
 };
 
 export const game = createSlice({
@@ -19,9 +20,8 @@ export const game = createSlice({
     changeLoadingState: (state: State, action: PayloadAction<LoadingState>) => {
       state.loadingState = action.payload;
     },
-    changeGame: (state: State, action: PayloadAction<Game | { field: string; value: any }>) => {
-      if (action.payload.field) {
-        state.game = state.game || mockGame;
+    changeGame: (state: State, action: PayloadAction<Game | GameChanges>) => {
+      if ('field' in action.payload && 'value' in action.payload) {
         state.game[action.payload.field] = action.payload.value;
       } else {
         state.game = action.payload;

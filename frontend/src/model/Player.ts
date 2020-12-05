@@ -1,6 +1,6 @@
-import { Object, PlayerDontWish, PlayerId, PlayerName, PlayerState, PlayerWish } from './Types';
+import { PlayerDontWish, PlayerId, PlayerName, PlayerState, PlayerWish } from './Types';
 
-export interface Player extends Object {
+export class Player {
   id?: PlayerId;
   state?: PlayerState;
   name?: PlayerName;
@@ -9,4 +9,9 @@ export interface Player extends Object {
   target?: PlayerId;
 }
 
-export const mockPlayer: Player = {};
+export type PlayerChanges =
+  | { field: 'name'; value: PlayerName }
+  | { field: 'wish'; value: PlayerWish }
+  | { field: 'dontWish'; value: PlayerDontWish };
+
+export const emptyPlayer: Player = {};

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Redirect, match } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { loadPlayerId, selectLoadingState, selectPlayerId } from './store/registration.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 

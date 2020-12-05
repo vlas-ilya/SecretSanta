@@ -4,6 +4,7 @@ import Form from 'components/Form/Form';
 import FormButton from 'components/FormButton/FormButton';
 import FormInput from 'components/FormInput/FormInput';
 import FormItem from 'components/FormItem/FormItem';
+import { GameChanges } from '../../../model/Game';
 import React from 'react';
 import Text from 'components/Text/Text';
 import { updateGame } from 'features/game/store/game.reducer';
@@ -12,8 +13,7 @@ export interface GameInfoProps {
   gameState?: GameState;
   name?: GameName;
   info?: GameInfo;
-  changeName: (value: string) => {};
-  changeGameInfo: (value: string) => {};
+  change: (changes: GameChanges) => {};
   updateGame: () => {};
   play: () => {};
 }
@@ -28,7 +28,7 @@ export const GameInfoPage = (props: GameInfoProps) => (
         name="name"
         disabled={props.gameState === 'RUN'}
         label="Название игры"
-        onChange={props.changeName}
+        onChange={(value: GameName) => props.change({ field: 'name', value })}
         value={props.name}
       />
     </FormItem>
@@ -37,7 +37,7 @@ export const GameInfoPage = (props: GameInfoProps) => (
         name="info"
         disabled={props.gameState === 'RUN'}
         label="Информация об игре"
-        onChange={props.changeGameInfo}
+        onChange={(value: GameInfo) => props.change({ field: 'info', value })}
         value={props.info}
       />
     </FormItem>
