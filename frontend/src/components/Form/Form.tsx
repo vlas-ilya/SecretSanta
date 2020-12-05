@@ -4,11 +4,11 @@ import React, { ReactNode } from 'react';
 
 import classNames from 'classnames';
 
-export interface FormProps {
+export type FormProps = {
   className?: string;
   children: ReactNode;
-}
+};
 
-export default function Form({ children, className }: FormProps) {
-  return <div className={classNames('form', className)}>{children}</div>;
-}
+export const Form = (props: FormProps) => (
+  <div className={classNames('form', props.className)}>{props.children}</div>
+);

@@ -5,13 +5,13 @@ import {
   selectLoadingState,
   selectPlayer,
   updatePlayer,
-} from './store/player.reducer';
+} from 'features/player/store/player.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { MatchIdentifiable } from 'model/Types';
-import Page from 'components/Page/Page';
+import { Page } from 'components/Page/Page';
+import { PlayerChanges } from 'model/Player';
 import { PlayerInfo } from 'features/player/components/PlayerInfo';
-import { PlayerChanges } from '../../model/Player';
 
 const PlayerPage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();

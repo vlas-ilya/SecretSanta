@@ -4,17 +4,15 @@ import React, { ReactNode } from 'react';
 
 import classNames from 'classnames';
 
-export interface ListProps {
+export type ListProps = {
   title: string;
   children: ReactNode;
   readonly?: boolean;
-}
+};
 
-export default function List({ title, children, readonly }: ListProps) {
-  return (
-    <div className={classNames('list', { readonly: readonly })}>
-      {title && <div className="list-title">{title}</div>}
-      {children}
-    </div>
-  );
-}
+export const List = (props: ListProps) => (
+  <div className={classNames('list', { readonly: props.readonly })}>
+    {props.title && <div className="list-title">{props.title}</div>}
+    {props.children}
+  </div>
+);

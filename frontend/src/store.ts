@@ -9,7 +9,7 @@ const customizedMiddleware = getDefaultMiddleware({
   serializableCheck: false,
 });
 
-export default configureStore({
+const store = configureStore({
   middleware: customizedMiddleware,
   reducer: {
     home,
@@ -18,3 +18,6 @@ export default configureStore({
     player,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export default store;

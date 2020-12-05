@@ -2,12 +2,12 @@ import React, { useCallback } from 'react';
 import { selectGameId, selectLoadingState, startGame } from './store/home.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Form from 'components/Form/Form';
-import FormButton from 'components/FormButton/FormButton';
-import FormItem from 'components/FormItem/FormItem';
-import Page from 'components/Page/Page';
+import { Form } from 'components/Form/Form';
+import { FormButton } from 'components/FormButton/FormButton';
+import { FormItem } from 'components/FormItem/FormItem';
+import { Page } from 'components/Page/Page';
 import { Redirect } from 'react-router-dom';
-import Text from 'components/Text/Text';
+import { Text } from 'components/Text/Text';
 
 const HomePage = () => {
   const dispatch = useDispatch();

@@ -1,14 +1,14 @@
-import Form from 'components/Form/Form';
-import FormItem from 'components/FormItem/FormItem';
-import List from 'components/List/List';
-import ListItem from 'components/List/ListItem';
+import { Form } from 'components/Form/Form';
+import { FormItem } from 'components/FormItem/FormItem';
+import { List } from 'components/List/List';
+import { ListItem } from 'components/List/ListItem';
 import { Player } from 'model/Player';
 import React from 'react';
-import Text from 'components/Text/Text';
+import { Text } from 'components/Text/Text';
 
-export interface GamePlayersPageProps {
+export type GamePlayersPageProps = {
   players?: Player[];
-}
+};
 
 export const GamePlayersPage = (props: GamePlayersPageProps) => (
   <Form>

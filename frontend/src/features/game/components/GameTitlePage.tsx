@@ -1,17 +1,17 @@
 import { GameState, RegistrationId } from 'model/Types';
 
-import Form from 'components/Form/Form';
-import FormButton from 'components/FormButton/FormButton';
-import FormInput from 'components/FormInput/FormInput';
-import FormItem from 'components/FormItem/FormItem';
+import { Form } from 'components/Form/Form';
+import { FormButton } from 'components/FormButton/FormButton';
+import { FormInput } from 'components/FormInput/FormInput';
+import { FormItem } from 'components/FormItem/FormItem';
 import React from 'react';
-import Text from 'components/Text/Text';
+import { Text } from 'components/Text/Text';
 
-export interface GameTitleProps {
+export type GameTitleProps = {
   gameState?: GameState;
   registrationId?: RegistrationId;
   startGame: () => void;
-}
+};
 
 export const GameTitlePage = (props: GameTitleProps) => (
   <Form>

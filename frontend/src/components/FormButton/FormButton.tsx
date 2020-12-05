@@ -2,18 +2,16 @@ import './styles.scss';
 
 import React, { MouseEventHandler, ReactNode } from 'react';
 
-export interface FormButtonProps {
+export type FormButtonProps = {
   onClick: MouseEventHandler;
   children: ReactNode;
-  className?: string
-}
+  className?: string;
+};
 
-export default function FormButton({ onClick, children, className }: FormButtonProps) {
-  return (
-    <div className="form-button">
-      <button onClick={onClick} className={className}>
-        {children}
-      </button>
-    </div>
-  );
-}
+export const FormButton = (props: FormButtonProps) => (
+  <div className="form-button">
+    <button onClick={props.onClick} className={props.className}>
+      {props.children}
+    </button>
+  </div>
+);

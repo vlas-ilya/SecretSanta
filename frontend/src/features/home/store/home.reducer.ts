@@ -1,6 +1,8 @@
 import { GameId, LoadingState } from 'model/Types';
-import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import fetch, { fetchAction } from 'utils/fetch';
+
+import { RootState } from 'store';
 
 export interface State {
   loadingState: LoadingState;
@@ -28,15 +30,11 @@ export default home.reducer;
 
 export const { changeLoadingState, changeGameId } = home.actions;
 
-const action = fetchAction(changeLoadingState);
-
 export const startGame = () =>
-  action(async (dispatch) => {
+  fetchAction(changeLoadingState, async (dispatch) => {
     const response = await fetch(`/api/game/`).post();
     dispatch(changeGameId(response.data));
   });
 
-const selectSelf = ({ home }: { home: State }) => home;
-
-export const selectLoadingState = createSelector(selectSelf, (state) => state.loadingState);
-export const selectGameId = createSelector(selectSelf, (state) => state.gameId);
+export const selectLoadingState = (state: RootState) => state.home.loadingState;
+export const selectGameId = (state: RootState) => state.home.gameId;

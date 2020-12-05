@@ -1,22 +1,22 @@
 import { GameInfo, GameName, GameState } from 'model/Types';
 
-import Form from 'components/Form/Form';
-import FormButton from 'components/FormButton/FormButton';
-import FormInput from 'components/FormInput/FormInput';
-import FormItem from 'components/FormItem/FormItem';
+import { Form } from 'components/Form/Form';
+import { FormButton } from 'components/FormButton/FormButton';
+import { FormInput } from 'components/FormInput/FormInput';
+import { FormItem } from 'components/FormItem/FormItem';
 import { GameChanges } from '../../../model/Game';
 import React from 'react';
-import Text from 'components/Text/Text';
+import { Text } from 'components/Text/Text';
 import { updateGame } from 'features/game/store/game.reducer';
 
-export interface GameInfoProps {
+export type GameInfoProps = {
   gameState?: GameState;
   name?: GameName;
   info?: GameInfo;
   change: (changes: GameChanges) => {};
   updateGame: () => {};
   play: () => {};
-}
+};
 
 export const GameInfoPage = (props: GameInfoProps) => (
   <Form>

@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import { loadPlayerId, selectLoadingState, selectPlayerId } from './store/registration.reducer';
+import {
+  loadPlayerId,
+  selectLoadingState,
+  selectPlayerId,
+} from 'features/registration/store/registration.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { MatchIdentifiable } from '../../model/Types';
-import Page from '../../components/Page/Page';
+import { MatchIdentifiable } from 'model/Types';
+import { Page } from 'components/Page/Page';
+import { Redirect } from 'react-router-dom';
 
 const RegistrationPage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();

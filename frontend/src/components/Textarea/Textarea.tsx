@@ -3,7 +3,7 @@ import './styles.scss';
 import React from 'react';
 import classNames from 'classnames';
 
-export interface TextareaProps {
+export type TextareaProps = {
   name: string;
   label?: string;
   value?: string;
@@ -11,22 +11,22 @@ export interface TextareaProps {
   onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   readOnly?: boolean;
   disabled?: boolean;
-}
+};
 
-export const Textarea = ({ name, label, value, onChange, readOnly, disabled }: TextareaProps) => (
+export const Textarea = (props: TextareaProps) => (
   <div
     className={classNames('textarea', {
-      filled: value,
+      filled: props.value,
     })}
   >
-    <label htmlFor={name}>{label}</label>
+    <label htmlFor={props.name}>{props.label}</label>
     <textarea
-      name={name}
-      id={name}
-      onChange={(e) => onChange && onChange(e.target.value, e)}
-      readOnly={readOnly}
-      disabled={disabled}
-      value={value}
+      name={props.name}
+      id={props.name}
+      onChange={(e) => props.onChange && props.onChange(e.target.value, e)}
+      readOnly={props.readOnly}
+      disabled={props.disabled}
+      value={props.value}
     />
   </div>
 );

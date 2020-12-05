@@ -1,21 +1,21 @@
 import { PlayerDontWish, PlayerName, PlayerWish } from 'model/Types';
 
-import Form from 'components/Form/Form';
-import FormButton from 'components/FormButton/FormButton';
-import FormInput from 'components/FormInput/FormInput';
-import FormItem from 'components/FormItem/FormItem';
-import { PlayerChanges } from '../../../model/Player';
+import { Form } from 'components/Form/Form';
+import { FormButton } from 'components/FormButton/FormButton';
+import { FormInput } from 'components/FormInput/FormInput';
+import { FormItem } from 'components/FormItem/FormItem';
+import { PlayerChanges } from 'model/Player';
 import React from 'react';
-import Text from 'components/Text/Text';
+import { Text } from 'components/Text/Text';
 import { Textarea } from 'components/Textarea/Textarea';
 
-export interface PlayerInfoProps {
+export type PlayerInfoProps = {
   name?: PlayerName;
   wish?: PlayerWish;
   dontWish?: PlayerDontWish;
   change: (changes: PlayerChanges) => {};
   updatePlayer: () => {};
-}
+};
 
 export const PlayerInfo = (props: PlayerInfoProps) => (
   <Form>

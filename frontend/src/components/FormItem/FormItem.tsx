@@ -2,10 +2,8 @@ import './styles.scss';
 
 import React, { ReactNode } from 'react';
 
-export interface FormItemProps {
+export type FormItemProps = {
   children: ReactNode;
-}
+};
 
-export default function FormItem({ children }: FormItemProps) {
-  return <div className="form-item">{children}</div>;
-}
+export const FormItem = (props: FormItemProps) => <div className="form-item">{props.children}</div>;

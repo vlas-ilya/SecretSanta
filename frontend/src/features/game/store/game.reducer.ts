@@ -1,7 +1,9 @@
-import { Game, GameChanges, emptyGame } from 'model/Game';
+import { Game, GameChanges } from 'model/Game';
 import { GameId, LoadingState } from 'model/Types';
-import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import fetch, { fetchAction } from 'utils/fetch';
+
+import { RootState } from 'store';
 
 export interface State {
   loadingState: LoadingState;
@@ -10,7 +12,7 @@ export interface State {
 
 export const initialState: State = {
   loadingState: 'INIT',
-  game: emptyGame,
+  game: new Game(),
 };
 
 export const game = createSlice({
@@ -34,16 +36,14 @@ export default game.reducer;
 
 export const { changeLoadingState, changeGame } = game.actions;
 
-const action = fetchAction(changeLoadingState);
-
 export const loadGameInfo = (id: GameId) =>
-  action(async (dispatch) => {
+  fetchAction(changeLoadingState, async (dispatch) => {
     const response = await fetch(`/api/game/${id}`).get();
     dispatch(changeGame(response.data));
   });
 
 export const updateGame = () =>
-  action(async (dispatch, state) => {
+  fetchAction(changeLoadingState, async (dispatch, state) => {
     const response = await fetch(`/api/game/${state.game.game.id}`).put({
       data: state.game.game,
     });
@@ -51,15 +51,10 @@ export const updateGame = () =>
   });
 
 export const startGame = () =>
-  action(async (dispatch, state) => {
-    const response = await fetch(`/api/game/${state.game.gameId}/start`).get();
+  fetchAction(changeLoadingState, async (dispatch, state) => {
+    const response = await fetch(`/api/game/${state.game.game.id}/start`).get();
     dispatch(changeGame(response.data));
   });
 
-const selectSelf = ({ game }: { game: State }) => game;
-
-export const selectLoadingState = createSelector<any, any, LoadingState>(
-  selectSelf,
-  (state) => state.loadingState,
-);
-export const selectGame = createSelector<any, any, Game>(selectSelf, (state) => state.game);
+export const selectLoadingState = (state: RootState) => state.game.loadingState;
+export const selectGame = (state: RootState) => state.game.game;

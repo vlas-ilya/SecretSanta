@@ -3,9 +3,9 @@ import './styles.scss';
 import React, { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
-import sync from './sync.svg';
+import sync from 'images/sync.svg';
 
-export interface FormInputProps {
+export type FormInputProps = {
   name: string;
   label?: string;
   validMessage?: string;
@@ -16,20 +16,9 @@ export interface FormInputProps {
   onSync?: Function;
   readOnly?: boolean;
   disabled?: boolean;
-}
+};
 
-export default function FormInput({
-  name,
-  label,
-  validMessage,
-  value,
-  onChange,
-  onEnter,
-  autoComplete = 'off',
-  onSync,
-  readOnly,
-  disabled,
-}: FormInputProps) {
+export const FormInput = (props: FormInputProps) => {
   const [syncClasses, setSyncClasses] = useState('sync');
   const [startAnimation, setStartAnimation] = useState(false);
 
@@ -47,34 +36,40 @@ export default function FormInput({
   return (
     <div
       className={classNames('form-input', {
-        filled: value,
-        invalid: validMessage,
-        sync: !!onSync,
+        filled: props.value,
+        invalid: props.validMessage,
+        sync: !!props.onSync,
       })}
     >
-      <label htmlFor={name}>{!validMessage ? label : <span className="validMessage">{validMessage}</span>}</label>
-      {onSync && (
+      <label htmlFor={props.name}>
+        {!props.validMessage ? (
+          props.label
+        ) : (
+          <span className="validMessage">{props.validMessage}</span>
+        )}
+      </label>
+      {props.onSync && (
         <img
           className={syncClasses}
           src={sync}
           alt=""
           onClick={() => {
             setStartAnimation(true);
-            onSync();
+            props.onSync && props.onSync();
           }}
         />
       )}
       <input
-        id={name}
-        name={name}
+        id={props.name}
+        name={props.name}
         type="text"
-        value={value}
-        autoComplete={autoComplete}
-        onKeyPress={(e) => onEnter && e.key === 'Enter' && onEnter(e)}
-        onChange={(e) => onChange && onChange(e.target.value, e)}
-        readOnly={readOnly}
-        disabled={disabled}
+        value={props.value}
+        autoComplete={props.autoComplete}
+        onKeyPress={(e) => props.onEnter && e.key === 'Enter' && props.onEnter(e)}
+        onChange={(e) => props.onChange && props.onChange(e.target.value, e)}
+        readOnly={props.readOnly}
+        disabled={props.disabled}
       />
     </div>
   );
-}
+};
