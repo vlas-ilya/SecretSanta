@@ -8,7 +8,7 @@ export interface PageProps {
   className?: string;
   loading?: boolean;
   onScroll?: UIEventHandler;
-  children: ReactNode;
+  children?: ReactNode;
   width?: number;
 }
 

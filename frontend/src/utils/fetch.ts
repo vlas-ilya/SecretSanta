@@ -1,5 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
+
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
+import { LoadingState } from '../model/Types';
 
 export interface Options extends AxiosRequestConfig {
   token?: string;
@@ -26,17 +29,16 @@ const fetch = (url: string) => ({
   delete: (options: Options = {}) => _fetch(url, { ...options, method: 'DELETE' }),
 });
 
-export const fetchAction = (onStart: Function, onSuccess: Function, onError: Function) => (
+export const fetchAction = (changeLoadingState: ActionCreatorWithPayload<LoadingState>) => (
   action: (dispatch: Dispatch, state: any) => Promise<void>,
 ) => async (dispatch: Dispatch, getState: Function) => {
   try {
-    onStart && dispatch(onStart());
+    changeLoadingState && dispatch(changeLoadingState('LOADING'));
     await action(dispatch, getState());
-    onSuccess && dispatch(onSuccess(dispatch));
+    changeLoadingState && dispatch(changeLoadingState('SUCCESS'));
   } catch (e) {
-    onError && dispatch(onError(dispatch));
+    changeLoadingState && dispatch(changeLoadingState('ERROR'));
   }
 };
-
 
 export default fetch;

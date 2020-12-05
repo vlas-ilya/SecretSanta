@@ -8,17 +8,18 @@ import {
 } from './store/player.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Page from '../../components/Page/Page';
-import { PlayerInfo } from './components/PlayerInfo';
+import { MatchIdentifiable } from 'model/Types';
+import Page from 'components/Page/Page';
+import { PlayerInfo } from 'features/player/components/PlayerInfo';
 
-const PlayerPage = ({ match }: { match: any }) => {
+const PlayerPage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();
   const loadingState = useSelector(selectLoadingState);
   const player = useSelector(selectPlayer);
 
   useEffect(() => {
-    dispatch(loadPlayerInfo(match.params.id));
-  }, [dispatch, match.params.id]);
+    dispatch(loadPlayerInfo(props.match.params.id));
+  }, [dispatch, props.match.params.id]);
 
   return (
     <Page className="game-page" loading={loadingState === 'LOADING'}>

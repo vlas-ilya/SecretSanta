@@ -1,8 +1,6 @@
-import { PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
-
-import { GameId, LoadingState, PlayerId, RegistrationId } from '../../../model/Types';
-import fetch, { fetchAction } from '../../../utils/fetch';
-import { changeGame } from '../../game/store/game.reducer';
+import { LoadingState, PlayerId, RegistrationId } from 'model/Types';
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
+import fetch, { fetchAction } from 'utils/fetch';
 
 export interface State {
   loadingState: LoadingState;
@@ -28,16 +26,9 @@ export const registration = createSlice({
 
 export default registration.reducer;
 
-export const {
-  changeLoadingState,
-  changePlayerId,
-} = registration.actions;
+export const { changeLoadingState, changePlayerId } = registration.actions;
 
-const action = fetchAction(
-  () => changeLoadingState('LOADING'),
-  () => changeLoadingState('SUCCESS'),
-  () => changeLoadingState('ERROR'),
-);
+const action = fetchAction(changeLoadingState);
 
 export const loadPlayerId = (id: RegistrationId) =>
   action(async (dispatch) => {
@@ -45,9 +36,7 @@ export const loadPlayerId = (id: RegistrationId) =>
     dispatch(changePlayerId(response.data));
   });
 
-
 const selectSelf = ({ registration }: { registration: State }) => registration;
 
-export const selectLoadingState = createSelector(selectSelf, state => state.loadingState);
-export const selectPlayerId = createSelector(selectSelf, state => state.playerId);
-
+export const selectLoadingState = createSelector(selectSelf, (state) => state.loadingState);
+export const selectPlayerId = createSelector(selectSelf, (state) => state.playerId);

@@ -6,22 +6,23 @@ import {
   selectLoadingState,
   startGame,
   updateGame,
-} from './store/game.reducer';
+} from 'features/game/store/game.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GameInfoPage } from './components/GameInfoPage';
-import { GamePlayersPage } from './components/GamePlayersPage';
-import { GameTitlePage } from './components/GameTitlePage';
-import Page from '../../components/Page/Page';
+import { GameInfoPage } from 'features/game/components/GameInfoPage';
+import { GamePlayersPage } from 'features/game/components/GamePlayersPage';
+import { GameTitlePage } from 'features/game/components/GameTitlePage';
+import { MatchIdentifiable } from 'model/Types';
+import Page from 'components/Page/Page';
 
-const GamePage = ({ match }: { match: any }) => {
+const GamePage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();
   const loadingState = useSelector(selectLoadingState);
   const game = useSelector(selectGame);
 
   useEffect(() => {
-    dispatch(loadGameInfo(match.params.id));
-  }, [dispatch, match.params.id]);
+    dispatch(loadGameInfo(props.match.params.id));
+  }, [dispatch, props.match.params.id]);
 
   return (
     <Page className="game-page" loading={loadingState === 'LOADING'}>
@@ -39,7 +40,7 @@ const GamePage = ({ match }: { match: any }) => {
         updateGame={() => dispatch(updateGame())}
         play={() => 2 + 2}
       />
-      <GamePlayersPage players={game?.players}/>
+      <GamePlayersPage players={game?.players} />
     </Page>
   );
 };

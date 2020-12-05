@@ -1,12 +1,12 @@
-import { GameInfo, GameName, GameState } from '../../../model/Types';
-import { updateGame } from '../store/game.reducer';
+import { GameInfo, GameName, GameState } from 'model/Types';
 
-import Form from '../../../components/Form/Form';
-import FormButton from '../../../components/FormButton/FormButton';
-import FormInput from '../../../components/FormInput/FormInput';
-import FormItem from '../../../components/FormItem/FormItem';
+import Form from 'components/Form/Form';
+import FormButton from 'components/FormButton/FormButton';
+import FormInput from 'components/FormInput/FormInput';
+import FormItem from 'components/FormItem/FormItem';
 import React from 'react';
-import Text from '../../../components/Text/Text';
+import Text from 'components/Text/Text';
+import { updateGame } from 'features/game/store/game.reducer';
 
 export interface GameInfoProps {
   gameState?: GameState;
@@ -18,28 +18,36 @@ export interface GameInfoProps {
   play: () => {};
 }
 
-export const GameInfoPage = ({ gameState, name, changeName, info, changeGameInfo, play }: GameInfoProps) => (
+export const GameInfoPage = (props: GameInfoProps) => (
   <Form>
     <FormItem>
       <Text type="h1">Информация об игре</Text>
     </FormItem>
     <FormItem>
-      <FormInput name="name" disabled={gameState === 'RUN'} label="Название игры" onChange={changeName} value={name} />
+      <FormInput
+        name="name"
+        disabled={props.gameState === 'RUN'}
+        label="Название игры"
+        onChange={props.changeName}
+        value={props.name}
+      />
     </FormItem>
     <FormItem>
       <FormInput
         name="info"
-        disabled={gameState === 'RUN'}
+        disabled={props.gameState === 'RUN'}
         label="Информация об игре"
-        onChange={changeGameInfo}
-        value={info}
+        onChange={props.changeGameInfo}
+        value={props.info}
       />
     </FormItem>
     <FormItem>
-      <Text type="p">Если вы тоже планируете участвовать в Тайном Санте, нажмите кнопку «Начать игру»</Text>
+      <Text type="p">
+        Если вы тоже планируете участвовать в Тайном Санте, нажмите кнопку «Начать игру»
+      </Text>
     </FormItem>
     <div className="actions">
-      <FormButton className="grey" onClick={play}>
+      <FormButton className="grey" onClick={props.play}>
         Участвовать
       </FormButton>
       <FormButton onClick={updateGame}>Сохранить</FormButton>

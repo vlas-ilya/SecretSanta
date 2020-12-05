@@ -1,8 +1,9 @@
-import {  LoadingState, PlayerId } from '../../../model/Types';
+import { LoadingState, PlayerId } from 'model/Types';
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
-import { Player, mockPlayer } from '../../../model/Player';
-import fetch, { fetchAction } from '../../../utils/fetch';
-import { changeGame } from '../../game/store/game.reducer';
+import { Player, mockPlayer } from 'model/Player';
+import fetch, { fetchAction } from 'utils/fetch';
+
+import { changeGame } from 'features/game/store/game.reducer';
 
 export interface State {
   loadingState: LoadingState;
@@ -35,11 +36,7 @@ export default player.reducer;
 
 export const { changeLoadingState, changePlayer } = player.actions;
 
-const action = fetchAction(
-  () => changeLoadingState('LOADING'),
-  () => changeLoadingState('SUCCESS'),
-  () => changeLoadingState('ERROR'),
-);
+const action = fetchAction(changeLoadingState);
 
 export const loadPlayerInfo = (id: PlayerId) =>
   action(async (dispatch) => {

@@ -1,7 +1,17 @@
+import { match } from 'react-router-dom';
+
 export type LoadingState = 'INIT' | 'LOADING' | 'SUCCESS' | 'ERROR';
 export type Object = {
   [index: string]: any;
 };
+
+export interface Identifiable {
+  id: string;
+}
+
+export interface MatchIdentifiable {
+  match: match<Identifiable>;
+}
 
 export type GameId = string;
 export type GameState = 'INIT' | 'RUN' | 'ENDED';

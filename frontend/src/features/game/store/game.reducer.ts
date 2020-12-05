@@ -1,7 +1,7 @@
-import { Game, mockGame } from '../../../model/Game';
-import { GameId, LoadingState } from '../../../model/Types';
+import { Game, mockGame } from 'model/Game';
+import { GameId, LoadingState } from 'model/Types';
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
-import fetch, { fetchAction } from '../../../utils/fetch';
+import fetch, { fetchAction } from 'utils/fetch';
 
 export interface State {
   loadingState: LoadingState;
@@ -34,11 +34,7 @@ export default game.reducer;
 
 export const { changeLoadingState, changeGame } = game.actions;
 
-const action = fetchAction(
-  () => changeLoadingState('LOADING'),
-  () => changeLoadingState('SUCCESS'),
-  () => changeLoadingState('ERROR'),
-);
+const action = fetchAction(changeLoadingState);
 
 export const loadGameInfo = (id: GameId) =>
   action(async (dispatch) => {
@@ -62,5 +58,8 @@ export const startGame = () =>
 
 const selectSelf = ({ game }: { game: State }) => game;
 
-export const selectLoadingState = createSelector<any, any, LoadingState>(selectSelf, (state) => state.loadingState);
+export const selectLoadingState = createSelector<any, any, LoadingState>(
+  selectSelf,
+  (state) => state.loadingState,
+);
 export const selectGame = createSelector<any, any, Game>(selectSelf, (state) => state.game);

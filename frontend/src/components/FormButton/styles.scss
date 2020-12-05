@@ -1,4 +1,4 @@
-@import '../../app/theme';
+@import '../../theme';
 
 .form-button {
   margin: 0 0 15px;
@@ -8,7 +8,11 @@
   }
 
   button {
-    @mixin button($background: $button-background, $color: $button-color, $hover-background: darken($background, 10)) {
+    @mixin button(
+      $background: $button-background,
+      $color: $button-color,
+      $hover-background: darken($background, 10)
+    ) {
       background: $background;
       color: $color;
       box-shadow: 0 2px 5px 0 rgba(black, 0.26);

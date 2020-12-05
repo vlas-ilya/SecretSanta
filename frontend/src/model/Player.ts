@@ -1,4 +1,4 @@
-import { PlayerDontWish, PlayerId, PlayerName, PlayerState, PlayerWish, Object } from './Types';
+import { Object, PlayerDontWish, PlayerId, PlayerName, PlayerState, PlayerWish } from './Types';
 
 export interface Player extends Object {
   id?: PlayerId;
@@ -9,6 +9,4 @@ export interface Player extends Object {
   target?: PlayerId;
 }
 
-export const mockPlayer: Player = {
-
-}
+export const mockPlayer: Player = {};

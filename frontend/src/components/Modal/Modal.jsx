@@ -4,7 +4,16 @@ import React from 'react';
 import classNames from 'classnames';
 import close from '../../images/close.svg';
 
-export default function Modal({ show, actions, title, className, noPadding, children, onClose, showCloseButton }) {
+export default function Modal({
+  show,
+  actions,
+  title,
+  className,
+  noPadding,
+  children,
+  onClose,
+  showCloseButton,
+}) {
   if (!show) {
     return false;
   }
