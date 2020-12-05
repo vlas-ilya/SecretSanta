@@ -1,0 +1,55 @@
+@import '../../app/theme';
+
+.textarea {
+  position: relative;
+  margin: 0 0 15px;
+
+  &:last-child {
+    margin: 0;
+  }
+
+  &.filled {
+    label {
+      position: absolute;
+      transition: all 0.1s;
+
+      transform: scale(0.5) translate(0, -30px);
+      font-weight: bold;
+      color: #505050;
+    }
+  }
+
+  label {
+    transform-origin: left;
+    transition: all 0.2s;
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    font-size: 16px;
+    top: 16px;
+    left: 16px;
+    color: #909090;
+    cursor: auto;
+  }
+
+
+  textarea {
+    font-family: 'Roboto', sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 1px solid $input-border-color;
+    padding: 15px 15px 13px;
+    box-sizing: border-box;
+    font-size: 16px;
+    resize: vertical;
+
+    border-radius: 0;
+    -webkit-appearance: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+      border: 1px solid $input-border-color-hover;
+    }
+  }
+}

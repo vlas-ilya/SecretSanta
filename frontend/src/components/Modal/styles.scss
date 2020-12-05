@@ -1,0 +1,87 @@
+.modal-back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0000009e;
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow-x: auto;
+
+  .modal {
+    font-family: 'Roboto', sans-serif;
+
+    max-width: 700px;
+    background: white;
+    margin: 40px auto;
+    position: relative;
+
+    &.width-auto {
+      width: fit-content;
+    }
+
+    .modal-title {
+      padding: 10px;
+      font-weight: 100;
+      h2 {
+        margin: 0;
+      }
+    }
+
+    .modal-body {
+      padding: 10px;
+      &.no-padding {
+        padding: 0;
+      }
+    }
+
+    &.big-margin {
+      .modal-title {
+        padding: 20px;
+      }
+      .modal-body {
+        padding: 10px 20px;
+      }
+    }
+
+    .modal-actions {
+      padding: 10px;
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-left: -5px;
+      margin-right: -5px;
+      margin-top: -10px;
+
+      .form-button {
+        flex: 1 1 200px;
+        min-width: 200px;
+        margin: 10px 5px 0;
+      }
+    }
+
+    .close {
+      width: 20px;
+      height: 20px;
+      display: none;
+      cursor: pointer;
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      opacity: 0.8;
+    }
+
+    &.show-close-button {
+      .close {
+        display: block;
+      }
+      .modal-title {
+        h2 {
+          margin-right: 30px;
+        }
+      }
+    }
+  }
+}

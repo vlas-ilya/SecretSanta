@@ -1,0 +1,23 @@
+$color1: #114b5f;
+$color2: #1a936f;
+$color3: #2fba91;
+$color4: #c6dabf;
+$color5: #f5efe3;
+
+$body-background: $color3;
+
+$form-background: white;
+
+$alert-background: $color1;
+
+$list-background: $color3;
+$list-selected-background: darken($list-background, 10);
+$list-color: lighten($color5, 5);
+
+$button-background: $color1;
+$button-color: white;
+$button-background-grey: #dedede;
+$button-color-grey: $color1;
+
+$input-border-color: #f2f2f2;
+$input-border-color-hover: $color1;

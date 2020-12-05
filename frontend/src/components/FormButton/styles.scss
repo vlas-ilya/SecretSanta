@@ -1,0 +1,44 @@
+@import '../../app/theme';
+
+.form-button {
+  margin: 0 0 15px;
+
+  &:last-child {
+    margin: 0;
+  }
+
+  button {
+    @mixin button($background: $button-background, $color: $button-color, $hover-background: darken($background, 10)) {
+      background: $background;
+      color: $color;
+      box-shadow: 0 2px 5px 0 rgba(black, 0.26);
+
+      &:hover,
+      &:active,
+      &:focus {
+        background: $hover-background;
+      }
+    }
+
+    @include button();
+
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+
+    &.grey {
+      @include button(
+        $button-background-grey,
+        $button-color-grey,
+        $hover-background: darken($button-background-grey, 5)
+      );
+    }
+  }
+}
