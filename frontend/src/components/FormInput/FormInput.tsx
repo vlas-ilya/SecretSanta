@@ -16,6 +16,7 @@ export type FormInputProps = {
   onSync?: Function;
   readOnly?: boolean;
   disabled?: boolean;
+  type?: '' | 'password' | 'number';
 };
 
 export const FormInput = (props: FormInputProps) => {
@@ -62,7 +63,7 @@ export const FormInput = (props: FormInputProps) => {
       <input
         id={props.name}
         name={props.name}
-        type="text"
+        type={props.type || 'text'}
         value={props.value}
         autoComplete={props.autoComplete}
         onKeyPress={(e) => props.onEnter && e.key === 'Enter' && props.onEnter(e)}

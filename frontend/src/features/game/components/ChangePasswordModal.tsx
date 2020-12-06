@@ -32,6 +32,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps) => (
         <FormItem>
           <FormInput
             name="password"
+            type="password"
             label="Введите пароль"
             value={props.changePasswordMessage.newPassword}
             onChange={(value) =>
@@ -48,6 +49,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps) => (
         <FormItem>
           <FormInput
             name="oldPassword"
+            type="password"
             label="Введите старый пароль"
             value={props.changePasswordMessage.oldPassword}
             onChange={(value) =>
@@ -61,6 +63,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps) => (
         <FormItem>
           <FormInput
             name="newPassword"
+            type="password"
             label="Введите новый пароль"
             value={props.changePasswordMessage.newPassword}
             onChange={(value) =>
@@ -74,6 +77,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps) => (
         <FormItem>
           <FormInput
             name="confirmPassword"
+            type="password"
             label="Повторите новый пароль"
             value={props.changePasswordMessage.confirmNewPassword}
             onChange={(value) =>

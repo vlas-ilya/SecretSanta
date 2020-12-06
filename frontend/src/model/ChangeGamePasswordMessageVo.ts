@@ -2,7 +2,7 @@ import { ChangeGamePasswordMessage } from '../../../backend/src/model/ChangeGame
 import { GamePassword } from '../../../backend/src/model/GameTypes';
 
 export class ChangeGamePasswordMessageVo implements ChangeGamePasswordMessage {
-  oldPassword: GamePassword = "";
-  newPassword: GamePassword = "";
-  confirmNewPassword: GamePassword = "";
+  oldPassword: GamePassword = '';
+  newPassword: GamePassword = '';
+  confirmNewPassword: GamePassword = '';
 }

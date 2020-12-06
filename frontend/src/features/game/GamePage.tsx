@@ -72,6 +72,7 @@ const GamePage = (props: MatchIdentifiable) => {
       <GamePlayersPage players={game?.players} />
       {showChangePasswordModal && (
         <ChangePasswordModal
+          // TODO: добавить валидацию полей
           changePasswordMessage={changePasswordMessage}
           setChangePasswordMessage={setChangePasswordMessage}
           hasPassword={game?.hasPassword}

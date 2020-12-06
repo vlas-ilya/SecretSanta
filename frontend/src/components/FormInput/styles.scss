@@ -67,7 +67,9 @@
     }
   }
 
-  input[type='text'] {
+  input[type='text'],
+  input[type='password'],
+  input[type='number'] {
     font-family: 'Roboto', sans-serif;
     outline: 0;
     background: #f2f2f2;

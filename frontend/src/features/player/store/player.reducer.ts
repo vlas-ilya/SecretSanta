@@ -1,12 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { PlayerChanges, PlayerId, PlayerPassword } from '../../../../../backend/src/model/PlayerTypes';
+import {
+  PlayerChanges,
+  PlayerId,
+  PlayerPassword,
+} from '../../../../../backend/src/model/PlayerTypes';
 import fetch, { fetchAction } from 'utils/fetch';
 
+import { ChangePlayerPasswordMessage } from '../../../../../backend/src/model/ChangePlayerPasswordMessage';
 import { GameVo } from '../../../model/GameVo';
 import { LoadingState } from '../../../../../backend/src/model/LoadingState';
 import { PlayerVo } from '../../../model/PlayerVo';
 import { RootState } from 'store';
-import { ChangePlayerPasswordMessage } from '../../../../../backend/src/model/ChangePlayerPasswordMessage';
 
 export interface State {
   loadingState: LoadingState;
@@ -49,13 +53,18 @@ export const player = createSlice({
 
 export default player.reducer;
 
-export const { changeLoadingState, changePlayer, changeGame, changePlayerPassword } = player.actions;
+export const {
+  changeLoadingState,
+  changePlayer,
+  changeGame,
+  changePlayerPassword,
+} = player.actions;
 
 export const loadGameInfo = (id: PlayerId) =>
   fetchAction(changeLoadingState, async (dispatch) => {
     const password = localStorage.getItem(`player-id-${id}`);
     const response = await fetch(`/api/player/${id}/game`).get({
-      password
+      password,
     });
     dispatch(changeGame(response.data));
   });
@@ -64,7 +73,7 @@ export const loadPlayerInfo = (id: PlayerId) =>
   fetchAction(changeLoadingState, async (dispatch) => {
     const password = localStorage.getItem(`player-id-${id}`);
     const response = await fetch(`/api/player/${id}`).get({
-      password
+      password,
     });
     dispatch(changePlayer(response.data));
   });
@@ -76,7 +85,7 @@ export const changePassword = (changePasswordMessage: ChangePlayerPasswordMessag
       data: {
         message: changePasswordMessage,
       },
-      password
+      password,
     });
 
     dispatch(changePlayer(response.data));
@@ -88,7 +97,7 @@ export const updatePlayer = () =>
     const password = localStorage.getItem(`player-id-${state.player.player.id}`);
     const response = await fetch(`/api/player/${state.player.player.id}`).put({
       data: state.player.player,
-      password
+      password,
     });
     dispatch(changePlayer(response.data));
   });

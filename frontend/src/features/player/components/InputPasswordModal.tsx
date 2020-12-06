@@ -31,6 +31,7 @@ export const InputPasswordModal = (props: InputPasswordModal) => {
         <FormItem>
           <FormInput
             name="password"
+            type="password"
             label="Введите пароль"
             value={password}
             onChange={(value) => setPassword(value)}
