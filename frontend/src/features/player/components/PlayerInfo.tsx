@@ -14,6 +14,7 @@ import { Text } from 'components/Text/Text';
 import { Textarea } from 'components/Textarea/Textarea';
 
 export type PlayerInfoProps = {
+  hasPassword?: boolean;
   name?: PlayerName;
   wish?: PlayerWish;
   taboo?: PlayerTaboo;
@@ -53,7 +54,7 @@ export const PlayerInfo = (props: PlayerInfoProps) => (
     </FormItem>
     <div className="actions">
       <FormButton className="grey" onClick={props.changePassword}>
-        Установить пароль
+        {props.hasPassword ? 'Изменить пароль' : 'Установить пароль'}
       </FormButton>
       <FormButton onClick={props.updatePlayer}>Сохранить</FormButton>
     </div>

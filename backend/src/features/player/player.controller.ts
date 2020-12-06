@@ -19,7 +19,7 @@ export class PlayerController {
   @Put('/:id/changePassword')
   async changePassword(
     @Param('id') id: PlayerId,
-    @Body('password') changePasswordMessage: ChangePlayerPasswordMessage,
+    @Body('message') changePasswordMessage: ChangePlayerPasswordMessage,
   ): Promise<PlayerDto> {
     return this.service.changePassword(id, changePasswordMessage);
   }

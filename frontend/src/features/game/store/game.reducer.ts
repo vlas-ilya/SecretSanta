@@ -56,20 +56,22 @@ export const loadGameInfo = (id: GameId) =>
 
 export const updateGame = () =>
   fetchAction(changeLoadingState, async (dispatch, state) => {
+    const password = localStorage.getItem(`game-id-${state.game.game.id}`);
     const response = await fetch(`/api/game/${state.game.game.id}`).put({
       data: state.game.game,
-      password: state.game.game.password,
+      password,
     });
     dispatch(changeGame(response.data));
   });
 
 export const changePassword = (changePasswordMessage: ChangeGamePasswordMessage) =>
   fetchAction(changeLoadingState, async (dispatch, state) => {
+    const password = localStorage.getItem(`game-id-${state.game.game.id}`);
     const response = await fetch(`/api/game/${state.game.game.id}/changePassword`).put({
       data: {
         message: changePasswordMessage,
       },
-      password: state.game.game.password,
+      password,
     });
 
     dispatch(changeGame(response.data));
@@ -78,8 +80,9 @@ export const changePassword = (changePasswordMessage: ChangeGamePasswordMessage)
 
 export const startGame = () =>
   fetchAction(changeLoadingState, async (dispatch, state) => {
+    const password = localStorage.getItem(`game-id-${state.game.game.id}`);
     const response = await fetch(`/api/game/${state.game.game.id}/start`).get({
-      password: state.game.game.password,
+      password,
     });
     dispatch(changeGame(response.data));
   });

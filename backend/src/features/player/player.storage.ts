@@ -27,15 +27,7 @@ export class PlayerStorage {
   }
 
   async update(player: PlayerDto): Promise<PlayerDto> {
-    const persisted = await this.find(player.id);
-
-    persisted.playerState = player.playerState;
-    persisted.name = player.name;
-    persisted.wish = player.wish;
-    persisted.taboo = player.taboo;
-    persisted.targetId = player.targetId;
-
-    return this.repository.save(persisted);
+    return this.repository.save(player);
   }
 
   async delete(player: PlayerDto): Promise<void> {

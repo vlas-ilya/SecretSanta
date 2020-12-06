@@ -37,12 +37,13 @@ const GamePage = (props: MatchIdentifiable) => {
   const onChangePassword = () => {
     if (!game?.hasPassword) {
       dispatch(changePassword(changePasswordMessage));
+      setShowChangePasswordModal(false);
       return;
     }
     if (game.password !== changePasswordMessage.oldPassword) {
       return;
     }
-    if (changePasswordMessage.newPassword != changePasswordMessage.confirmNewPassword) {
+    if (changePasswordMessage.newPassword !== changePasswordMessage.confirmNewPassword) {
       return;
     }
     dispatch(changePassword(changePasswordMessage));
