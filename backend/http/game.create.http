@@ -1,2 +1,7 @@
-POST /game/ HTTP/1.1
-Host: localhost:3000
+POST /api/game/ HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "password": "111"
+}

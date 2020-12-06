@@ -1,2 +1,3 @@
-GET /player/8979d48d-367c-4be9-9232-4c764acc0c36 HTTP/1.1
-Host: localhost:3000
+GET /api/player/cad93a38-df82-474a-b86d-36499fa2aa62 HTTP/1.1
+Host: localhost:8080
+password: 111

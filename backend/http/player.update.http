@@ -1,9 +1,10 @@
-PUT /player/254ea5cd-40b8-4ffe-929e-463ad99b7260 HTTP/1.1
-Host: localhost:3000
+PUT /api/player/cad93a38-df82-474a-b86d-36499fa2aa62 HTTP/1.1
+Host: localhost:8080
 Content-Type: application/json
+password: 111
 
 {
-  "name": "test223444",
-  "wish": "testtt",
-  "dontWish": "tototo"
+  "name": "aaaa",
+  "wish": "bbbbb",
+  "taboo": "cccccccc"
 }

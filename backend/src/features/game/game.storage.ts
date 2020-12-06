@@ -1,4 +1,4 @@
-import Game, { RegistrationId } from './game.entity';
+import Game, { GameId, GamePassword, RegistrationId } from './game.entity';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
@@ -10,14 +10,15 @@ import { v4 } from 'uuid';
 export class GameStorage {
   constructor(@InjectRepository(Game) private repository: Repository<Game>) {}
 
-  async create(): Promise<Game> {
+  async create(password: GamePassword): Promise<Game> {
     const game = new Game();
     game.id = v4();
     game.registrationId = v4();
+    game.password = password;
     return this.repository.save(game);
   }
 
-  async find(id: PlayerId): Promise<Game | undefined> {
+  async find(id: GameId): Promise<Game | undefined> {
     return this.repository.findOne({
       where: { id },
       relations: ['players'],
@@ -44,16 +45,7 @@ export class GameStorage {
     await this.repository.delete(game);
   }
 
-  async update(game: Game): Promise<Game> {
-    const persisted = await this.find(game.id);
-
-    persisted.gameState = game.gameState;
-    persisted.playerState = game.playerState;
-    persisted.name = game.name;
-    persisted.wish = game.wish;
-    persisted.dontWish = game.dontWish;
-    persisted.targetId = game.targetId;
-
+  async update(persisted: Game): Promise<Game> {
     return this.repository.save(persisted);
   }
 }

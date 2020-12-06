@@ -1,4 +1,4 @@
-import Player, { PlayerId } from './player.entity';
+import Player, { PlayerId, PlayerPassword } from './player.entity';
 
 import { GameStorage } from '../game/game.storage';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,11 +14,15 @@ export class PlayerStorage {
     private readonly gameStorage: GameStorage,
   ) {}
 
-  async create(registrationId: RegistrationId): Promise<Player> {
+  async create(
+    registrationId: RegistrationId,
+    password: PlayerPassword,
+  ): Promise<Player> {
     const game = await this.gameStorage.findByRegistrationId(registrationId);
     const player = new Player();
     player.id = v4();
     player.game = game;
+    player.password = password;
     return await this.repository.save(player);
   }
 
@@ -32,7 +36,7 @@ export class PlayerStorage {
     persisted.playerState = player.playerState;
     persisted.name = player.name;
     persisted.wish = player.wish;
-    persisted.dontWish = player.dontWish;
+    persisted.taboo = player.taboo;
     persisted.targetId = player.targetId;
 
     return this.repository.save(persisted);
