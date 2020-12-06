@@ -1,5 +1,6 @@
 import './styles.scss';
 
+import TextareaAutosize from 'react-textarea-autosize';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -20,9 +21,10 @@ export const Textarea = (props: TextareaProps) => (
     })}
   >
     <label htmlFor={props.name}>{props.label}</label>
-    <textarea
+    <TextareaAutosize
       name={props.name}
       id={props.name}
+      minRows={3}
       onChange={(e) => props.onChange && props.onChange(e.target.value, e)}
       readOnly={props.readOnly}
       disabled={props.disabled}
