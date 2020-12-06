@@ -8,6 +8,7 @@ import React from 'react';
 import { Text } from 'components/Text/Text';
 
 export type GameTitleProps = {
+  hasPassword?: boolean;
   gameState?: GameState;
   registrationId?: RegistrationId;
   startGame: () => void;
@@ -40,7 +41,7 @@ export const GameTitlePage = (props: GameTitleProps) => (
         </FormItem>
         <div className="actions">
           <FormButton className="grey" onClick={props.changePassword}>
-            Установить пароль
+            {props.hasPassword ? 'Изменить пароль' : 'Установить пароль'}
           </FormButton>
           <FormButton onClick={props.startGame}>Начать игру</FormButton>
         </div>

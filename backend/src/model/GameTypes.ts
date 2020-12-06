@@ -15,6 +15,7 @@ export default interface Game {
   password: GamePassword;
   gameState: GameState;
   players: Player[];
+  hasPassword: boolean;
 }
 
 export type ChangeGameTitle = { field: 'title'; value: GameTitle };

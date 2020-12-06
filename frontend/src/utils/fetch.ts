@@ -6,14 +6,14 @@ import { LoadingState } from '../../../backend/src/model/LoadingState';
 import { RootState } from '../store';
 
 export interface Options extends AxiosRequestConfig {
-  token?: string;
+  password?: string | null;
 }
 
 const _fetch = (url: string, options: Options = {}) => {
   axios.defaults.withCredentials = true;
   const headers = options.headers || {};
-  if (options.token) {
-    headers['Authorization'] = `Token ${options.token}`;
+  if (options.password) {
+    headers['password'] = options.password;
   }
   const requestOptions = {
     ...options,
@@ -39,7 +39,7 @@ export const fetchAction = (
     await action(dispatch, getState());
     changeLoadingState && dispatch(changeLoadingState('SUCCESS'));
   } catch (e) {
-    changeLoadingState && dispatch(changeLoadingState('ERROR'));
+    changeLoadingState && dispatch(changeLoadingState(['ERROR', e.response?.data?.message]));
   }
 };
 

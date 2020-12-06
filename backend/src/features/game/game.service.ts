@@ -43,8 +43,7 @@ export class GameService {
     throwIfTrue(persisted.gameState !== 'INIT', new InvalidStateException('INVALID_GAME_STATE'));
     GameService.checkPassword(persisted, password);
 
-    // TODO: фильтровать только активных игроков
-    setPlayersTarget(persisted.players);
+    setPlayersTarget(persisted.players.filter((player) => player.playerState === 'ACTIVE'));
 
     for (const player of persisted.players) {
       await this.playerStorage.update(player);
@@ -88,6 +87,7 @@ export class GameService {
     GameService.checkPassword(persisted, changePasswordMessage.oldPassword);
 
     persisted.password = changePasswordMessage.newPassword;
+    persisted.hasPassword = true;
     return await this.storage.update(persisted);
   }
 }

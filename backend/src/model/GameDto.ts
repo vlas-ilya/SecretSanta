@@ -15,21 +15,24 @@ export default class GameDto implements Game {
   @PrimaryGeneratedColumn('uuid')
   id: GameId;
 
-  @Column()
+  @Column({ default: '' })
   registrationId: RegistrationId;
 
-  @Column()
+  @Column({ default: '' })
   title: GameTitle = '';
 
-  @Column()
+  @Column({ default: '' })
   description: GameDescription = '';
 
   @Column({ nullable: true, default: null })
   password: GamePassword;
 
-  @Column()
+  @Column({ default: 'INIT' })
   gameState: GameState = 'INIT';
 
   @OneToMany(() => PlayerDto, (player) => player.game)
   players: PlayerDto[];
+
+  @Column({ default: false })
+  hasPassword: boolean;
 }

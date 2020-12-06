@@ -17,4 +17,5 @@ export class GameVo implements Game {
   password: GamePassword = '';
   gameState: GameState = 'INIT';
   players: PlayerVo[] = [];
+  hasPassword: boolean = false;
 }

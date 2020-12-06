@@ -16,6 +16,7 @@ export default interface Player {
   taboo: PlayerTaboo;
   targetId?: PlayerId;
   game?: Game;
+  hasPassword: boolean;
 }
 
 export type ChangePlayerName = { field: 'name'; value: PlayerName };

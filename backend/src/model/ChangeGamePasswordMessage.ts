@@ -1,6 +1,6 @@
 import { GamePassword } from './GameTypes';
 
-export class ChangeGamePasswordMessage {
+export interface ChangeGamePasswordMessage {
   oldPassword: GamePassword;
   newPassword: GamePassword;
 }

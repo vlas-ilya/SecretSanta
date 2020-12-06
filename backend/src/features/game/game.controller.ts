@@ -20,7 +20,7 @@ export class GameController {
   @Put('/:id/changePassword')
   async changePassword(
     @Param('id') id: GameId,
-    @Body('password') changePasswordMessage: ChangeGamePasswordMessage,
+    @Body('message') changePasswordMessage: ChangeGamePasswordMessage,
   ): Promise<GameDto> {
     return this.service.changePassword(id, changePasswordMessage);
   }
@@ -30,8 +30,9 @@ export class GameController {
     @Param('id') id: GameId,
     @Headers('password') password: GamePassword,
   ): Promise<GameDto> {
-    // TODO: возвращать только активных игроков
-    return await this.service.get(id, password);
+    const game = await this.service.get(id, password);
+    game.players = game.players.filter((player) => player.playerState === 'ACTIVE');
+    return game;
   }
 
   @Get('/:id/start')

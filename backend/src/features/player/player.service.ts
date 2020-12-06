@@ -81,6 +81,7 @@ export class PlayerService {
     PlayerService.checkPassword(persisted, changePasswordMessage.oldPassword);
 
     persisted.password = changePasswordMessage.newPassword;
+    persisted.hasPassword = true;
     return await this.storage.update(persisted);
   }
 }

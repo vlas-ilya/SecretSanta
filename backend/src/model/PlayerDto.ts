@@ -15,19 +15,19 @@ export default class PlayerDto implements Player {
   @PrimaryGeneratedColumn('uuid')
   id: PlayerId;
 
-  @Column()
+  @Column({ default: 'INIT' })
   playerState: PlayerState = 'INIT';
 
-  @Column()
+  @Column({ default: '' })
   name: PlayerName = '';
 
   @Column({ nullable: true, default: null })
   password: PlayerPassword;
 
-  @Column()
+  @Column({ default: '' })
   wish: PlayerWish = '';
 
-  @Column()
+  @Column({ default: '' })
   taboo: PlayerTaboo = '';
 
   @Column({ nullable: true, default: null })
@@ -35,4 +35,7 @@ export default class PlayerDto implements Player {
 
   @ManyToOne(() => GameDto, (game) => game.players)
   game: GameDto;
+
+  @Column({ default: false })
+  hasPassword: boolean;
 }

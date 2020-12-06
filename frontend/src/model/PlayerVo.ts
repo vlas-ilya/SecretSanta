@@ -18,4 +18,5 @@ export class PlayerVo implements Player {
   taboo: PlayerTaboo = '';
   targetId?: PlayerId;
   game?: Game;
+  hasPassword: boolean = false;
 }

@@ -10,5 +10,5 @@
   "cli": {
     "migrationsDir": "./dist/**/migrations/"
   },
-  "synchronize": true
+  "synchronize": false
 }
