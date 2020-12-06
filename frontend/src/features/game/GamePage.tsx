@@ -9,12 +9,12 @@ import {
 } from 'features/game/store/game.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { GameChanges } from '../../../../backend/src/model/GameTypes';
 import { GameInfoPage } from 'features/game/components/GameInfoPage';
 import { GamePlayersPage } from 'features/game/components/GamePlayersPage';
 import { GameTitlePage } from 'features/game/components/GameTitlePage';
 import { MatchIdentifiable } from 'model/MatchIdentifiable';
 import { Page } from 'components/Page/Page';
-import { GameChanges } from '../../../../backend/src/model/GameTypes';
 
 const GamePage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();
@@ -31,6 +31,9 @@ const GamePage = (props: MatchIdentifiable) => {
         gameState={game?.gameState}
         registrationId={game?.registrationId}
         startGame={() => dispatch(startGame())}
+        changePassword={() => {}}
+        // TODO: реализовать установку / смену паролья
+        // TODO: реализовать ввод паролья для логина, если он установлен
       />
       <GameInfoPage
         gameState={game?.gameState}
@@ -38,6 +41,7 @@ const GamePage = (props: MatchIdentifiable) => {
         description={game?.description}
         change={(changes: GameChanges) => dispatch(changeGame(changes))}
         updateGame={() => dispatch(updateGame())}
+        // TODO: реализовать участие админа в игре
         play={() => 2 + 2}
       />
       <GamePlayersPage players={game?.players} />

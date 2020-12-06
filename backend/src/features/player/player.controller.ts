@@ -1,10 +1,11 @@
 import { Body, Controller, Get, Headers, Param, Post, Put } from '@nestjs/common';
+import { PlayerId, PlayerPassword } from '../../model/PlayerTypes';
 
+import { ChangePlayerPasswordMessage } from '../../model/ChangePlayerPasswordMessage';
+import GameDto from '../../model/GameDto';
+import PlayerDto from '../../model/PlayerDto';
 import { PlayerService } from './player.service';
 import { RegistrationId } from '../../model/GameTypes';
-import { PlayerId, PlayerPassword } from '../../model/PlayerTypes';
-import { ChangePlayerPasswordMessage } from '../../model/ChangePlayerPasswordMessage';
-import PlayerDto from '../../model/PlayerDto';
 
 @Controller('/api/player')
 export class PlayerController {
@@ -15,12 +16,20 @@ export class PlayerController {
     return await this.service.create(id);
   }
 
-  @Put('/:id')
+  @Put('/:id/changePassword')
   async changePassword(
     @Param('id') id: PlayerId,
     @Body('password') changePasswordMessage: ChangePlayerPasswordMessage,
   ): Promise<PlayerDto> {
     return this.service.changePassword(id, changePasswordMessage);
+  }
+
+  @Get('/:id/game')
+  async getGameInfo(
+    @Param('id') id: PlayerId,
+    @Headers('password') password: PlayerPassword,
+  ): Promise<GameDto> {
+    return await this.service.getGameInfo(id, password);
   }
 
   @Get('/:id')

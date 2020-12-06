@@ -1,10 +1,10 @@
+import { GameChanges, GameId } from '../../../../../backend/src/model/GameTypes';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import fetch, { fetchAction } from 'utils/fetch';
 
-import { GameChanges, GameId } from '../../../../../backend/src/model/GameTypes';
-import { RootState } from 'store';
-import { LoadingState } from '../../../../../backend/src/model/LoadingState';
 import { GameVo } from '../../../model/GameVo';
+import { LoadingState } from '../../../../../backend/src/model/LoadingState';
+import { RootState } from 'store';
 
 export interface State {
   loadingState: LoadingState;

@@ -6,6 +6,7 @@ import Player, {
   PlayerTaboo,
   PlayerWish,
 } from '../../../backend/src/model/PlayerTypes';
+
 import Game from '../../../backend/src/model/GameTypes';
 
 export class PlayerVo implements Player {

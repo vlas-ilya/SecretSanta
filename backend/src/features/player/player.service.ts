@@ -10,6 +10,7 @@ import PlayerDto from '../../model/PlayerDto';
 import { PlayerStorage } from './player.storage';
 import { RegistrationId } from '../../model/GameTypes';
 import { throwIfTrue } from '../../utils/thorw-if-true';
+import GameDto from '../../model/GameDto';
 
 @Injectable()
 export class PlayerService {
@@ -36,6 +37,22 @@ export class PlayerService {
     throwIfTrue(!player, new NotFoundException('PLAYER_NOT_FOUND'));
     PlayerService.checkPassword(player, password);
     return player;
+  }
+
+  async getGameInfo(id: PlayerId, password: PlayerPassword): Promise<GameDto> {
+    const player = await this.storage.find(id);
+    throwIfTrue(!player, new NotFoundException('PLAYER_NOT_FOUND'));
+    PlayerService.checkPassword(player, password);
+
+    const persisted = await this.gameStorage.findByPlayerId(id);
+    throwIfTrue(!persisted, new NotFoundException('GAME_NOT_FOUND'));
+
+    const game = new GameDto();
+    game.title = persisted.title;
+    game.description = persisted.description;
+    game.gameState = persisted.gameState;
+
+    return game;
   }
 
   async update(player: PlayerDto, password: PlayerPassword): Promise<PlayerDto> {

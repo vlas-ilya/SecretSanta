@@ -25,8 +25,9 @@ export class GameService {
     );
   }
 
-  async create(): Promise<GameDto> {
-    return await this.storage.create();
+  async create(): Promise<GameId> {
+    const game = await this.storage.create();
+    return game.id;
   }
 
   async get(id: GameId, password: GamePassword): Promise<GameDto> {
@@ -42,6 +43,7 @@ export class GameService {
     throwIfTrue(persisted.gameState !== 'INIT', new InvalidStateException('INVALID_GAME_STATE'));
     GameService.checkPassword(persisted, password);
 
+    // TODO: фильтровать только активных игроков
     setPlayersTarget(persisted.players);
 
     for (const player of persisted.players) {

@@ -1,3 +1,4 @@
+import { GameState, RegistrationId } from '../../../../../backend/src/model/GameTypes';
 
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
@@ -5,12 +6,12 @@ import { FormInput } from 'components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
 import React from 'react';
 import { Text } from 'components/Text/Text';
-import { GameState, RegistrationId } from '../../../../../backend/src/model/GameTypes';
 
 export type GameTitleProps = {
   gameState?: GameState;
   registrationId?: RegistrationId;
   startGame: () => void;
+  changePassword: () => void;
 };
 
 export const GameTitlePage = (props: GameTitleProps) => (
@@ -30,13 +31,22 @@ export const GameTitlePage = (props: GameTitleProps) => (
             name="registrationId"
             readOnly
             label="Ссылка для регистрации"
+            // TODO: сделать копирование ссылки
             value={`${window.location.origin}/player/registration/${props.registrationId}`}
           />
         </FormItem>
         <FormItem>
           <Text type="p">После регистрации всех игроков нажмите кнопку «Начать игру»</Text>
         </FormItem>
-        <FormButton onClick={props.startGame}>Начать игру</FormButton>
+        <div className="actions">
+          <FormButton className="grey" onClick={props.changePassword}>
+            Установить пароль
+          </FormButton>
+          <FormButton onClick={props.startGame}>Начать игру</FormButton>
+        </div>
+        <FormItem>
+          <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
+        </FormItem>
       </>
     )}
   </Form>

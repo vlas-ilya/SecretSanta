@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import fetch, { fetchAction } from 'utils/fetch';
 
-import { RootState } from 'store';
 import { LoadingState } from '../../../../../backend/src/model/LoadingState';
 import { PlayerId } from '../../../../../backend/src/model/PlayerTypes';
 import { RegistrationId } from '../../../../../backend/src/model/GameTypes';
+import { RootState } from 'store';
 
 export interface State {
   loadingState: LoadingState;

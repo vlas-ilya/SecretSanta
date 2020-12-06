@@ -1,3 +1,9 @@
+import {
+  GameChanges,
+  GameDescription,
+  GameState,
+  GameTitle,
+} from '../../../../../backend/src/model/GameTypes';
 
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
@@ -5,8 +11,6 @@ import { FormInput } from 'components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
 import React from 'react';
 import { Text } from 'components/Text/Text';
-import { updateGame } from 'features/game/store/game.reducer';
-import { GameChanges, GameDescription, GameState, GameTitle } from '../../../../../backend/src/model/GameTypes';
 
 export type GameInfoProps = {
   gameState?: GameState;
@@ -49,7 +53,7 @@ export const GameInfoPage = (props: GameInfoProps) => (
       <FormButton className="grey" onClick={props.play}>
         Участвовать
       </FormButton>
-      <FormButton onClick={updateGame}>Сохранить</FormButton>
+      <FormButton onClick={props.updateGame}>Сохранить</FormButton>
     </div>
   </Form>
 );

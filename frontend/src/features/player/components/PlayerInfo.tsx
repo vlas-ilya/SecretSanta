@@ -18,6 +18,7 @@ export type PlayerInfoProps = {
   wish?: PlayerWish;
   taboo?: PlayerTaboo;
   change: (changes: PlayerChanges) => {};
+  changePassword: () => void;
   updatePlayer: () => {};
 };
 
@@ -50,8 +51,14 @@ export const PlayerInfo = (props: PlayerInfoProps) => (
         onChange={(value) => props.change({ field: 'taboo', value })}
       />
     </FormItem>
-    <FormItem>
+    <div className="actions">
+      <FormButton className="grey" onClick={props.changePassword}>
+        Установить пароль
+      </FormButton>
       <FormButton onClick={props.updatePlayer}>Сохранить</FormButton>
+    </div>
+    <FormItem>
+      <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
     </FormItem>
   </Form>
 );

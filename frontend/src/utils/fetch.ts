@@ -2,8 +2,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import { RootState } from '../store';
 import { LoadingState } from '../../../backend/src/model/LoadingState';
+import { RootState } from '../store';
 
 export interface Options extends AxiosRequestConfig {
   token?: string;

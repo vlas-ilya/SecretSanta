@@ -1,21 +1,23 @@
 import { Body, Controller, Delete, Get, Headers, Param, Post, Put } from '@nestjs/common';
 import { GameId, GamePassword } from '../../model/GameTypes';
 
+import { ChangeGamePasswordMessage } from '../../model/ChangeGamePasswordMessage';
+import GameDto from '../../model/GameDto';
 import { GameService } from './game.service';
 import { PlayerId } from '../../model/PlayerTypes';
-import GameDto from '../../model/GameDto';
-import { ChangeGamePasswordMessage } from '../../model/ChangeGamePasswordMessage';
 
 @Controller('/api/game')
 export class GameController {
+  // TODO: добавить регистрацию админа икры как игрока
+
   constructor(private readonly service: GameService) {}
 
   @Post()
-  async create(): Promise<GameDto> {
+  async create(): Promise<GameId> {
     return this.service.create();
   }
 
-  @Put('/:id')
+  @Put('/:id/changePassword')
   async changePassword(
     @Param('id') id: GameId,
     @Body('password') changePasswordMessage: ChangeGamePasswordMessage,
@@ -24,7 +26,11 @@ export class GameController {
   }
 
   @Get('/:id')
-  async get(@Param('id') id: GameId, @Headers('password') password: GamePassword): Promise<GameDto> {
+  async get(
+    @Param('id') id: GameId,
+    @Headers('password') password: GamePassword,
+  ): Promise<GameDto> {
+    // TODO: возвращать только активных игроков
     return await this.service.get(id, password);
   }
 
