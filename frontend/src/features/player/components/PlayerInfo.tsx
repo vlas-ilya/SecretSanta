@@ -1,10 +1,14 @@
-import { PlayerDontWish, PlayerName, PlayerWish } from 'model/Types';
+import {
+  PlayerChanges,
+  PlayerName,
+  PlayerTaboo,
+  PlayerWish,
+} from '../../../../../backend/src/model/PlayerTypes';
 
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
 import { FormInput } from 'components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
-import { PlayerChanges } from 'model/Player';
 import React from 'react';
 import { Text } from 'components/Text/Text';
 import { Textarea } from 'components/Textarea/Textarea';
@@ -12,7 +16,7 @@ import { Textarea } from 'components/Textarea/Textarea';
 export type PlayerInfoProps = {
   name?: PlayerName;
   wish?: PlayerWish;
-  dontWish?: PlayerDontWish;
+  taboo?: PlayerTaboo;
   change: (changes: PlayerChanges) => {};
   updatePlayer: () => {};
 };
@@ -42,8 +46,8 @@ export const PlayerInfo = (props: PlayerInfoProps) => (
       <Textarea
         name="dontWish"
         label="Не дарить ни в коем случае"
-        value={props.dontWish}
-        onChange={(value) => props.change({ field: 'dontWish', value })}
+        value={props.taboo}
+        onChange={(value) => props.change({ field: 'taboo', value })}
       />
     </FormItem>
     <FormItem>

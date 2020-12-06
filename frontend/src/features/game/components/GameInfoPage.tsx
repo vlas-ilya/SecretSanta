@@ -1,18 +1,17 @@
-import { GameInfo, GameName, GameState } from 'model/Types';
 
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
 import { FormInput } from 'components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
-import { GameChanges } from '../../../model/Game';
 import React from 'react';
 import { Text } from 'components/Text/Text';
 import { updateGame } from 'features/game/store/game.reducer';
+import { GameChanges, GameDescription, GameState, GameTitle } from '../../../../../backend/src/model/GameTypes';
 
 export type GameInfoProps = {
   gameState?: GameState;
-  name?: GameName;
-  info?: GameInfo;
+  title?: GameTitle;
+  description?: GameDescription;
   change: (changes: GameChanges) => {};
   updateGame: () => {};
   play: () => {};
@@ -28,8 +27,8 @@ export const GameInfoPage = (props: GameInfoProps) => (
         name="name"
         disabled={props.gameState === 'RUN'}
         label="Название игры"
-        onChange={(value: GameName) => props.change({ field: 'name', value })}
-        value={props.name}
+        onChange={(value: GameTitle) => props.change({ field: 'title', value })}
+        value={props.title}
       />
     </FormItem>
     <FormItem>
@@ -37,8 +36,8 @@ export const GameInfoPage = (props: GameInfoProps) => (
         name="info"
         disabled={props.gameState === 'RUN'}
         label="Информация об игре"
-        onChange={(value: GameInfo) => props.change({ field: 'info', value })}
-        value={props.info}
+        onChange={(value: GameDescription) => props.change({ field: 'description', value })}
+        value={props.description}
       />
     </FormItem>
     <FormItem>

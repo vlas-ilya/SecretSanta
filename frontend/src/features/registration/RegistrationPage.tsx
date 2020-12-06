@@ -6,7 +6,7 @@ import {
 } from 'features/registration/store/registration.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { MatchIdentifiable } from 'model/Types';
+import { MatchIdentifiable } from 'model/MatchIdentifiable';
 import { Page } from 'components/Page/Page';
 import { Redirect } from 'react-router-dom';
 

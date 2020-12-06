@@ -1,7 +1,7 @@
 import './styles.scss';
 
-import TextareaAutosize from 'react-textarea-autosize';
 import React from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import classNames from 'classnames';
 
 export type TextareaProps = {

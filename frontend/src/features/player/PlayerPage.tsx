@@ -8,10 +8,10 @@ import {
 } from 'features/player/store/player.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { MatchIdentifiable } from 'model/Types';
+import { MatchIdentifiable } from 'model/MatchIdentifiable';
 import { Page } from 'components/Page/Page';
-import { PlayerChanges } from 'model/Player';
 import { PlayerInfo } from 'features/player/components/PlayerInfo';
+import { PlayerChanges } from '../../../../backend/src/model/PlayerTypes';
 
 const PlayerPage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const PlayerPage = (props: MatchIdentifiable) => {
       <PlayerInfo
         name={player?.name}
         wish={player?.wish}
-        dontWish={player?.dontWish}
+        taboo={player?.taboo}
         change={(changes: PlayerChanges) => dispatch(changePlayer(changes))}
         updatePlayer={() => dispatch(updatePlayer())}
       />

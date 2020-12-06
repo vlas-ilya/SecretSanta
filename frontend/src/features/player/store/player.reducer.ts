@@ -1,18 +1,19 @@
-import { LoadingState, PlayerId } from 'model/Types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Player, PlayerChanges } from 'model/Player';
 import fetch, { fetchAction } from 'utils/fetch';
 
 import { RootState } from 'store';
+import { LoadingState } from '../../../../../backend/src/model/LoadingState';
+import { PlayerChanges, PlayerId } from '../../../../../backend/src/model/PlayerTypes';
+import { PlayerVo } from '../../../model/PlayerVo';
 
 export interface State {
   loadingState: LoadingState;
-  player: Player;
+  player: PlayerVo;
 }
 
 export const initialState: State = {
   loadingState: 'INIT',
-  player: new Player(),
+  player: new PlayerVo(),
 };
 
 export const player = createSlice({
@@ -22,7 +23,7 @@ export const player = createSlice({
     changeLoadingState: (state: State, action: PayloadAction<LoadingState>) => {
       state.loadingState = action.payload;
     },
-    changePlayer: (state: State, action: PayloadAction<Player | PlayerChanges>) => {
+    changePlayer: (state: State, action: PayloadAction<PlayerVo | PlayerChanges>) => {
       if ('field' in action.payload && 'value' in action.payload) {
         state.player[action.payload.field] = action.payload.value;
       } else {

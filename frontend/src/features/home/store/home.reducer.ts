@@ -1,8 +1,9 @@
-import { GameId, LoadingState } from 'model/Types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import fetch, { fetchAction } from 'utils/fetch';
 
 import { RootState } from 'store';
+import { GameId } from '../../../../../backend/src/model/GameTypes';
+import { LoadingState } from '../../../../../backend/src/model/LoadingState';
 
 export interface State {
   loadingState: LoadingState;

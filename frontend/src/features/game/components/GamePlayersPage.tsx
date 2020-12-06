@@ -2,12 +2,12 @@ import { Form } from 'components/Form/Form';
 import { FormItem } from 'components/FormItem/FormItem';
 import { List } from 'components/List/List';
 import { ListItem } from 'components/List/ListItem';
-import { Player } from 'model/Player';
+import { PlayerVo } from 'model/PlayerVo';
 import React from 'react';
 import { Text } from 'components/Text/Text';
 
 export type GamePlayersPageProps = {
-  players?: Player[];
+  players?: PlayerVo[];
 };
 
 export const GamePlayersPage = (props: GamePlayersPageProps) => (

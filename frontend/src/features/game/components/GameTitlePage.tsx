@@ -1,4 +1,3 @@
-import { GameState, RegistrationId } from 'model/Types';
 
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
@@ -6,6 +5,7 @@ import { FormInput } from 'components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
 import React from 'react';
 import { Text } from 'components/Text/Text';
+import { GameState, RegistrationId } from '../../../../../backend/src/model/GameTypes';
 
 export type GameTitleProps = {
   gameState?: GameState;

@@ -9,12 +9,12 @@ import {
 } from 'features/game/store/game.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GameChanges } from '../../model/Game';
 import { GameInfoPage } from 'features/game/components/GameInfoPage';
 import { GamePlayersPage } from 'features/game/components/GamePlayersPage';
 import { GameTitlePage } from 'features/game/components/GameTitlePage';
-import { MatchIdentifiable } from 'model/Types';
+import { MatchIdentifiable } from 'model/MatchIdentifiable';
 import { Page } from 'components/Page/Page';
+import { GameChanges } from '../../../../backend/src/model/GameTypes';
 
 const GamePage = (props: MatchIdentifiable) => {
   const dispatch = useDispatch();
@@ -34,8 +34,8 @@ const GamePage = (props: MatchIdentifiable) => {
       />
       <GameInfoPage
         gameState={game?.gameState}
-        name={game?.name}
-        info={game?.info}
+        title={game?.title}
+        description={game?.description}
         change={(changes: GameChanges) => dispatch(changeGame(changes))}
         updateGame={() => dispatch(updateGame())}
         play={() => 2 + 2}

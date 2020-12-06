@@ -3,7 +3,7 @@
   "logging": ["error", "schema"],
   "logger": "simple-console",
   "database": "./db/game.sqlite3",
-  "entities": ["./dist/**/*.entity{.ts,.js}"],
+  "entities": ["./dist/**/model/*{.ts,.js}"],
   "migrationsTableName": "migration_table",
   "migrations": ["./dist/**/migrations/*{.ts,.js}"],
   "migrationsRun": true,

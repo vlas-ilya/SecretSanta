@@ -1,36 +1,32 @@
-import Player, { PlayerId, PlayerPassword } from './player.entity';
-
 import { GameStorage } from '../game/game.storage';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { RegistrationId } from '../game/game.entity';
+import PlayerDto from '../../model/PlayerDto';
+import { PlayerId } from '../../model/PlayerTypes';
+import { RegistrationId } from '../../model/GameTypes';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
 @Injectable()
 export class PlayerStorage {
   constructor(
-    @InjectRepository(Player) private repository: Repository<Player>,
+    @InjectRepository(PlayerDto) private repository: Repository<PlayerDto>,
     private readonly gameStorage: GameStorage,
   ) {}
 
-  async create(
-    registrationId: RegistrationId,
-    password: PlayerPassword,
-  ): Promise<Player> {
+  async create(registrationId: RegistrationId): Promise<PlayerDto> {
     const game = await this.gameStorage.findByRegistrationId(registrationId);
-    const player = new Player();
+    const player = new PlayerDto();
     player.id = v4();
     player.game = game;
-    player.password = password;
     return await this.repository.save(player);
   }
 
-  async find(id: PlayerId): Promise<Player | undefined> {
+  async find(id: PlayerId): Promise<PlayerDto | undefined> {
     return await this.repository.findOne(id);
   }
 
-  async update(player: Player): Promise<Player> {
+  async update(player: PlayerDto): Promise<PlayerDto> {
     const persisted = await this.find(player.id);
 
     persisted.playerState = player.playerState;
@@ -42,7 +38,7 @@ export class PlayerStorage {
     return this.repository.save(persisted);
   }
 
-  async delete(player: Player): Promise<void> {
+  async delete(player: PlayerDto): Promise<void> {
     await this.repository.delete(player);
   }
 }
