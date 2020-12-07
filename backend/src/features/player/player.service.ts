@@ -6,17 +6,17 @@ import IncorrectPasswordException from '../../exceptions/incorrect-password.exce
 import { Injectable } from '@nestjs/common';
 import InvalidStateException from '../../exceptions/invalid-state.exception';
 import NotFoundException from '../../exceptions/not-found.exception';
-import PlayerDto from '../../model/PlayerDto';
+import PlayerEntity from '../../model/PlayerEntity';
 import { PlayerStorage } from './player.storage';
 import { RegistrationId } from '../../model/GameTypes';
 import { throwIfTrue } from '../../utils/thorw-if-true';
-import GameDto from '../../model/GameDto';
+import GameEntity from '../../model/GameEntity';
 
 @Injectable()
 export class PlayerService {
   constructor(private readonly storage: PlayerStorage, private readonly gameStorage: GameStorage) {}
 
-  private static checkPassword(player: PlayerDto, password: PlayerPassword): void {
+  private static checkPassword(player: PlayerEntity, password: PlayerPassword): void {
     throwIfTrue(
       player.password != null && player.password != password,
       new IncorrectPasswordException('INCORRECT_PLAYER_PASSWORD'),
@@ -32,14 +32,14 @@ export class PlayerService {
     return player.id;
   }
 
-  async get(id: PlayerId, password: PlayerPassword): Promise<PlayerDto> {
+  async get(id: PlayerId, password: PlayerPassword): Promise<PlayerEntity> {
     const player = await this.storage.find(id);
     throwIfTrue(!player, new NotFoundException('PLAYER_NOT_FOUND'));
     PlayerService.checkPassword(player, password);
     return player;
   }
 
-  async getGameInfo(id: PlayerId, password: PlayerPassword): Promise<GameDto> {
+  async getGameInfo(id: PlayerId, password: PlayerPassword): Promise<GameEntity> {
     const player = await this.storage.find(id);
     throwIfTrue(!player, new NotFoundException('PLAYER_NOT_FOUND'));
     PlayerService.checkPassword(player, password);
@@ -47,7 +47,7 @@ export class PlayerService {
     const persisted = await this.gameStorage.findByPlayerId(id);
     throwIfTrue(!persisted, new NotFoundException('GAME_NOT_FOUND'));
 
-    const game = new GameDto();
+    const game = new GameEntity();
     game.title = persisted.title;
     game.description = persisted.description;
     game.gameState = persisted.gameState;
@@ -55,7 +55,7 @@ export class PlayerService {
     return game;
   }
 
-  async update(player: PlayerDto, password: PlayerPassword): Promise<PlayerDto> {
+  async update(player: PlayerEntity, password: PlayerPassword): Promise<PlayerEntity> {
     const game = await this.gameStorage.findByPlayerId(player.id);
     const persisted = await this.storage.find(player.id);
     throwIfTrue(!player, new NotFoundException('PLAYER_NOT_FOUND'));
@@ -75,7 +75,7 @@ export class PlayerService {
   async changePassword(
     id: PlayerId,
     changePasswordMessage: ChangePlayerPasswordMessage,
-  ): Promise<PlayerDto> {
+  ): Promise<PlayerEntity> {
     const persisted = await this.storage.find(id);
     throwIfTrue(!persisted, new NotFoundException('PLAYER_NOT_FOUND'));
     PlayerService.checkPassword(persisted, changePasswordMessage.oldPassword);

@@ -8,10 +8,10 @@ import Player, {
   PlayerWish,
 } from './PlayerTypes';
 
-import GameDto from './GameDto';
+import GameEntity from './GameEntity';
 
 @Entity('player')
-export default class PlayerDto implements Player {
+export default class PlayerEntity implements Player {
   @PrimaryGeneratedColumn('uuid')
   id: PlayerId;
 
@@ -33,8 +33,8 @@ export default class PlayerDto implements Player {
   @Column({ nullable: true, default: null })
   targetId: PlayerId;
 
-  @ManyToOne(() => GameDto, (game) => game.players)
-  game: GameDto;
+  @ManyToOne(() => GameEntity, (game) => game.players)
+  game: GameEntity;
 
   @Column({ default: false })
   hasPassword: boolean;

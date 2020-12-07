@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Headers, Param, Post, Put } from '@nestj
 import { GameId, GamePassword } from '../../model/GameTypes';
 
 import { ChangeGamePasswordMessage } from '../../model/ChangeGamePasswordMessage';
-import GameDto from '../../model/GameDto';
+import GameEntity from '../../model/GameEntity';
 import { GameService } from './game.service';
 import { PlayerId } from '../../model/PlayerTypes';
 
@@ -21,7 +21,7 @@ export class GameController {
   async changePassword(
     @Param('id') id: GameId,
     @Body('message') changePasswordMessage: ChangeGamePasswordMessage,
-  ): Promise<GameDto> {
+  ): Promise<GameEntity> {
     return this.service.changePassword(id, changePasswordMessage);
   }
 
@@ -29,7 +29,7 @@ export class GameController {
   async get(
     @Param('id') id: GameId,
     @Headers('password') password: GamePassword,
-  ): Promise<GameDto> {
+  ): Promise<GameEntity> {
     const game = await this.service.get(id, password);
     game.players = game.players.filter((player) => player.playerState === 'ACTIVE');
     return game;
@@ -43,9 +43,9 @@ export class GameController {
   @Put('/:id')
   async update(
     @Param('id') id: PlayerId,
-    @Body() game: GameDto,
+    @Body() game: GameEntity,
     @Headers('password') password: GamePassword,
-  ): Promise<GameDto> {
+  ): Promise<GameEntity> {
     return await this.service.update({ ...game, id: id }, password);
   }
 

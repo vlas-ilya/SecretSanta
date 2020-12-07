@@ -1,6 +1,6 @@
 import { GameId, RegistrationId } from '../../model/GameTypes';
 
-import GameDto from '../../model/GameDto';
+import GameEntity from '../../model/GameEntity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { PlayerId } from '../../model/PlayerTypes';
@@ -9,29 +9,29 @@ import { v4 } from 'uuid';
 
 @Injectable()
 export class GameStorage {
-  constructor(@InjectRepository(GameDto) private repository: Repository<GameDto>) {}
+  constructor(@InjectRepository(GameEntity) private repository: Repository<GameEntity>) {}
 
-  async create(): Promise<GameDto> {
-    const game = new GameDto();
+  async create(): Promise<GameEntity> {
+    const game = new GameEntity();
     game.id = v4();
     game.registrationId = v4();
     return this.repository.save(game);
   }
 
-  async find(id: GameId): Promise<GameDto | undefined> {
+  async find(id: GameId): Promise<GameEntity | undefined> {
     return this.repository.findOne({
       where: { id },
       relations: ['players'],
     });
   }
 
-  async findByRegistrationId(registrationId: RegistrationId): Promise<GameDto | undefined> {
+  async findByRegistrationId(registrationId: RegistrationId): Promise<GameEntity | undefined> {
     return await this.repository.findOne({
       registrationId,
     });
   }
 
-  async findByPlayerId(playerId: PlayerId): Promise<GameDto> {
+  async findByPlayerId(playerId: PlayerId): Promise<GameEntity> {
     return await this.repository
       .createQueryBuilder('game')
       .innerJoin('game.players', 'player')
@@ -39,11 +39,11 @@ export class GameStorage {
       .getOne();
   }
 
-  async delete(game: GameDto): Promise<void> {
+  async delete(game: GameEntity): Promise<void> {
     await this.repository.delete(game);
   }
 
-  async update(persisted: GameDto): Promise<GameDto> {
+  async update(persisted: GameEntity): Promise<GameEntity> {
     return this.repository.save(persisted);
   }
 }

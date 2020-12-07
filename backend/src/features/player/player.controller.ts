@@ -2,8 +2,8 @@ import { Body, Controller, Get, Headers, Param, Post, Put } from '@nestjs/common
 import { PlayerId, PlayerPassword } from '../../model/PlayerTypes';
 
 import { ChangePlayerPasswordMessage } from '../../model/ChangePlayerPasswordMessage';
-import GameDto from '../../model/GameDto';
-import PlayerDto from '../../model/PlayerDto';
+import GameEntity from '../../model/GameEntity';
+import PlayerEntity from '../../model/PlayerEntity';
 import { PlayerService } from './player.service';
 import { RegistrationId } from '../../model/GameTypes';
 
@@ -20,7 +20,7 @@ export class PlayerController {
   async changePassword(
     @Param('id') id: PlayerId,
     @Body('message') changePasswordMessage: ChangePlayerPasswordMessage,
-  ): Promise<PlayerDto> {
+  ): Promise<PlayerEntity> {
     return this.service.changePassword(id, changePasswordMessage);
   }
 
@@ -28,7 +28,7 @@ export class PlayerController {
   async getGameInfo(
     @Param('id') id: PlayerId,
     @Headers('password') password: PlayerPassword,
-  ): Promise<GameDto> {
+  ): Promise<GameEntity> {
     return await this.service.getGameInfo(id, password);
   }
 
@@ -36,16 +36,16 @@ export class PlayerController {
   async get(
     @Param('id') id: PlayerId,
     @Headers('password') password: PlayerPassword,
-  ): Promise<PlayerDto> {
+  ): Promise<PlayerEntity> {
     return await this.service.get(id, password);
   }
 
   @Put('/:id')
   async update(
     @Param('id') id: PlayerId,
-    @Body() player: PlayerDto,
+    @Body() player: PlayerEntity,
     @Headers('password') password: PlayerPassword,
-  ): Promise<PlayerDto> {
+  ): Promise<PlayerEntity> {
     return await this.service.update({ ...player, id: id }, password);
   }
 }

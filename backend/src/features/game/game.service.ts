@@ -1,7 +1,7 @@
 import { GameId, GamePassword } from '../../model/GameTypes';
 
 import { ChangeGamePasswordMessage } from '../../model/ChangeGamePasswordMessage';
-import GameDto from '../../model/GameDto';
+import GameEntity from '../../model/GameEntity';
 import { GameStorage } from './game.storage';
 import IncorrectPasswordException from '../../exceptions/incorrect-password.exception';
 import { Injectable } from '@nestjs/common';
@@ -18,7 +18,7 @@ export class GameService {
     private readonly playerStorage: PlayerStorage,
   ) {}
 
-  private static checkPassword(game: GameDto, password: GamePassword): void {
+  private static checkPassword(game: GameEntity, password: GamePassword): void {
     throwIfTrue(
       game.password != null && game.password != password,
       new IncorrectPasswordException('INCORRECT_GAME_PASSWORD'),
@@ -30,7 +30,7 @@ export class GameService {
     return game.id;
   }
 
-  async get(id: GameId, password: GamePassword): Promise<GameDto> {
+  async get(id: GameId, password: GamePassword): Promise<GameEntity> {
     const game = await this.storage.find(id);
     throwIfTrue(!game, new NotFoundException('GAME_NOT_FOUND'));
     GameService.checkPassword(game, password);
@@ -38,7 +38,7 @@ export class GameService {
   }
 
   async start(id: GameId, password: GamePassword): Promise<void> {
-    const persisted: GameDto = await this.storage.find(id);
+    const persisted: GameEntity = await this.storage.find(id);
     throwIfTrue(!persisted, new NotFoundException('GAME_NOT_FOUND'));
     throwIfTrue(persisted.gameState !== 'INIT', new InvalidStateException('INVALID_GAME_STATE'));
     GameService.checkPassword(persisted, password);
@@ -55,7 +55,7 @@ export class GameService {
     });
   }
 
-  async update(game: GameDto, password: GamePassword): Promise<GameDto> {
+  async update(game: GameEntity, password: GamePassword): Promise<GameEntity> {
     const persisted = await this.storage.find(game.id);
     throwIfTrue(!persisted, new NotFoundException('GAME_NOT_FOUND'));
     throwIfTrue(persisted.gameState !== 'INIT', new InvalidStateException('INVALID_GAME_STATE'));
@@ -81,7 +81,7 @@ export class GameService {
   async changePassword(
     id: GameId,
     changePasswordMessage: ChangeGamePasswordMessage,
-  ): Promise<GameDto> {
+  ): Promise<GameEntity> {
     const persisted = await this.storage.find(id);
     throwIfTrue(!persisted, new NotFoundException('GAME_NOT_FOUND'));
     GameService.checkPassword(persisted, changePasswordMessage.oldPassword);
