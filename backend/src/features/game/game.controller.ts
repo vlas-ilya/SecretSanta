@@ -5,8 +5,10 @@ import { ChangeGamePasswordMessage } from '../../model/ChangeGamePasswordMessage
 import GameEntity from '../../model/GameEntity';
 import { GameService } from './game.service';
 import { PlayerId } from '../../model/PlayerTypes';
+import { ResponseFieldSecurity } from '../../interceptors/security.interceptor';
 
 @Controller('/api/game')
+@ResponseFieldSecurity()
 export class GameController {
   // TODO: добавить регистрацию админа икры как игрока
 
@@ -26,6 +28,7 @@ export class GameController {
   }
 
   @Get('/:id')
+  @ResponseFieldSecurity('players') // сначала вызывается для метода, а потом для класса
   async get(
     @Param('id') id: GameId,
     @Headers('password') password: GamePassword,

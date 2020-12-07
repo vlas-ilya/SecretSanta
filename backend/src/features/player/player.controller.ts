@@ -6,8 +6,10 @@ import GameEntity from '../../model/GameEntity';
 import PlayerEntity from '../../model/PlayerEntity';
 import { PlayerService } from './player.service';
 import { RegistrationId } from '../../model/GameTypes';
+import { ResponseFieldSecurity } from '../../interceptors/security.interceptor';
 
 @Controller('/api/player')
+@ResponseFieldSecurity()
 export class PlayerController {
   constructor(private readonly service: PlayerService) {}
 
