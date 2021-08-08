@@ -106,9 +106,9 @@ export class Game {
     const gameDto = new GameDto();
     gameDto.id = this.id.value;
     gameDto.registrationId = this.registrationId.value;
-    gameDto.title = this.title.value;
-    gameDto.description = this.description.value;
     gameDto.state = this.state;
+    gameDto.title = this.title?.value;
+    gameDto.description = this.description?.value;
     gameDto.password = this.password?.value;
     gameDto.hasPassword = this.password?.value != null;
     gameDto.players = this.players.map((player) => {
@@ -130,7 +130,7 @@ export class Game {
     players.forEach((player, index) => (player.target = targets[index]));
   }
 
-  existCoincidences(targets: Player[], players: Player[]): boolean {
+  private existCoincidences(targets: Player[], players: Player[]): boolean {
     return !!players.find((player, index) => player.id === targets[index].id);
   }
 }

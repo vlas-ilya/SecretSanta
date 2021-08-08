@@ -1,8 +1,10 @@
 import { PlayerPinVo } from '../vo/PlayerVo';
 import {
-  containsOnlyNumbers, inInterval,
+  containsOnlyNumbers,
+  inInterval,
   notNull,
-  PLAYER_PIN_HAS_INCORRECT_FORMAT, PLAYER_PIN_HAS_INCORRECT_LENGTH,
+  PLAYER_PIN_HAS_INCORRECT_FORMAT,
+  PLAYER_PIN_HAS_INCORRECT_LENGTH,
   PLAYER_PIN_IS_NULL,
 } from '../../../../utils/validators';
 import { Interval } from '../../../../utils/classes/Interval';
