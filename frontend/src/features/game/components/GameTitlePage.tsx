@@ -37,7 +37,9 @@ export const GameTitlePage = (props: GameTitleProps) => (
           />
         </FormItem>
         <FormItem>
-          <Text type="p">После регистрации всех игроков нажмите кнопку «Начать игру»</Text>
+          <Text type="p">
+            После регистрации всех игроков нажмите кнопку «Начать игру»
+          </Text>
         </FormItem>
         <div className="actions">
           <FormButton className="grey" onClick={props.changePassword}>

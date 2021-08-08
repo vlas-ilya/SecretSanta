@@ -5,8 +5,8 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  Post,
   Put,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { PlayerChangesVo, PlayerIdVo, PlayerVo } from './model/vo/PlayerVo';
@@ -22,11 +22,14 @@ import { RegistrationIdVo } from '../game/model/vo/GameVo';
 export class PlayerController {
   constructor(private readonly service: PlayerService) {}
 
-  @Post('/register/:id')
-  @HttpCode(HttpStatus.CREATED)
-  async register(@Param('id') registrationId: RegistrationIdVo): Promise<PlayerIdVo> {
+  @Get('/register/:id')
+  @HttpCode(HttpStatus.FOUND)
+  async register(
+    @Res() res,
+    @Param('id') registrationId: RegistrationIdVo,
+  ): Promise<PlayerIdVo> {
     const playerId = await this.service.create(new RegistrationId(registrationId));
-    return playerId.value;
+    return res.redirect(`/player/${playerId.value}`);
   }
 
   @Get('/:id')

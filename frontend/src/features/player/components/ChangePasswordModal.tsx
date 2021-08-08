@@ -10,7 +10,9 @@ export type ChangePasswordModalProps = {
   onClose: () => void;
   changePassword: () => void;
   changePasswordMessage: ChangePlayerPasswordMessageVo;
-  setChangePasswordMessage: (changePasswordMessage: ChangePlayerPasswordMessageVo) => void;
+  setChangePasswordMessage: (
+    changePasswordMessage: ChangePlayerPasswordMessageVo,
+  ) => void;
 };
 
 export const ChangePasswordModal = (props: ChangePasswordModalProps) => (

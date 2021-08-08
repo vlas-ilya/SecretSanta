@@ -40,7 +40,9 @@ export const GameInfoPage = (props: GameInfoProps) => (
         name="info"
         disabled={props.gameState === 'RUN'}
         label="Информация об игре"
-        onChange={(value: GameDescription) => props.change({ field: 'description', value })}
+        onChange={(value: GameDescription) =>
+          props.change({ field: 'description', value })
+        }
         value={props.description}
       />
     </FormItem>

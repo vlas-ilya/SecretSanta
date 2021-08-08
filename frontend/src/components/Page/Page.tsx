@@ -15,7 +15,10 @@ export type PageProps = {
 export const Page = (props: PageProps) => (
   <div className={classNames(props.className, 'page', { loading: props.loading })}>
     <div className="page-wrapper" onScroll={props.onScroll}>
-      <div className="content-wrapper" style={props.width ? { maxWidth: props.width + 'px' } : {}}>
+      <div
+        className="content-wrapper"
+        style={props.width ? { maxWidth: props.width + 'px' } : {}}
+      >
         {props.children}
       </div>
     </div>

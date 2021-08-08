@@ -18,10 +18,20 @@ export const GameInfo = (props: GameInfoProps) => (
       <FormInput name="title" label="Название игры" value={props.game?.title} disabled />
     </FormItem>
     <FormItem>
-      <FormInput name="title" label="Информация об игре" value={props.game?.description} disabled />
+      <FormInput
+        name="title"
+        label="Информация об игре"
+        value={props.game?.description}
+        disabled
+      />
     </FormItem>
     <FormItem>
-      <FormInput name="title" label="Статус игры" value={props.game?.gameState} disabled />
+      <FormInput
+        name="title"
+        label="Статус игры"
+        value={props.game?.gameState}
+        disabled
+      />
     </FormItem>
   </Form>
 );

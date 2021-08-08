@@ -6,4 +6,6 @@ export type FormItemProps = {
   children: ReactNode;
 };
 
-export const FormItem = (props: FormItemProps) => <div className="form-item">{props.children}</div>;
+export const FormItem = (props: FormItemProps) => (
+  <div className="form-item">{props.children}</div>
+);

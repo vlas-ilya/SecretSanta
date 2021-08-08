@@ -41,7 +41,10 @@ export const player = createSlice({
         state.player = action.payload;
       }
     },
-    changePlayerPassword: (state: State, action: PayloadAction<[PlayerId, PlayerPassword]>) => {
+    changePlayerPassword: (
+      state: State,
+      action: PayloadAction<[PlayerId, PlayerPassword]>,
+    ) => {
       localStorage.setItem(`player-id-${action.payload[0]}`, action.payload[1]);
       state.player = {
         ...state.player,
@@ -53,12 +56,8 @@ export const player = createSlice({
 
 export default player.reducer;
 
-export const {
-  changeLoadingState,
-  changePlayer,
-  changeGame,
-  changePlayerPassword,
-} = player.actions;
+export const { changeLoadingState, changePlayer, changeGame, changePlayerPassword } =
+  player.actions;
 
 export const loadGameInfo = (id: PlayerId) =>
   fetchAction(changeLoadingState, async (dispatch) => {
@@ -81,7 +80,9 @@ export const loadPlayerInfo = (id: PlayerId) =>
 export const changePassword = (changePasswordMessage: ChangePlayerPasswordMessage) =>
   fetchAction(changeLoadingState, async (dispatch, state) => {
     const password = localStorage.getItem(`player-id-${state.player.player.id}`);
-    const response = await fetch(`/api/player/${state.player.player.id}/changePassword`).put({
+    const response = await fetch(
+      `/api/player/${state.player.player.id}/changePassword`,
+    ).put({
       data: {
         message: changePasswordMessage,
       },
@@ -89,7 +90,9 @@ export const changePassword = (changePasswordMessage: ChangePlayerPasswordMessag
     });
 
     dispatch(changePlayer(response.data));
-    dispatch(changePlayerPassword([state.player.player.id, changePasswordMessage.newPassword]));
+    dispatch(
+      changePlayerPassword([state.player.player.id, changePasswordMessage.newPassword]),
+    );
   });
 
 export const updatePlayer = () =>

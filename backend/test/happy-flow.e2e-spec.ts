@@ -53,14 +53,14 @@ describe('Happy Flow (e2e)', () => {
     player: PlayerVo;
     accessToken: string;
   }> => {
-    const createPlayerRes = await request(app.getHttpServer()).post(
+    const createPlayerRes = await request(app.getHttpServer()).get(
       `/api/player/register/${game.game.registrationId}`,
     );
-    expect(createPlayerRes.status).toBe(201);
-    const accessToken = await login(app, createPlayerRes.text);
+    expect(createPlayerRes.status).toBe(302);
+    const accessToken = await login(app, createPlayerRes.text.substr(30));
 
     const playerRes = await request(app.getHttpServer())
-      .get(`/api/player/${createPlayerRes.text}`)
+      .get(`/api/player/${createPlayerRes.text.substr(30)}`)
       .set('cookie', `auth-cookie=${accessToken}`);
 
     expect(playerRes.status).toBe(200);

@@ -1,4 +1,8 @@
-import { GameChanges, GameId, GamePassword } from '../../../../../backend/src/model/GameTypes';
+import {
+  GameChanges,
+  GameId,
+  GamePassword,
+} from '../../../../../backend/src/model/GameTypes';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import fetch, { fetchAction } from 'utils/fetch';
 

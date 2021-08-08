@@ -27,7 +27,13 @@ export default function Modal(props: ModalProps) {
         {props.title && (
           <div className="modal-title">
             <h2>{props.title}</h2>
-            <img className="close" role="button" onClick={props.onClose} src={close} alt="close" />
+            <img
+              className="close"
+              role="button"
+              onClick={props.onClose}
+              src={close}
+              alt="close"
+            />
           </div>
         )}
         <div className={classNames('modal-body', { 'no-padding': props.noPadding })}>

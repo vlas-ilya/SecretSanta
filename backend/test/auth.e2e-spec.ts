@@ -62,10 +62,11 @@ describe('AuthController (e2e)', () => {
       ?.split(';')?.[0]
       .split('auth-cookie=')?.[1];
 
-    const checkSessionRes = await request(app.getHttpServer()).post(`/auth/check_session`)
+    const checkSessionRes = await request(app.getHttpServer())
+      .post(`/auth/check_session`)
       .set('cookie', `auth-cookie=${accessToken}`);
 
     expect(checkSessionRes.status).toBe(200);
-    expect(checkSessionRes.text).toBe("true");
+    expect(checkSessionRes.text).toBe('true');
   }, 90000);
 });

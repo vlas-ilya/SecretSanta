@@ -30,17 +30,20 @@ const fetch = (url: string) => ({
   delete: (options: Options = {}) => _fetch(url, { ...options, method: 'DELETE' }),
 });
 
-export const fetchAction = (
-  changeLoadingState: ActionCreatorWithPayload<LoadingState>,
-  action: (dispatch: Dispatch, state: RootState) => Promise<void>,
-) => async (dispatch: Dispatch, getState: Function) => {
-  try {
-    changeLoadingState && dispatch(changeLoadingState('LOADING'));
-    await action(dispatch, getState());
-    changeLoadingState && dispatch(changeLoadingState('SUCCESS'));
-  } catch (e) {
-    changeLoadingState && dispatch(changeLoadingState(['ERROR', e.response?.data?.message]));
-  }
-};
+export const fetchAction =
+  (
+    changeLoadingState: ActionCreatorWithPayload<LoadingState>,
+    action: (dispatch: Dispatch, state: RootState) => Promise<void>,
+  ) =>
+  async (dispatch: Dispatch, getState: Function) => {
+    try {
+      changeLoadingState && dispatch(changeLoadingState('LOADING'));
+      await action(dispatch, getState());
+      changeLoadingState && dispatch(changeLoadingState('SUCCESS'));
+    } catch (e) {
+      changeLoadingState &&
+        dispatch(changeLoadingState(['ERROR', e.response?.data?.message]));
+    }
+  };
 
 export default fetch;
