@@ -1,3 +1,0 @@
-GET /api/game/7621a8f9-1af1-425c-ac01-c374a88b1248/start HTTP/1.1
-Host: localhost:8080
-password: 111

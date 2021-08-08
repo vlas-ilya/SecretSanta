@@ -1,15 +1,15 @@
 import { GameController } from './game.controller';
+import { GameDto } from './model/dto/GameDto';
 import { GameService } from './game.service';
 import { GameStorage } from './game.storage';
-import { Module } from '@nestjs/common';
-import { PlayerStorage } from '../player/player.storage';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import GameEntity from '../../model/GameEntity';
-import PlayerEntity from '../../model/PlayerEntity';
 
+@Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([GameEntity]), TypeOrmModule.forFeature([PlayerEntity])],
+  imports: [TypeOrmModule.forFeature([GameDto])],
   controllers: [GameController],
-  providers: [GameService, GameStorage, PlayerStorage],
+  providers: [GameService, GameStorage],
+  exports: [GameStorage],
 })
 export class GameModule {}

@@ -1,53 +1,51 @@
-import { Body, Controller, Get, Headers, Param, Post, Put } from '@nestjs/common';
-import { PlayerId, PlayerPassword } from '../../model/PlayerTypes';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import { PlayerChangesVo, PlayerIdVo, PlayerVo } from './model/vo/PlayerVo';
 
-import { ChangePlayerPasswordMessage } from '../../model/ChangePlayerPasswordMessage';
-import GameEntity from '../../model/GameEntity';
-import PlayerEntity from '../../model/PlayerEntity';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { PlayerChanges } from './model/do/PlayerChanges';
+import { PlayerId } from './model/do/PlayerId';
 import { PlayerService } from './player.service';
-import { RegistrationId } from '../../model/GameTypes';
-import { ResponseFieldSecurity } from '../../interceptors/security.interceptor';
+import { RegistrationId } from '../game/model/do/RegistrationId';
+import { RegistrationIdVo } from '../game/model/vo/GameVo';
 
 @Controller('/api/player')
-@ResponseFieldSecurity()
 export class PlayerController {
   constructor(private readonly service: PlayerService) {}
 
   @Post('/register/:id')
-  async register(@Param('id') id: RegistrationId): Promise<PlayerId> {
-    return await this.service.create(id);
-  }
-
-  @Put('/:id/changePassword')
-  async changePassword(
-    @Param('id') id: PlayerId,
-    @Body('message') changePasswordMessage: ChangePlayerPasswordMessage,
-  ): Promise<PlayerEntity> {
-    return this.service.changePassword(id, changePasswordMessage);
-  }
-
-  @Get('/:id/game')
-  async getGameInfo(
-    @Param('id') id: PlayerId,
-    @Headers('password') password: PlayerPassword,
-  ): Promise<GameEntity> {
-    return await this.service.getGameInfo(id, password);
+  @HttpCode(HttpStatus.CREATED)
+  async register(@Param('id') registrationId: RegistrationIdVo): Promise<PlayerIdVo> {
+    const playerId = await this.service.create(new RegistrationId(registrationId));
+    return playerId.value;
   }
 
   @Get('/:id')
-  async get(
-    @Param('id') id: PlayerId,
-    @Headers('password') password: PlayerPassword,
-  ): Promise<PlayerEntity> {
-    return await this.service.get(id, password);
+  @UseGuards(JwtAuthGuard)
+  async get(@Param('id') id: PlayerIdVo): Promise<PlayerVo> {
+    const player = await this.service.get(new PlayerId(id));
+    return player.toVo();
   }
 
   @Put('/:id')
+  @UseGuards(JwtAuthGuard)
   async update(
-    @Param('id') id: PlayerId,
-    @Body() player: PlayerEntity,
-    @Headers('password') password: PlayerPassword,
-  ): Promise<PlayerEntity> {
-    return await this.service.update({ ...player, id: id }, password);
+    @Param('id') id: PlayerIdVo,
+    @Body() request: PlayerChangesVo,
+  ): Promise<PlayerVo> {
+    const player = await this.service.update(
+      new PlayerId(id),
+      new PlayerChanges(request),
+    );
+    return player.toVo();
   }
 }

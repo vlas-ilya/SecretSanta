@@ -3,12 +3,15 @@
   "logging": ["error", "schema"],
   "logger": "simple-console",
   "database": "./db/game.sqlite3",
-  "entities": ["./dist/**/model/*{.ts,.js}"],
+  "entities": [
+    "./dist/features/game/model/dto/*{.ts,.js}",
+    "./dist/features/player/model/dto/*{.ts,.js}"
+  ],
   "migrationsTableName": "migration_table",
   "migrations": ["./dist/**/migrations/*{.ts,.js}"],
   "migrationsRun": true,
   "cli": {
     "migrationsDir": "./dist/**/migrations/"
   },
-  "synchronize": false
+  "synchronize": true
 }

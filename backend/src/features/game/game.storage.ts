@@ -1,49 +1,54 @@
-import { GameId, RegistrationId } from '../../model/GameTypes';
-
-import GameEntity from '../../model/GameEntity';
+import { Game } from './model/do/Game';
+import { GameDto } from './model/dto/GameDto';
+import { GameId } from './model/do/GameId';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { PlayerId } from '../../model/PlayerTypes';
+import { RegistrationId } from './model/do/RegistrationId';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
+import { GameVo } from './model/vo/GameVo';
+import { GameState } from './model/do/GameState';
 
 @Injectable()
 export class GameStorage {
-  constructor(@InjectRepository(GameEntity) private repository: Repository<GameEntity>) {}
+  constructor(@InjectRepository(GameDto) private repository: Repository<GameDto>) {}
 
-  async create(): Promise<GameEntity> {
-    const game = new GameEntity();
+  async create(): Promise<Game> {
+    const game = new GameDto();
     game.id = v4();
     game.registrationId = v4();
-    return this.repository.save(game);
+    game.state = GameState.INIT;
+    const persisted = await this.repository.save(game);
+    return Game.fromDto(persisted);
   }
 
-  async find(id: GameId): Promise<GameEntity | undefined> {
-    return this.repository.findOne({
-      where: { id },
+  async find(id: GameId): Promise<Game | undefined> {
+    const persisted: GameDto = await this.repository.findOne({
+      where: { id: id.value },
       relations: ['players'],
     });
+    if (!persisted) {
+      return null;
+    }
+    return Game.fromDto(persisted);
   }
 
-  async findByRegistrationId(registrationId: RegistrationId): Promise<GameEntity | undefined> {
-    return await this.repository.findOne({
-      registrationId,
+  async findByRegistrationId(registrationId: RegistrationId): Promise<Game | undefined> {
+    const persisted: GameDto = await this.repository.findOne({
+      registrationId: registrationId.value,
     });
+    if (!persisted) {
+      return null;
+    }
+    return Game.fromDto(persisted);
   }
 
-  async findByPlayerId(playerId: PlayerId): Promise<GameEntity> {
-    return await this.repository
-      .createQueryBuilder('game')
-      .innerJoin('game.players', 'player')
-      .where('player.id = :playerId', { playerId })
-      .getOne();
+  async delete(game: Game): Promise<void> {
+    await this.repository.delete(game.toDto());
   }
 
-  async delete(game: GameEntity): Promise<void> {
-    await this.repository.delete(game);
-  }
-
-  async update(persisted: GameEntity): Promise<GameEntity> {
-    return this.repository.save(persisted);
+  async update(game: Game): Promise<Game> {
+    const persisted: GameDto = await this.repository.save(game.toDto());
+    return Game.fromDto(persisted);
   }
 }

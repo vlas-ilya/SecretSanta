@@ -1,36 +1,44 @@
-import { GameStorage } from '../game/game.storage';
+import { Game } from '../game/model/do/Game';
+import { GameDto } from '../game/model/dto/GameDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import PlayerEntity from '../../model/PlayerEntity';
-import { PlayerId } from '../../model/PlayerTypes';
-import { RegistrationId } from '../../model/GameTypes';
+import { Player } from './model/do/Player';
+import { PlayerDto } from './model/dto/PlayerDto';
+import { PlayerId } from './model/do/PlayerId';
+import { RegistrationId } from '../game/model/do/RegistrationId';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
 @Injectable()
 export class PlayerStorage {
-  constructor(
-    @InjectRepository(PlayerEntity) private repository: Repository<PlayerEntity>,
-    private readonly gameStorage: GameStorage,
-  ) {}
+  constructor(@InjectRepository(PlayerDto) private repository: Repository<PlayerDto>) {}
 
-  async create(registrationId: RegistrationId): Promise<PlayerEntity> {
-    const game = await this.gameStorage.findByRegistrationId(registrationId);
-    const player = new PlayerEntity();
+  async create(registrationId: RegistrationId, game: Game): Promise<Player> {
+    const player = new PlayerDto();
     player.id = v4();
-    player.game = game;
-    return await this.repository.save(player);
+    player.game = new GameDto();
+    player.game.id = game.id.value;
+    const persisted = await this.repository.save(player);
+    return Player.fromDto(persisted, game);
   }
 
-  async find(id: PlayerId): Promise<PlayerEntity | undefined> {
-    return await this.repository.findOne(id);
+  async find(id: PlayerId): Promise<Player | undefined> {
+    const persisted = await this.repository.findOne({
+      where: { id: id.value },
+      relations: ['game', 'target'],
+    });
+    if (!persisted) {
+      return null;
+    }
+    return Player.fromDto(persisted, Game.fromDto(persisted.game));
   }
 
-  async update(player: PlayerEntity): Promise<PlayerEntity> {
-    return this.repository.save(player);
+  async update(player: Player): Promise<Player> {
+    await this.repository.save(player.toDto());
+    return this.find(player.id);
   }
 
-  async delete(player: PlayerEntity): Promise<void> {
-    await this.repository.delete(player);
+  async delete(player: Player): Promise<void> {
+    await this.repository.delete(player.toDto());
   }
 }

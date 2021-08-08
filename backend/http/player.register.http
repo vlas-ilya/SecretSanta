@@ -1,7 +1,0 @@
-POST /api/player/register/c5e05c38-8ffc-43d1-bbce-eead2bca8d26 HTTP/1.1
-Host: localhost:8080
-Content-Type: application/json
-
-{
-  "password": "222"
-}
