@@ -16,6 +16,7 @@ import { PlayerTaboo } from './PlayerTaboo';
 import { PlayerVo } from '../vo/PlayerVo';
 import { PlayerWish } from './PlayerWish';
 import { TargetVo } from '../vo/TargetVo';
+import { ifExist } from '../../../../utils/ifExist';
 
 export class Player {
   constructor(
@@ -99,20 +100,23 @@ export class Player {
       new PlayerId(playerDto.id),
       playerDto.state as PlayerState,
       game,
-      playerDto.name && new PlayerName(playerDto.name),
-      playerDto.password && new PlayerPassword(playerDto.password),
-      playerDto.wish && new PlayerWish(playerDto.wish),
-      playerDto.taboo && new PlayerTaboo(playerDto.taboo),
-      playerDto.target &&
-        new Player(
-          new PlayerId(playerDto.target.id),
-          playerDto.target.state as PlayerState,
-          game,
-          playerDto.target.name && new PlayerName(playerDto.target.name),
-          null,
-          playerDto.target.wish && new PlayerWish(playerDto.target.wish),
-          playerDto.target.taboo && new PlayerTaboo(playerDto.target.taboo),
-        ),
+      ifExist(playerDto.name, (name) => new PlayerName(name)),
+      ifExist(playerDto.password, (password) => new PlayerPassword(password)),
+      ifExist(playerDto.wish, (wish) => new PlayerWish(wish)),
+      ifExist(playerDto.taboo, (taboo) => new PlayerTaboo(taboo)),
+      ifExist(
+        playerDto.target,
+        (target) =>
+          new Player(
+            new PlayerId(target.id),
+            target.state as PlayerState,
+            game,
+            ifExist(target.name, (name) => new PlayerName(name)),
+            null,
+            ifExist(target.wish, (wish) => new PlayerWish(wish)),
+            ifExist(target.taboo, (taboo) => new PlayerTaboo(taboo)),
+          ),
+      ),
     );
   }
 

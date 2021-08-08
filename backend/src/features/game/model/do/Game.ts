@@ -17,6 +17,7 @@ import { Player } from '../../../player/model/do/Player';
 import { PlayerDto } from '../../../player/model/dto/PlayerDto';
 import { PlayerState } from '../../../player/model/do/PlayerState';
 import { RegistrationId } from './RegistrationId';
+import { ifExist } from '../../../../utils/ifExist';
 
 export class Game {
   private _players: Player[] = [];
@@ -90,9 +91,9 @@ export class Game {
       new GameId(gameDto.id),
       new RegistrationId(gameDto.registrationId),
       gameDto.state as GameState,
-      gameDto.title && new GameTitle(gameDto.title),
-      gameDto.description && new GameDescription(gameDto.description),
-      gameDto.password && new GamePassword(gameDto.password),
+      ifExist(gameDto.title, (title) => new GameTitle(title)),
+      ifExist(gameDto.description, (description) => new GameDescription(description)),
+      ifExist(gameDto.password, (password) => new GamePassword(password)),
     );
     gameDto.players &&
       game.players.push(
