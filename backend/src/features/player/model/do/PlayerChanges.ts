@@ -6,10 +6,10 @@ import {
   notEmpty,
   notNull,
 } from '../../../../utils/validators';
+import { PlayerChangesVo, PlayerVo } from '../vo/PlayerVo';
 
 import { Change } from '../../../../utils/classes/Change';
 import { Player } from './Player';
-import { PlayerChangesVo, PlayerVo } from '../vo/PlayerVo';
 import { PlayerName } from './PlayerName';
 import { PlayerPassword } from './PlayerPassword';
 import { PlayerState } from './PlayerState';
@@ -20,19 +20,19 @@ const fields: (keyof PlayerVo | 'pin')[] = ['name', 'wish', 'taboo', 'state', 'p
 const changedFields = (changes: PlayerChangesVo) =>
   Object.keys(changes).filter((item) => fields.includes(item as keyof PlayerVo));
 
-type Changes =
-  | Change<Player, 'name'>
-  | Change<Player, 'wish'>
-  | Change<Player, 'taboo'>
-  | {
-      password: {
-        oldValue?: PlayerPassword;
-        value: PlayerPassword;
-      };
-    };
+type ChangeName = Change<Player, 'name'>;
+type ChangeWish = Change<Player, 'wish'>;
+type ChangeTaboo = Change<Player, 'taboo'>;
+type ChangePassword = {
+  password: {
+    oldValue?: PlayerPassword;
+    value: PlayerPassword;
+  };
+};
+type Changes = {} | ChangeName | ChangeWish | ChangeTaboo | ChangePassword;
 
 export class PlayerChanges {
-  private changes: Changes;
+  private changes: Changes = {};
 
   constructor(changes: PlayerChangesVo) {
     notNull(changes, PLAYER_CHANGES_IS_NULL);
@@ -41,25 +41,27 @@ export class PlayerChanges {
   }
 
   private transform(changes: PlayerChangesVo) {
-    this.changes = {
-      name: 'name' in changes && {
+    if ('name' in changes) {
+      (this.changes as ChangeName).name = {
         value: new PlayerName(changes.name.value),
-      },
-      wish: 'wish' in changes && {
+      };
+    }
+    if ('wish' in changes) {
+      (this.changes as ChangeWish).wish = {
         value: new PlayerWish(changes.wish.value),
-      },
-      taboo: 'taboo' in changes && {
+      };
+    }
+    if ('taboo' in changes) {
+      (this.changes as ChangeTaboo).taboo = {
         value: new PlayerTaboo(changes.taboo.value),
-      },
-      password: 'pin' in changes && {
+      };
+    }
+    if ('pin' in changes) {
+      (this.changes as ChangePassword).password = {
         oldValue: PlayerPassword.createOrNull({ pin: changes.pin.oldValue }),
         value: new PlayerPassword({ pin: changes.pin.newValue }),
-      },
-    };
-
-    Object.keys(this.changes)
-      .filter((key) => !this.changes[key])
-      .forEach((key) => delete this.changes[key]);
+      };
+    }
   }
 
   apply(player: Player): Player {

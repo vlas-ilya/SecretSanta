@@ -23,19 +23,20 @@ const fields: (keyof GameVo | 'pin')[] = ['title', 'description', 'pin', 'state'
 const changedFields = (changes: GameChangesVo) =>
   Object.keys(changes).filter((item) => fields.includes(item as keyof GameVo));
 
-type Changes =
-  | Change<Game, 'title'>
-  | Change<Game, 'description'>
-  | Change<Game, 'state'>
-  | {
-      password: {
-        oldValue?: GamePassword;
-        value: GamePassword;
-      };
-    };
+type ChangeTitle = Change<Game, 'title'>;
+type ChangeDescription = Change<Game, 'description'>;
+type ChangeState = Change<Game, 'state'>;
+type ChangePassword = {
+  password: {
+    oldValue?: GamePassword;
+    value: GamePassword;
+  };
+};
+
+type Changes = {} | ChangeTitle | ChangeDescription | ChangeState | ChangePassword;
 
 export class GameChanges {
-  private changes: Changes;
+  private changes: Changes = {};
 
   constructor(changes: GameChangesVo) {
     notNull(changes, GAME_CHANGES_IS_NULL);
@@ -44,25 +45,27 @@ export class GameChanges {
   }
 
   private transform(changes: GameChangesVo) {
-    this.changes = {
-      title: 'title' in changes && {
+    if ('title' in changes) {
+      (this.changes as ChangeTitle).title = {
         value: new GameTitle(changes.title.value),
-      },
-      description: 'description' in changes && {
+      };
+    }
+    if ('description' in changes) {
+      (this.changes as ChangeDescription).description = {
         value: new GameDescription(changes.description.value),
-      },
-      password: 'pin' in changes && {
+      };
+    }
+    if ('pin' in changes) {
+      (this.changes as ChangePassword).password = {
         value: new GamePassword({ pin: changes.pin.newValue }),
         oldValue: GamePassword.createOrNull({ pin: changes.pin.oldValue }),
-      },
-      state: 'state' in changes && {
+      };
+    }
+    if ('state' in changes) {
+      (this.changes as ChangeState).state = {
         value: changes.state.value as GameState,
-      },
-    };
-
-    Object.keys(this.changes)
-      .filter((key) => !this.changes[key])
-      .forEach((key) => delete this.changes[key]);
+      };
+    }
   }
 
   public apply(game: Game): Game {
