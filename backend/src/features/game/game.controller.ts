@@ -10,7 +10,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { GameChangesVo, GameIdVo, GamePinVo, GameVo } from './model/vo/GameVo';
+import { GameChangesVo, GameIdVo, GameVo } from './model/vo/GameVo';
 
 import { GameChanges } from './model/do/GameChanges';
 import { GameId } from './model/do/GameId';
@@ -41,7 +41,10 @@ export class GameController {
     @Param('id') id: GameIdVo,
     @Body() request: GameChangesVo,
   ): Promise<GameVo> {
-    const game = await this.service.update(new GameId(id), new GameChanges(request));
+    const game = await this.service.update(
+      new GameId(id),
+      await GameChanges.create(request),
+    );
     return game.toVo();
   }
 

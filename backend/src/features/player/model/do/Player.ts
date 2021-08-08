@@ -100,7 +100,7 @@ export class Player {
       playerDto.state as PlayerState,
       game,
       playerDto.name && new PlayerName(playerDto.name),
-      playerDto.password && new PlayerPassword({ password: playerDto.password }),
+      playerDto.password && new PlayerPassword(playerDto.password),
       playerDto.wish && new PlayerWish(playerDto.wish),
       playerDto.taboo && new PlayerTaboo(playerDto.taboo),
       playerDto.target &&

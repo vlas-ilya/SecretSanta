@@ -1,3 +1,5 @@
+import * as bcrypt from 'bcrypt';
+
 import { BadRequestException } from '../exceptions/BadRequestException';
 import { Change } from './classes/Change';
 import { ConflictException } from '../exceptions/ConflictException';
@@ -10,6 +12,8 @@ import { Player } from '../features/player/model/do/Player';
 import { PlayerPassword } from '../features/player/model/do/PlayerPassword';
 import { UnauthorizedException } from '../exceptions/UnauthorizedException';
 import { isUUID } from '@nestjs/common/utils/is-uuid';
+import { PlayerPin } from '../features/player/model/do/PlayerPin';
+import { GamePin } from '../features/game/model/do/GamePin';
 
 export const GAME_ID_IS_NULL = new BadRequestException('GAME_ID_IS_NULL');
 export const GAME_ID_HAS_INCORRECT_FORMAT = new BadRequestException(
@@ -150,33 +154,45 @@ export function notEmpty<T extends { length: number }>(value: T, errorMessage: E
   }
 }
 
-export function correctOldPassword(
+export async function correctOldPassword(
   game: Game,
   password: {
     password: {
-      oldValue?: GamePassword;
+      oldValue?: GamePin;
       value: GamePassword;
     };
   },
   errorMessage: Error,
 ) {
-  if (game?.password?.value !== password?.password?.oldValue?.value) {
-    throw errorMessage;
+  if (game?.password?.value) {
+    const isMatch = await bcrypt.compare(
+      password?.password?.oldValue?.value,
+      game.password.value,
+    );
+    if (!isMatch) {
+      throw errorMessage;
+    }
   }
 }
 
-export function correctOldPlayerPassword(
+export async function correctOldPlayerPassword(
   player: Player,
   password: {
     password: {
-      oldValue?: PlayerPassword;
+      oldValue?: PlayerPin;
       value: PlayerPassword;
     };
   },
   errorMessage: Error,
 ) {
-  if (player?.password?.value !== password?.password?.oldValue?.value) {
-    throw errorMessage;
+  if (player?.password?.value) {
+    const isMatch = await bcrypt.compare(
+      password?.password?.oldValue?.value,
+      player.password.value,
+    );
+    if (!isMatch) {
+      throw errorMessage;
+    }
   }
 }
 

@@ -44,7 +44,7 @@ export class PlayerService {
   async update(id: PlayerId, changes: PlayerChanges): Promise<Player> {
     const player = await this.get(id);
     isTrue(player.game.state === 'INIT', GAME_SHOULD_BE_IN_INIT_STATUS);
-    const newPlayer = changes.apply(player);
+    const newPlayer = await changes.apply(player);
     return this.storage.update(newPlayer);
   }
 }

@@ -15,6 +15,7 @@ import { PlayerPassword } from './PlayerPassword';
 import { PlayerState } from './PlayerState';
 import { PlayerTaboo } from './PlayerTaboo';
 import { PlayerWish } from './PlayerWish';
+import { PlayerPin } from './PlayerPin';
 
 const fields: (keyof PlayerVo | 'pin')[] = ['name', 'wish', 'taboo', 'state', 'pin'];
 const changedFields = (changes: PlayerChangesVo) =>
@@ -25,7 +26,7 @@ type ChangeWish = Change<Player, 'wish'>;
 type ChangeTaboo = Change<Player, 'taboo'>;
 type ChangePassword = {
   password: {
-    oldValue?: PlayerPassword;
+    oldValue?: PlayerPin;
     value: PlayerPassword;
   };
 };
@@ -34,39 +35,49 @@ type Changes = {} | ChangeName | ChangeWish | ChangeTaboo | ChangePassword;
 export class PlayerChanges {
   private changes: Changes = {};
 
-  constructor(changes: PlayerChangesVo) {
+  constructor() {}
+
+  static async create(changes: PlayerChangesVo): Promise<PlayerChanges> {
     notNull(changes, PLAYER_CHANGES_IS_NULL);
     notEmpty(changedFields(changes), PLAYER_CHANGES_IS_EMPTY);
-    this.transform(changes);
+    const playerChanges = new PlayerChanges();
+    playerChanges.changes = await PlayerChanges.transform(changes);
+    return playerChanges;
   }
 
-  private transform(changes: PlayerChangesVo) {
-    if ('name' in changes) {
-      (this.changes as ChangeName).name = {
-        value: new PlayerName(changes.name.value),
+  private static async transform(changesVo: PlayerChangesVo): Promise<Changes> {
+    const changes: Changes = {};
+    if ('name' in changesVo) {
+      (changes as ChangeName).name = {
+        value: new PlayerName(changesVo.name.value),
       };
     }
-    if ('wish' in changes) {
-      (this.changes as ChangeWish).wish = {
-        value: new PlayerWish(changes.wish.value),
+    if ('wish' in changesVo) {
+      (changes as ChangeWish).wish = {
+        value: new PlayerWish(changesVo.wish.value),
       };
     }
-    if ('taboo' in changes) {
-      (this.changes as ChangeTaboo).taboo = {
-        value: new PlayerTaboo(changes.taboo.value),
+    if ('taboo' in changesVo) {
+      (changes as ChangeTaboo).taboo = {
+        value: new PlayerTaboo(changesVo.taboo.value),
       };
     }
-    if ('pin' in changes) {
-      (this.changes as ChangePassword).password = {
-        oldValue: PlayerPassword.createOrNull({ pin: changes.pin.oldValue }),
-        value: new PlayerPassword({ pin: changes.pin.newValue }),
+    if ('pin' in changesVo) {
+      (changes as ChangePassword).password = {
+        value: await PlayerPassword.create(new PlayerPin(changesVo.pin.newValue)),
+        oldValue: changesVo.pin.oldValue && new PlayerPin(changesVo.pin.oldValue),
       };
     }
+    return changes;
   }
 
-  apply(player: Player): Player {
+  async apply(player: Player): Promise<Player> {
     'password' in this.changes &&
-      correctOldPlayerPassword(player, this.changes, PLAYER_OLD_PIN_IS_NOT_CORRECT);
+      (await correctOldPlayerPassword(
+        player,
+        this.changes,
+        PLAYER_OLD_PIN_IS_NOT_CORRECT,
+      ));
 
     const newName = this.loadValue(player, 'name');
     const newWish = this.loadValue(player, 'wish');

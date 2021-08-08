@@ -47,7 +47,7 @@ export class PlayerController {
   ): Promise<PlayerVo> {
     const player = await this.service.update(
       new PlayerId(id),
-      new PlayerChanges(request),
+      await PlayerChanges.create(request),
     );
     return player.toVo();
   }

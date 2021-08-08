@@ -22,7 +22,6 @@
   },
   "esversion": 8,
   "devDependencies": {
-    "@types/passport-jwt": "^3.0.6",
     "@typescript-eslint/eslint-plugin": "4.29.0",
     "@typescript-eslint/parser": "4.29.0",
     "eslint": "7.32.0",
@@ -42,11 +41,5 @@
     "prettier-eslint-cli": "5.0.1",
     "prettier-plugin-import-sort": "0.0.7"
   },
-  "dependencies": {
-    "@nestjs/jwt": "^8.0.0",
-    "@nestjs/passport": "^8.0.1",
-    "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
-  }
+  "dependencies": {}
 }

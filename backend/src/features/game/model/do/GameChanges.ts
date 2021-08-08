@@ -16,6 +16,7 @@ import { Change } from '../../../../utils/classes/Change';
 import { Game } from './Game';
 import { GameDescription } from './GameDescription';
 import { GamePassword } from './GamePassword';
+import { GamePin } from './GamePin';
 import { GameState } from './GameState';
 import { GameTitle } from './GameTitle';
 
@@ -28,7 +29,7 @@ type ChangeDescription = Change<Game, 'description'>;
 type ChangeState = Change<Game, 'state'>;
 type ChangePassword = {
   password: {
-    oldValue?: GamePassword;
+    oldValue?: GamePin;
     value: GamePassword;
   };
 };
@@ -38,34 +39,40 @@ type Changes = {} | ChangeTitle | ChangeDescription | ChangeState | ChangePasswo
 export class GameChanges {
   private changes: Changes = {};
 
-  constructor(changes: GameChangesVo) {
+  private constructor() {}
+
+  static async create(changes: GameChangesVo): Promise<GameChanges> {
     notNull(changes, GAME_CHANGES_IS_NULL);
     notEmpty(changedFields(changes), GAME_CHANGES_IS_EMPTY);
-    this.transform(changes);
+    const gameChanges = new GameChanges();
+    gameChanges.changes = await GameChanges.transform(changes);
+    return gameChanges;
   }
 
-  private transform(changes: GameChangesVo) {
-    if ('title' in changes) {
-      (this.changes as ChangeTitle).title = {
-        value: new GameTitle(changes.title.value),
+  private static async transform(changesVo: GameChangesVo): Promise<Changes> {
+    const changes: Changes = {};
+    if ('title' in changesVo) {
+      (changes as ChangeTitle).title = {
+        value: new GameTitle(changesVo.title.value),
       };
     }
-    if ('description' in changes) {
-      (this.changes as ChangeDescription).description = {
-        value: new GameDescription(changes.description.value),
+    if ('description' in changesVo) {
+      (changes as ChangeDescription).description = {
+        value: new GameDescription(changesVo.description.value),
       };
     }
-    if ('pin' in changes) {
-      (this.changes as ChangePassword).password = {
-        value: new GamePassword({ pin: changes.pin.newValue }),
-        oldValue: GamePassword.createOrNull({ pin: changes.pin.oldValue }),
+    if ('pin' in changesVo) {
+      (changes as ChangePassword).password = {
+        value: await GamePassword.create(new GamePin(changesVo.pin.newValue)),
+        oldValue: changesVo.pin.oldValue && (await new GamePin(changesVo.pin.oldValue)),
       };
     }
-    if ('state' in changes) {
-      (this.changes as ChangeState).state = {
-        value: changes.state.value as GameState,
+    if ('state' in changesVo) {
+      (changes as ChangeState).state = {
+        value: changesVo.state.value as GameState,
       };
     }
+    return changes;
   }
 
   public apply(game: Game): Game {

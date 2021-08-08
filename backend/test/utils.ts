@@ -3,7 +3,7 @@ import * as request from 'supertest';
 export const login = async (
   app: any,
   id: string,
-  password: string = '-',
+  password: string = '00000',
 ): Promise<string> => {
   const loginRes = await request(app.getHttpServer()).post(`/auth/login`).send({
     username: id,

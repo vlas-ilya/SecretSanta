@@ -92,7 +92,7 @@ export class Game {
       gameDto.state as GameState,
       gameDto.title && new GameTitle(gameDto.title),
       gameDto.description && new GameDescription(gameDto.description),
-      gameDto.password && new GamePassword({ password: gameDto.password }),
+      gameDto.password && new GamePassword(gameDto.password),
     );
     gameDto.players &&
       game.players.push(
