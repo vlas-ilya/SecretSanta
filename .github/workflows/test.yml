@@ -1,0 +1,29 @@
+name: 'Test git log'
+
+on:
+  push:
+    branches:
+      - test
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build android app, run tests, upload apk to Firebase and SDK to S3
+    steps:
+
+      - name: 'checkout'
+        uses: actions/checkout@v2
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup environment variables'
+        run: |
+          echo "COMMIT_MSG_BASH=$(git log -1 --pretty="%s")" >> $GITHUB_ENV
+          echo ${{env.COMMIT_MSG_BASH}}
+          echo ${{env.COMMIT_MSG}}
