@@ -7,12 +7,14 @@ on:
       - '.github/workflows/backend-tests.yml'
     branches:
       - main
+      - master
   pull_request:
     paths:
       - 'backend'
       - '.github/workflows/backend-tests.yml'
     branches:
       - main
+      - master
 
 defaults:
   run:
