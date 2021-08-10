@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+env:
+  COMMIT_MSG: ${{ github.event.head_commit.message }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,8 +20,6 @@ jobs:
 
       - name: 'checkout'
         uses: actions/checkout@v2
-        env:
-          COMMIT_MSG: ${{ github.event.head_commit.message }}
         with:
           fetch-depth: 0
 
