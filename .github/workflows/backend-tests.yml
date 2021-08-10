@@ -1,0 +1,36 @@
+name: 'Run backend tests'
+
+on:
+  push:
+    paths:
+      - 'backend'
+      - '.github/workflows/backend-tests.yml'
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'backend'
+      - '.github/workflows/backend-tests.yml'
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: ./backend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build android app, run tests, upload apk to Firebase and SDK to S3
+    steps:
+
+      - name: 'checkout'
+        uses: actions/checkout@v2
+
+      - name: 'set up Node.js 16.x'
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: 'run tests'
+        run: 'npm run test:e2e'
