@@ -25,5 +25,8 @@ jobs:
       - name: 'Setup environment variables'
         run: |
           echo "COMMIT_MSG_BASH=$(git log -1 --pretty="%s")" >> $GITHUB_ENV
+          echo "COMMIT_MSG1_BASH=$(git log --pretty="%s")" >> $GITHUB_ENV
+          echo ${{env.COMMIT_MSG1_BASH}}
           echo ${{env.COMMIT_MSG_BASH}}
           echo ${{env.COMMIT_MSG}}
+          echo ${{github.event.head_commit.message}}
