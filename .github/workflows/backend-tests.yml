@@ -34,5 +34,15 @@ jobs:
         with:
           node-version: '16.x'
 
+      - name: 'node_modules cache'
+        id: node_modules-cache
+        uses: actions/cache@v2
+        with:
+          path: /node_modules
+          key: node_modules
+
+      - name: 'install app'
+        run: 'npm i'
+
       - name: 'run tests'
         run: 'npm run test:e2e'
