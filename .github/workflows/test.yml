@@ -13,6 +13,27 @@ env:
   COMMIT_MSG: ${{ github.event.head_commit.message }}
 
 jobs:
+  initialise:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Get commit message
+        id: get_commit_message
+        run: |
+          if   [[ '${{ github.event_name }}' == 'push' ]]; then
+            echo ::set-output name=commit_message::$(git log --format=%B -n 1 HEAD)
+          elif [[ '${{ github.event_name }}' == 'pull_request' ]]; then
+            echo ::set-output name=commit_message::$(git log --format=%B -n 1 HEAD^2)
+          fi
+
+    outputs:
+      commit_message:
+        echo "${{ steps.get_commit_message.outputs.commit_message }}"
+
   build:
     runs-on: ubuntu-latest
     name: Build android app, run tests, upload apk to Firebase and SDK to S3
@@ -24,10 +45,12 @@ jobs:
           fetch-depth: 0
 
       - name: 'Setup environment variables'
+        if: "!contains(needs.pre_ci.outputs.commit_message, '[skip]')"
         run: |
           echo "COMMIT_MSG_BASH=$(git log -1 --pretty="%s")" >> $GITHUB_ENV
 
       - name: 'Show environment variables'
+        if: "!contains(needs.pre_ci.outputs.commit_message, '[skip]')"
         run: |
           echo ${{github.event.head_commit.message}}
           echo ${{env.COMMIT_MSG_BASH}}
