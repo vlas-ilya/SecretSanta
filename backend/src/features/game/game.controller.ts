@@ -12,14 +12,18 @@ import {
 } from '@nestjs/common';
 import { GameChangesVo, GameIdVo, GameVo } from './model/vo/GameVo';
 
+import { Connection } from 'typeorm';
 import { GameChanges } from './model/do/GameChanges';
 import { GameId } from './model/do/GameId';
 import { GameService } from './game.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { wrapAllMethodsInTransaction } from '../../utils/transaction';
 
 @Controller('/api/game')
 export class GameController {
-  constructor(private readonly service: GameService) {}
+  constructor(private service: GameService, private readonly connection: Connection) {
+    this.service = wrapAllMethodsInTransaction(connection, service);
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

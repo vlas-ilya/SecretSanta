@@ -11,16 +11,20 @@ import {
 } from '@nestjs/common';
 import { PlayerChangesVo, PlayerIdVo, PlayerVo } from './model/vo/PlayerVo';
 
+import { Connection } from 'typeorm';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { PlayerChanges } from './model/do/PlayerChanges';
 import { PlayerId } from './model/do/PlayerId';
 import { PlayerService } from './player.service';
 import { RegistrationId } from '../game/model/do/RegistrationId';
 import { RegistrationIdVo } from '../game/model/vo/GameVo';
+import { wrapAllMethodsInTransaction } from '../../utils/transaction';
 
 @Controller('/api/player')
 export class PlayerController {
-  constructor(private readonly service: PlayerService) {}
+  constructor(private service: PlayerService, private readonly connection: Connection) {
+    this.service = wrapAllMethodsInTransaction(connection, service);
+  }
 
   @Get('/register/:id')
   @HttpCode(HttpStatus.FOUND)

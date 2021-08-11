@@ -6,20 +6,18 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import { INestApplication } from '@nestjs/common';
 import { isUUID } from '@nestjs/common/utils/is-uuid';
-import { login } from './utils';
+import { createApp, login } from './utils';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { getConnectionOptions } from 'typeorm';
+import { GameModule } from '../src/features/game/game.module';
+import { PlayerModule } from '../src/features/player/player.module';
+import { AuthModule } from '../src/features/auth/auth.module';
 
 describe('GameController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
-    console.log(__dirname + '/../db/game.sqlite3');
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-    app.use(cookieParser());
-    await app.init();
+    app = await createApp('game');
   }, 90000);
 
   it('/POST api/game', async () => {
