@@ -34,7 +34,7 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: 'node_modules cache'
+      - name: 'cache node_modules'
         id: node_modules-cache
         uses: actions/cache@v2
         with:
