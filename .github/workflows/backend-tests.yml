@@ -38,8 +38,8 @@ jobs:
         id: node_modules-cache
         uses: actions/cache@v2
         with:
-          path: ./node_modules
-          key: node_modules
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: 'install app'
         run: 'npm i'
