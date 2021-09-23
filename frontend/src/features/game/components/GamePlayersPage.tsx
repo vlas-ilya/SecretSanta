@@ -2,12 +2,12 @@ import { Form } from 'components/Form/Form';
 import { FormItem } from 'components/FormItem/FormItem';
 import { List } from 'components/List/List';
 import { ListItem } from 'components/List/ListItem';
-import { PlayerVo } from 'model/PlayerVo';
 import React from 'react';
 import { Text } from 'components/Text/Text';
+import { PlayerShortInfoVo } from '../store/model/PlayerShortInfo';
 
 export type GamePlayersPageProps = {
-  players?: PlayerVo[];
+  players?: PlayerShortInfoVo[];
 };
 
 export const GamePlayersPage = (props: GamePlayersPageProps) => (
@@ -17,8 +17,8 @@ export const GamePlayersPage = (props: GamePlayersPageProps) => (
     </FormItem>
     <FormItem>
       <List title="Список игроков">
-        {props.players?.map((player) => (
-          <ListItem key={player.id}>{player.name}</ListItem>
+        {props.players?.map((player, index) => (
+          <ListItem key={index}>{player.name}</ListItem>
         ))}
       </List>
     </FormItem>

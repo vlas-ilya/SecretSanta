@@ -1,4 +1,3 @@
-import { GameState, RegistrationId } from '../../../../../backend/src/model/GameTypes';
 
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
@@ -6,13 +5,14 @@ import { FormInput } from 'components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
 import React from 'react';
 import { Text } from 'components/Text/Text';
+import { GameState, RegistrationId } from '../store/model/GameTypes';
 
 export type GameTitleProps = {
-  hasPassword?: boolean;
-  gameState?: GameState;
+  state?: GameState;
   registrationId?: RegistrationId;
-  startGame: () => void;
-  changePassword: () => void;
+  hasPassword?: boolean;
+  onStartGame: () => void;
+  onChangePin: () => void;
 };
 
 export const GameTitlePage = (props: GameTitleProps) => (
@@ -20,7 +20,7 @@ export const GameTitlePage = (props: GameTitleProps) => (
     <FormItem>
       <Text type="h1">Тайный санта</Text>
     </FormItem>
-    {props.gameState === 'INIT' && (
+    {props.state === 'INIT' && (
       <>
         <FormItem>
           <Text type="p">
@@ -32,8 +32,8 @@ export const GameTitlePage = (props: GameTitleProps) => (
             name="registrationId"
             readOnly
             label="Ссылка для регистрации"
-            // TODO: сделать копирование ссылки
-            value={`${window.location.origin}/player/registration/${props.registrationId}`}
+            // TODO: сделать копирование ссылки и отображение qr-code
+            value={`${window.location.origin}/api/player/register/${props.registrationId}`}
           />
         </FormItem>
         <FormItem>
@@ -42,10 +42,10 @@ export const GameTitlePage = (props: GameTitleProps) => (
           </Text>
         </FormItem>
         <div className="actions">
-          <FormButton className="grey" onClick={props.changePassword}>
+          <FormButton className="grey" onClick={props.onChangePin}>
             {props.hasPassword ? 'Изменить пароль' : 'Установить пароль'}
           </FormButton>
-          <FormButton onClick={props.startGame}>Начать игру</FormButton>
+          <FormButton onClick={props.onStartGame}>Начать игру</FormButton>
         </div>
         <FormItem>
           <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>

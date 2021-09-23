@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { selectGameId, selectLoadingState, startGame } from './store/home.reducer';
+import { selectGameId, selectLoadingStatus } from './store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Form } from 'components/Form/Form';
@@ -8,20 +8,21 @@ import { FormItem } from 'components/FormItem/FormItem';
 import { Page } from 'components/Page/Page';
 import { Redirect } from 'react-router-dom';
 import { Text } from 'components/Text/Text';
+import { createGame } from './store/useCases/createGame';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const loadingState = useSelector(selectLoadingState);
+  const loadingStatus = useSelector(selectLoadingStatus);
   const gameId = useSelector(selectGameId);
 
-  const onStartGame = useCallback(() => dispatch(startGame()), [dispatch]);
+  const onStartGame = useCallback(() => dispatch(createGame()), [dispatch]);
 
   if (gameId) {
     return <Redirect to={`/game/${gameId}`} />;
   }
 
   return (
-    <Page className="home-page" loading={loadingState === 'LOADING'}>
+    <Page className="home-page" loading={loadingStatus.state === 'LOADING'}>
       <Form>
         <FormItem>
           <Text type="h1">Тайный санта</Text>

@@ -1,0 +1,1 @@
+export const INVALID_RESPONSE = 'INVALID_RESPONSE';

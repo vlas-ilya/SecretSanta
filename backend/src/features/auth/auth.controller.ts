@@ -9,7 +9,6 @@ import {
 import { Cookie, Cookies } from '../../utils/Cookies';
 
 import { AuthService } from './auth.service';
-import { GamePinVo } from '../game/model/vo/GameVo';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { LocalAuthGuard } from './local-auth.guard';
 

@@ -3,7 +3,7 @@ import './styles.scss';
 import React, { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
-import sync from 'images/sync.svg';
+import sync from 'resources/images/sync.svg';
 
 export type FormInputProps = {
   name: string;

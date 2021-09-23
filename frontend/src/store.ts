@@ -1,9 +1,9 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 
-import game from 'features/game/store/game.reducer';
-import home from 'features/home/store/home.reducer';
+import game from 'features/game/store/reducer';
+import home from 'features/home/store/reducer';
 import player from 'features/player/store/player.reducer';
-import registration from 'features/registration/store/registration.reducer';
+import session from 'features/session/store/reducer';
 
 const customizedMiddleware = getDefaultMiddleware({
   serializableCheck: false,
@@ -14,8 +14,8 @@ const store = configureStore({
   reducer: {
     home,
     game,
-    registration,
     player,
+    session,
   },
 });
 

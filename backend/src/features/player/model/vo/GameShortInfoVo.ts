@@ -8,7 +8,7 @@ import {
 export class GameShortInfoVo {
   constructor(
     public id: GameIdVo,
-    public gameState: GameStateVo = 'INIT',
+    public state: GameStateVo = 'INIT',
     public title?: GameTitleVo,
     public description?: GameDescriptionVo,
   ) {}

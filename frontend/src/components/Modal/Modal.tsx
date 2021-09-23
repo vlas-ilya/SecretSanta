@@ -3,7 +3,7 @@ import './styles.scss';
 import React, { ReactNode } from 'react';
 
 import classNames from 'classnames';
-import close from '../../images/close.svg';
+import close from '../../resources/images/close.svg';
 
 export type ModalProps = {
   actions: ReactNode;

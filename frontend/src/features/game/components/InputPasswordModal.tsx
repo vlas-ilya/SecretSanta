@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { FormButton } from '../../../components/FormButton/FormButton';
 import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from '../../../components/FormItem/FormItem';
-import { GamePassword } from '../../../../../backend/src/model/GameTypes';
 import Modal from '../../../components/Modal/Modal';
 import { Text } from '../../../components/Text/Text';
+import { GamePin } from '../store/model/GameTypes';
 
 export type InputPasswordModal = {
-  onInputPassword: (password: GamePassword) => void;
+  onInputPassword: (password: GamePin) => void;
 };
 
 export const InputPasswordModal = (props: InputPasswordModal) => {

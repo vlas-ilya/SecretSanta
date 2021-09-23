@@ -5,15 +5,15 @@ import { Change } from './classes/Change';
 import { ConflictException } from '../exceptions/ConflictException';
 import { Game } from '../features/game/model/do/Game';
 import { GamePassword } from '../features/game/model/do/GamePassword';
+import { GamePin } from '../features/game/model/do/GamePin';
 import { GameState } from '../features/game/model/do/GameState';
 import { Interval } from './classes/Interval';
 import { NotFoundException } from '../exceptions/NotFoundException';
 import { Player } from '../features/player/model/do/Player';
 import { PlayerPassword } from '../features/player/model/do/PlayerPassword';
+import { PlayerPin } from '../features/player/model/do/PlayerPin';
 import { UnauthorizedException } from '../exceptions/UnauthorizedException';
 import { isUUID } from '@nestjs/common/utils/is-uuid';
-import { PlayerPin } from '../features/player/model/do/PlayerPin';
-import { GamePin } from '../features/game/model/do/GamePin';
 
 export const GAME_ID_IS_NULL = new BadRequestException('GAME_ID_IS_NULL');
 export const GAME_ID_HAS_INCORRECT_FORMAT = new BadRequestException(
@@ -106,7 +106,7 @@ export const START_SHOULD_BE_GREATER_END = new BadRequestException(
   'START_SHOULD_BE_GREATER_END',
 );
 
-export const UNAUTHORIZED_EXCEPTION = 'UNAUTHORIZED_EXCEPTION';
+export const UNAUTHORIZED_EXCEPTION = new UnauthorizedException('UNAUTHORIZED_EXCEPTION');
 
 export function notNull<T>(value: T, errorMessage: Error) {
   if (value === null || value === undefined) {

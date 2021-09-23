@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import { LoadingState } from '../../../backend/src/model/LoadingState';
+import { LoadingStatus } from './classes/LoadingState';
 import { RootState } from '../store';
 
 export interface Options extends AxiosRequestConfig {
@@ -30,19 +30,39 @@ const fetch = (url: string) => ({
   delete: (options: Options = {}) => _fetch(url, { ...options, method: 'DELETE' }),
 });
 
+export type Action = (dispatch: Dispatch, state: RootState) => Promise<any>;
+export type Hooks = {
+  onStart?: Action;
+  onSuccess?: Action;
+  onFail?: Action;
+  onFinish?: Action;
+};
+
 export const fetchAction =
   (
-    changeLoadingState: ActionCreatorWithPayload<LoadingState>,
+    changeLoadingStatus: ActionCreatorWithPayload<LoadingStatus>,
     action: (dispatch: Dispatch, state: RootState) => Promise<void>,
+    hooks?: Hooks,
   ) =>
   async (dispatch: Dispatch, getState: Function) => {
     try {
-      changeLoadingState && dispatch(changeLoadingState('LOADING'));
+      hooks?.onStart && (await hooks.onStart(dispatch, getState()));
+      changeLoadingStatus && dispatch(changeLoadingStatus({ state: 'LOADING' }));
       await action(dispatch, getState());
-      changeLoadingState && dispatch(changeLoadingState('SUCCESS'));
+      changeLoadingStatus && dispatch(changeLoadingStatus({ state: 'SUCCESS' }));
+      hooks?.onSuccess && (await hooks.onSuccess(dispatch, getState()));
     } catch (e) {
-      changeLoadingState &&
-        dispatch(changeLoadingState(['ERROR', e.response?.data?.message]));
+      changeLoadingStatus &&
+        dispatch(
+          changeLoadingStatus({
+            state: 'FAIL',
+            payload: e.response?.data?.message,
+            errorCode: e.response?.status,
+          }),
+        );
+      hooks?.onFail && (await hooks.onFail(dispatch, getState()));
+    } finally {
+      hooks?.onFinish && (await hooks.onFinish(dispatch, getState()));
     }
   };
 
