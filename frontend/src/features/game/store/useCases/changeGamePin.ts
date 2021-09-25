@@ -1,4 +1,4 @@
-import { ValidationError, usecase } from '../../../../utils/usecase/UseCase';
+import { ValidationError, usecase } from '../../../../utils/usecase/usecase';
 import { changeLoadingStatus, setGame } from '../reducer';
 
 import { GameChangePin } from '../model/GameChangePin';

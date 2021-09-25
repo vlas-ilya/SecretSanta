@@ -10,7 +10,7 @@ import {
 import { PlayerChange } from '../model/PlayerChange';
 import { fetchAction } from '../../../../utils/fetch';
 import { update } from '../api/api';
-import { usecase } from '../../../../utils/usecase/UseCase';
+import { usecase } from '../../../../utils/usecase/usecase';
 
 const validator = (changes: PlayerChange) => {
   return null;

@@ -1,4 +1,4 @@
-import { ValidationError, usecase } from '../../../../utils/usecase/UseCase';
+import { ValidationError, usecase } from '../../../../utils/usecase/usecase';
 import {
   applyChanges,
   backup,

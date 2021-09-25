@@ -14,11 +14,11 @@ export class Operation {
 
 type Validator<T> = (parameter: T) => ValidationError[] | null;
 type Action = (dispatch: Dispatch, getState: Function) => Promise<void>;
-type UseCase<T> = (parameter: T, callback?: () => void) => Action;
+type Usecase<T> = (parameter: T, callback?: () => void) => Action;
 export type Result = ValidationError[] | Operation;
 
 export const usecase =
-  <T>(validators: Validator<T>, useCase: UseCase<T>) =>
+  <T>(validators: Validator<T>, useCase: Usecase<T>) =>
   (parameter: T, callback?: () => void): Result => {
     if (validators) {
       const errors = validators(parameter);

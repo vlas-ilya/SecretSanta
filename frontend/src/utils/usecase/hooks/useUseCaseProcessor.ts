@@ -1,8 +1,7 @@
-import { Operation, Result, ValidationError } from '../UseCase';
-import { useCallback, useState } from 'react';
+import { Operation, Result, ValidationError } from '../usecase';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { useValidationErrorsTransformer } from './useValidationErrorsTransformer';
 
 export const useUseCaseProcessor = (): [
   Record<string, string>,
@@ -28,7 +27,14 @@ export const useUseCaseProcessor = (): [
     setValidationError([]);
   }, [setValidationError]);
 
-  const errors = useValidationErrorsTransformer(validationError);
+  const errors = useMemo(() => {
+    return (
+      validationError?.reduce((acc, error) => {
+        acc[error.field] = error.message;
+        return acc;
+      }, {} as Record<string, string>) || {}
+    );
+  }, [validationError]);
 
   return [errors, processResult, clearValidationErrors];
 };

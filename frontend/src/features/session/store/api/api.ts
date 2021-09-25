@@ -11,6 +11,10 @@ export const login = async (id: Id, pin: Pin | undefined) => {
   });
 };
 
-export const checkSession = async () => {
-  await fetch(`/auth/check_session`).post();
+export const checkSession = async (id: Id) => {
+  await fetch(`/auth/check_session`).post({
+    data: {
+      username: id,
+    }
+  });
 };

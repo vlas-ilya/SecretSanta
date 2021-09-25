@@ -1,11 +1,6 @@
 import { Id, Pin } from './store/model/SessionTypes';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  selectHasSession,
-  selectLoadingStatus,
-  selectShouldInputPin,
-  selectWasIncorrectPin,
-} from './store/selectors';
+import { selectAuthenticationState, selectLoadingStatus } from './store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { InputPinModal } from './components/InputPinModal';
@@ -24,22 +19,20 @@ export const withAuthentication =
   ) =>
   (props: Omit<T, keyof AuthenticationProps>) => {
     const dispatch = useDispatch();
-    const hasSession = useSelector(selectHasSession);
-    const shouldInputPin = useSelector(selectShouldInputPin);
+    const authenticationState = useSelector(selectAuthenticationState);
     const loadingStatus = useSelector(selectLoadingStatus);
-    const wasIncorrectPin = useSelector(selectWasIncorrectPin);
     const [id, setId] = useState<Id | undefined>(undefined);
 
     useEffect(() => {
       if (!id) {
         return;
       }
-      if (hasSession === undefined) {
-        dispatch(checkSession());
-      } else if (!hasSession && !shouldInputPin) {
+      if (authenticationState === 'SHOULD_CHECK_SESSION') {
+        dispatch(checkSession(id));
+      } else if (authenticationState === 'SHOULD_LOGIN') {
         dispatch(login(id, undefined));
       }
-    }, [id, hasSession, shouldInputPin, dispatch]);
+    }, [id, authenticationState, dispatch]);
 
     const loginWithPin = useCallback(
       (pin: Pin) => {
@@ -47,19 +40,28 @@ export const withAuthentication =
           dispatch(login(id, pin));
         }
       },
-      [id, login, dispatch],
+      [id, dispatch],
     );
 
-    if (!hasSession && shouldInputPin) {
+    if (
+      authenticationState === 'SHOULD_LOGIN_WITH_PIN' ||
+      authenticationState === 'WAS_INCORRECT_PIN'
+    ) {
       return (
         <Page loading={loadingStatus.state === 'LOADING'}>
           <InputPinModal
             onInputPin={loginWithPin}
-            wasIncorrectPin={wasIncorrectPin}
+            wasIncorrectPin={authenticationState == 'WAS_INCORRECT_PIN'}
           />
         </Page>
       );
     }
 
-    return <WrappedComponent {...(props as T)} setId={setId} hasSession={hasSession} />;
+    return (
+      <WrappedComponent
+        {...(props as T)}
+        setId={setId}
+        hasSession={authenticationState === 'AUTHENTICATED'}
+      />
+    );
   };

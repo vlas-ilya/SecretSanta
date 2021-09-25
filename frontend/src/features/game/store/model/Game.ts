@@ -12,7 +12,7 @@ import {
   IsOptional,
   IsString,
   Length,
-  ValidateNested, ValidationArguments,
+  ValidateNested,
 } from 'class-validator';
 
 import { GameChanges } from './GameChange';
@@ -55,14 +55,14 @@ export class Game {
 
   @IsString()
   @Length(10, 255, {
-    message: "Заголовок должен занимать от 10 до 255 символов"
+    message: 'Заголовок должен занимать от 10 до 255 символов',
   })
   @IsOptional()
   title?: GameTitle;
 
   @IsString()
   @Length(10, 1000, {
-    message: "Описание должно занимать от 10 до 255 символов"
+    message: 'Описание должно занимать от 10 до 255 символов',
   })
   @IsOptional()
   description?: GameDescription;

@@ -4,18 +4,15 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 import { LoadingStatus } from './classes/LoadingState';
 import { RootState } from '../store';
-import { changeHasSession } from '../features/session/store/reducer';
+import { changeAuthenticationState } from '../features/session/store/reducer';
 
 export interface Options extends AxiosRequestConfig {
-  password?: string | null;
+
 }
 
 const _fetch = (url: string, options: Options = {}) => {
   axios.defaults.withCredentials = true;
   const headers = options.headers || {};
-  if (options.password) {
-    headers['password'] = options.password;
-  }
   const requestOptions = {
     ...options,
     headers,
@@ -55,7 +52,7 @@ export const fetchAction =
       hooks?.onSuccess && (await hooks.onSuccess(dispatch, getState()));
     } catch (e) {
       if (e.response?.status === 401 && shouldReloginOnAuthError) {
-        dispatch(changeHasSession(false))
+        dispatch(changeAuthenticationState('SHOULD_LOGIN'))
       }
       changeLoadingStatus &&
         dispatch(

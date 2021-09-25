@@ -1,12 +1,7 @@
 import * as api from '../api/api';
 
 import { Id, Pin } from '../model/SessionTypes';
-import {
-  changeHasSession,
-  changeLoadingStatus,
-  shouldInputPin,
-  wasIncorrectPin,
-} from '../reducer';
+import { changeAuthenticationState, changeLoadingStatus } from '../reducer';
 
 import { fetchAction } from '../../../../utils/fetch';
 
@@ -15,18 +10,19 @@ export const login = (id: Id, pin: Pin | undefined) =>
     changeLoadingStatus,
     async (dispatch, state) => {
       try {
-        dispatch(wasIncorrectPin(false));
         await api.login(id, pin);
-        dispatch(changeHasSession(true));
+        dispatch(changeAuthenticationState('AUTHENTICATED'));
       } catch (e) {
         if (e.response.status !== 401) {
           throw e;
         }
-        if (state.session.shouldInputPin) {
-          dispatch(wasIncorrectPin(true));
-        }
-        dispatch(shouldInputPin());
-        dispatch(changeHasSession(false));
+        dispatch(
+          changeAuthenticationState(
+            state.session.authenticationState === 'SHOULD_LOGIN_WITH_PIN'
+              ? 'WAS_INCORRECT_PIN'
+              : 'SHOULD_LOGIN_WITH_PIN',
+          ),
+        );
       }
     },
     undefined,
