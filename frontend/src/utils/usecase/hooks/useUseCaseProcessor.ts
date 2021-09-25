@@ -2,10 +2,12 @@ import { Operation, Result, ValidationError } from '../UseCase';
 import { useCallback, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
+import { useValidationErrorsTransformer } from './useValidationErrorsTransformer';
 
 export const useUseCaseProcessor = (): [
-  ValidationError[],
+  Record<string, string>,
   (result: Result) => void,
+  () => void,
 ] => {
   const dispatch = useDispatch();
   const [validationError, setValidationError] = useState<ValidationError[]>([]);
@@ -13,6 +15,7 @@ export const useUseCaseProcessor = (): [
   const processResult = useCallback(
     (result: Result) => {
       if (result instanceof Operation) {
+        setValidationError([]);
         dispatch(result.run());
       } else {
         setValidationError(result);
@@ -21,5 +24,11 @@ export const useUseCaseProcessor = (): [
     [dispatch, setValidationError],
   );
 
-  return [validationError, processResult];
+  const clearValidationErrors = useCallback(() => {
+    setValidationError([]);
+  }, [setValidationError]);
+
+  const errors = useValidationErrorsTransformer(validationError);
+
+  return [errors, processResult, clearValidationErrors];
 };

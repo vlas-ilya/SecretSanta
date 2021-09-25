@@ -10,7 +10,7 @@ import {
 import { PlayerChange } from '../model/PlayerChange';
 import { fetchAction } from '../../../../utils/fetch';
 import { update } from '../api/api';
-import { use_Case } from '../../../../utils/usecase/UseCase';
+import { usecase } from '../../../../utils/usecase/UseCase';
 
 const validator = (changes: PlayerChange) => {
   return null;
@@ -34,4 +34,4 @@ const action = (changes: PlayerChange) =>
     },
   );
 
-export const changePlayerInfo = use_Case(validator, action);
+export const changePlayerInfo = usecase(validator, action);

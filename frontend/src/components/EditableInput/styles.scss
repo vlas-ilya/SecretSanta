@@ -1,0 +1,61 @@
+.EditableInput {
+  display: block;
+  position: relative;
+}
+
+.EditableInput_View {
+  display: block;
+  position: relative;
+}
+
+.EditableInput_ViewContent {
+  display: block;
+  position: relative;
+  margin-right: 45px;
+}
+
+.EditableInput_NameLabel {
+  font-weight: bold;
+  margin-right: 5px;
+
+  &:after {
+    content: ":";
+  }
+}
+
+.EditableInput_ValueLabel {
+  cursor: pointer;
+  border-bottom: 1px dashed black;
+  position: relative;
+
+  &:after {
+    content: url("../../resources/images/edit.svg");
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: 3px;
+    vertical-align: bottom;
+  }
+}
+
+.EditableInput_Edit {
+  display: block;
+}
+
+.EditableInput_ValueEdit {
+  margin-right: 98px;
+}
+
+.EditableInput_ShowViewButton,
+.EditableInput_ApplyButton {
+  width: 49px;
+  position: absolute;
+  top: 0;
+}
+
+.EditableInput_ShowViewButton {
+  right: 0;
+}
+
+.EditableInput_ApplyButton {
+  right: 49px;
+}

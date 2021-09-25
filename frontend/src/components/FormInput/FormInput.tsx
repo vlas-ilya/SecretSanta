@@ -10,12 +10,14 @@ export type FormInputProps = {
   label?: string;
   validMessage?: string;
   value?: string;
+  className?: string;
   onChange?: (value: string, e: React.ChangeEvent<HTMLInputElement>) => void;
   onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   autoComplete?: 'off' | 'on';
   onSync?: Function;
   readOnly?: boolean;
   disabled?: boolean;
+  autoFocus?: boolean;
   type?: '' | 'password' | 'number';
 };
 
@@ -36,7 +38,7 @@ export const FormInput = (props: FormInputProps) => {
 
   return (
     <div
-      className={classNames('form-input', {
+      className={classNames('form-input', props.className, {
         filled: props.value,
         invalid: props.validMessage,
         sync: !!props.onSync,
@@ -61,6 +63,7 @@ export const FormInput = (props: FormInputProps) => {
         />
       )}
       <input
+        autoFocus={props.autoFocus}
         id={props.name}
         name={props.name}
         type={props.type || 'text'}

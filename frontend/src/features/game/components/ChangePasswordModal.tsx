@@ -5,22 +5,23 @@ import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from '../../../components/FormItem/FormItem';
 import { GameChangePin } from '../store/model/GameChangePin';
 import Modal from '../../../components/Modal/Modal';
-import { ValidationError } from '../../../utils/usecase/UseCase';
-import { useValidationErrorsTransformer } from '../../../utils/usecase/hooks/useValidationErrorsTransformer';
 
 export type ChangePasswordModalProps = {
   hasPassword: boolean;
-  validationError?: ValidationError[];
+  validationErrors: Record<string, string>;
   onChangeGamePin: (changes: GameChangePin) => void;
   onClose: () => void;
 };
 
-export const ChangePasswordModal = (props: ChangePasswordModalProps) => {
-  const { onChangeGamePin } = props;
+export const ChangePasswordModal = ({
+  hasPassword,
+  validationErrors,
+  onChangeGamePin,
+  onClose,
+}: ChangePasswordModalProps) => {
   const [oldPin, setOldPin] = useState('');
   const [newPin, setNewPin] = useState('');
   const [confirmation, setConfirmation] = useState('');
-  const validationErrors = useValidationErrorsTransformer(props.validationError);
 
   const changeGamePinCallback = useCallback(() => {
     onChangeGamePin(new GameChangePin(newPin, confirmation, oldPin));
@@ -29,7 +30,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps) => {
   return (
     <Modal
       actions={[
-        <FormButton key="close" className="grey" onClick={props.onClose}>
+        <FormButton key="close" className="grey" onClick={onClose}>
           Отмена
         </FormButton>,
         <FormButton key="change" onClick={changeGamePinCallback}>
@@ -37,10 +38,10 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps) => {
         </FormButton>,
       ]}
       showCloseButton
-      onClose={props.onClose}
-      title={props.hasPassword ? 'Установка пароля' : 'Смена пароля'}
+      onClose={onClose}
+      title={hasPassword ? 'Установка пароля' : 'Смена пароля'}
     >
-      {!props.hasPassword && (
+      {!hasPassword && (
         <FormItem>
           <FormInput
             name="oldPin"

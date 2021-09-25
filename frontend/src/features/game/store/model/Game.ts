@@ -12,11 +12,11 @@ import {
   IsOptional,
   IsString,
   Length,
-  ValidateNested,
+  ValidateNested, ValidationArguments,
 } from 'class-validator';
 
 import { GameChanges } from './GameChange';
-import { PlayerShortInfoVo } from './PlayerShortInfo';
+import { PlayerShortInfo } from './PlayerShortInfo';
 
 export class Game {
   constructor(
@@ -24,9 +24,9 @@ export class Game {
     registrationId: RegistrationId,
     state: GameState,
     hasPassword: boolean,
-    title: GameTitle,
-    description: GameDescription,
-    players: PlayerShortInfoVo[],
+    title?: GameTitle,
+    description?: GameDescription,
+    players?: PlayerShortInfo[],
   ) {
     this.id = id;
     this.registrationId = registrationId;
@@ -54,18 +54,22 @@ export class Game {
   hasPassword: boolean;
 
   @IsString()
-  @Length(10, 255)
+  @Length(10, 255, {
+    message: "Заголовок должен занимать от 10 до 255 символов"
+  })
   @IsOptional()
   title?: GameTitle;
 
   @IsString()
-  @Length(10, 1000)
+  @Length(10, 1000, {
+    message: "Описание должно занимать от 10 до 255 символов"
+  })
   @IsOptional()
   description?: GameDescription;
 
   @ValidateNested()
   @IsOptional()
-  players?: PlayerShortInfoVo[];
+  players?: PlayerShortInfo[];
 
   applyChanges(changes: GameChanges) {
     if ('title' in changes) {

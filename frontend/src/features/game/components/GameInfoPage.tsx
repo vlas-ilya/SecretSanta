@@ -1,33 +1,58 @@
+import { GameDescription, GameId, GameState, GameTitle } from '../store/model/GameTypes';
 
-
+import { EditableInput } from '../../../components/EditableInput/EditableInput';
 import { Form } from 'components/Form/Form';
-import { FormButton } from 'components/FormButton/FormButton';
-import { FormInput } from 'components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
+import { GameChanges } from '../store/model/GameChange';
 import React from 'react';
 import { Text } from 'components/Text/Text';
-import { ValidationError } from '../../../utils/usecase/UseCase';
-import { GameDescription, GameState, GameTitle } from '../store/model/GameTypes';
-import { GameChanges } from '../store/model/GameChange';
 
 export type GameInfoProps = {
   state?: GameState;
   title?: GameTitle;
   description?: GameDescription;
-  validationError?: ValidationError[]
+  validationErrors: Record<string, string>;
+  clearValidationErrors: () => void;
   onChangeGameInfo: (changes: GameChanges) => void;
 };
 
-export const GameInfoPage = (props: GameInfoProps) => (
+export const GameInfoPage = ({
+  state,
+  title,
+  description,
+  validationErrors,
+  onChangeGameInfo,
+  clearValidationErrors,
+}: GameInfoProps) => (
   <Form>
     <FormItem>
       <Text type="h1">Информация об игре</Text>
     </FormItem>
     <FormItem>
-
+      <EditableInput
+        name="Заголовок"
+        value={title}
+        validationMessage={validationErrors['title']}
+        onStartEditing={clearValidationErrors}
+        onChange={(value: GameId) =>
+          onChangeGameInfo({
+            title: { value },
+          })
+        }
+      />
     </FormItem>
     <FormItem>
-
+      <EditableInput
+        name="Описание"
+        value={description}
+        validationMessage={validationErrors['description']}
+        onStartEditing={clearValidationErrors}
+        onChange={(value: GameDescription) =>
+          onChangeGameInfo({
+            description: { value },
+          })
+        }
+      />
     </FormItem>
   </Form>
 );

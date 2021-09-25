@@ -12,12 +12,12 @@ export class Operation {
   }
 }
 
-type Validator<T> = (parameter: T) => [ValidationError] | null;
+type Validator<T> = (parameter: T) => ValidationError[] | null;
 type Action = (dispatch: Dispatch, getState: Function) => Promise<void>;
 type UseCase<T> = (parameter: T) => Action;
-export type Result = [ValidationError] | Operation;
+export type Result = ValidationError[] | Operation;
 
-export const use_Case =
+export const usecase =
   <T>(validators: Validator<T>, useCase: UseCase<T>) =>
   (parameter: T): Result => {
     if (validators) {

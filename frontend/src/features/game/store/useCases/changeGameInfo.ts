@@ -1,3 +1,4 @@
+import { ValidationError, usecase } from '../../../../utils/usecase/UseCase';
 import {
   applyChanges,
   backup,
@@ -7,13 +8,20 @@ import {
   tryToRestoreFromBackup,
 } from '../reducer';
 
+import { Game } from '../model/Game';
 import { GameChange } from '../model/GameChange';
 import { fetchAction } from '../../../../utils/fetch';
+import { plainToClass } from 'class-transformer';
 import { update } from '../api/api';
-import { use_Case } from '../../../../utils/usecase/UseCase';
+import { validateSync } from 'class-validator';
 
-const validator = (changes: GameChange) => {
-  return null;
+const validator = (change: GameChange): ValidationError[] => {
+  const game = plainToClass(Game, change.game);
+  game.applyChanges(change.changes);
+  const validationErrors = validateSync(game);
+  return validationErrors.map(
+    (error) => new ValidationError(error.property, error.constraints?.isLength || ''),
+  );
 };
 
 const action = (changes: GameChange) =>
@@ -34,4 +42,4 @@ const action = (changes: GameChange) =>
     },
   );
 
-export const changeGameInfo = use_Case(validator, action);
+export const changeGameInfo = usecase(validator, action);

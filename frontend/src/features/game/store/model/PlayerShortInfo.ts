@@ -1,8 +1,8 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 import { PlayerName, PlayerState } from '../../../player/store/model/PlayerTypes';
 
-export class PlayerShortInfoVo {
-  constructor(state: PlayerState, name: PlayerName) {
+export class PlayerShortInfo {
+  constructor(state: PlayerState, name?: PlayerName) {
     this.state = state;
     this.name = name;
   }

@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Game } from './model/Game';
 import { GameChanges } from './model/GameChange';
 import { LoadingStatus } from '../../../utils/classes/LoadingState';
+import { plainToClass } from 'class-transformer';
 
 export type State = {
   loadingStatus: LoadingStatus;
@@ -28,7 +29,7 @@ export const game = createSlice({
       }
     },
     backup: (state: State) => {
-      state.backup = state.game;
+      state.backup = plainToClass(Game, { ...state.game });
     },
     clearBackup: (state: State) => {
       state.backup = undefined;

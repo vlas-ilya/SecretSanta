@@ -3,6 +3,8 @@
 .form-button {
   margin: 0 0 15px;
 
+  overflow: hidden;
+
   &:last-child {
     margin: 0;
   }
@@ -37,12 +39,24 @@
     transition: all 0.3 ease;
     cursor: pointer;
 
+    svg {
+      margin-top: 1px;
+      margin-bottom: -3px;
+      width: 18px;
+      fill: $button-color;
+    }
+
     &.grey {
       @include button(
         $button-background-grey,
         $button-color-grey,
         $hover-background: darken($button-background-grey, 5)
       );
+
+      svg {
+        fill: $button-color-grey;
+      }
     }
+
   }
 }

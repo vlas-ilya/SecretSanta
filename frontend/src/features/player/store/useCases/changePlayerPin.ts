@@ -3,7 +3,7 @@ import { changeLoadingStatus, setPlayer } from '../player.reducer';
 import { PlayerChangePin } from '../model/PlayerChangePin';
 import { fetchAction } from '../../../../utils/fetch';
 import { update } from '../api/api';
-import { use_Case } from '../../../../utils/usecase/UseCase';
+import { usecase } from '../../../../utils/usecase/UseCase';
 
 const validator = (changePinMessage: PlayerChangePin) => {
   return null;
@@ -25,4 +25,4 @@ const action = (changePinMessage: PlayerChangePin) =>
     dispatch(setPlayer(player));
   });
 
-const changePlayerPin = use_Case(validator, action);
+const changePlayerPin = usecase(validator, action);

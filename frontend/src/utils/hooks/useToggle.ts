@@ -3,13 +3,13 @@ import { useCallback, useState } from 'react';
 export const useToggle = (): [boolean, () => void, () => void] => {
   const [show, setShow] = useState(false);
 
-  const showModal = useCallback(() => {
+  const setTrue = useCallback(() => {
     setShow(true);
   }, [setShow]);
 
-  const hideModal = useCallback(() => {
+  const setFalse = useCallback(() => {
     setShow(false);
   }, [setShow]);
 
-  return [show, showModal, hideModal];
+  return [show, setTrue, setFalse];
 };

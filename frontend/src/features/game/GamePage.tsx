@@ -26,7 +26,7 @@ const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
   const loadingStatus = useSelector(selectLoadingStatus);
   const game = useSelector(selectGame);
   const dispatch = useDispatch();
-  const [validationError, process] = useUseCaseProcessor();
+  const [validationErrors, process, clearValidationErrors] = useUseCaseProcessor();
   const [changeGamePinModal, showChangeGamePinModal, hideChangeGamePinModal] =
     useToggle();
 
@@ -82,14 +82,15 @@ const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
             state={game.state}
             title={game.title}
             description={game.description}
-            validationError={validationError}
+            validationErrors={validationErrors}
+            clearValidationErrors={clearValidationErrors}
             onChangeGameInfo={onChangeGameInfo}
           />
           <GamePlayersPage players={game.players} />
           {changeGamePinModal && (
             <ChangePasswordModal
               hasPassword={game.hasPassword}
-              validationError={validationError}
+              validationErrors={validationErrors}
               onChangeGamePin={onChangeGamePin}
               onClose={hideChangeGamePinModal}
             />

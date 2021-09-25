@@ -4,10 +4,10 @@ import { List } from 'components/List/List';
 import { ListItem } from 'components/List/ListItem';
 import React from 'react';
 import { Text } from 'components/Text/Text';
-import { PlayerShortInfoVo } from '../store/model/PlayerShortInfo';
+import { PlayerShortInfo } from '../store/model/PlayerShortInfo';
 
 export type GamePlayersPageProps = {
-  players?: PlayerShortInfoVo[];
+  players?: PlayerShortInfo[];
 };
 
 export const GamePlayersPage = (props: GamePlayersPageProps) => (
