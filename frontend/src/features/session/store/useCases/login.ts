@@ -7,7 +7,12 @@ import { changeHasSession, changeLoadingStatus } from '../reducer';
 import { fetchAction } from '../../../../utils/fetch';
 
 export const login = (id: GameId | PlayerId, pin: GamePin | PlayerPin | undefined) =>
-  fetchAction(changeLoadingStatus, async (dispatch) => {
-    await api.login(id, pin);
-    dispatch(changeHasSession(true));
-  });
+  fetchAction(
+    changeLoadingStatus,
+    async (dispatch) => {
+      await api.login(id, pin);
+      dispatch(changeHasSession(true));
+    },
+    undefined,
+    false,
+  );

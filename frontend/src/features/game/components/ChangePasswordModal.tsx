@@ -39,9 +39,9 @@ export const ChangePasswordModal = ({
       ]}
       showCloseButton
       onClose={onClose}
-      title={hasPassword ? 'Установка пароля' : 'Смена пароля'}
+      title={hasPassword ? 'Смена пароля' : 'Установка пароля' }
     >
-      {!hasPassword && (
+      {hasPassword && (
         <FormItem>
           <FormInput
             name="oldPin"
@@ -58,17 +58,17 @@ export const ChangePasswordModal = ({
           name="pin"
           type="password"
           label="Введите новый пароль"
-          validMessage={validationErrors['pin']}
+          validMessage={validationErrors['newPin']}
           value={newPin}
           onChange={setNewPin}
         />
       </FormItem>
       <FormItem>
         <FormInput
-          name="conformation"
+          name="confirmation"
           type="password"
           label="Повторите новый пароль"
-          validMessage={validationErrors['conformation']}
+          validMessage={validationErrors['confirmation']}
           value={confirmation}
           onChange={setConfirmation}
         />

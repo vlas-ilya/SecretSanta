@@ -14,17 +14,17 @@ export class Operation {
 
 type Validator<T> = (parameter: T) => ValidationError[] | null;
 type Action = (dispatch: Dispatch, getState: Function) => Promise<void>;
-type UseCase<T> = (parameter: T) => Action;
+type UseCase<T> = (parameter: T, callback?: () => void) => Action;
 export type Result = ValidationError[] | Operation;
 
 export const usecase =
   <T>(validators: Validator<T>, useCase: UseCase<T>) =>
-  (parameter: T): Result => {
+  (parameter: T, callback?: () => void): Result => {
     if (validators) {
       const errors = validators(parameter);
       if (errors && errors.length > 0) {
         return errors;
       }
     }
-    return new Operation(() => useCase(parameter));
+    return new Operation(() => useCase(parameter, callback));
   };

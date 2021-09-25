@@ -11,7 +11,6 @@ export const checkSession = () =>
       await api.checkSession();
       dispatch(changeHasSession(true));
     },
-    {
-      onFail: async (dispatch) => dispatch(changeHasSession(false)),
-    },
+    undefined,
+    true,
   );

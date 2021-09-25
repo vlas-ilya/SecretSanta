@@ -4,6 +4,7 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 import { LoadingStatus } from './classes/LoadingState';
 import { RootState } from '../store';
+import { changeHasSession } from '../features/session/store/reducer';
 
 export interface Options extends AxiosRequestConfig {
   password?: string | null;
@@ -43,6 +44,7 @@ export const fetchAction =
     changeLoadingStatus: ActionCreatorWithPayload<LoadingStatus>,
     action: (dispatch: Dispatch, state: RootState) => Promise<void>,
     hooks?: Hooks,
+    shouldReloginOnAuthError: boolean = true
   ) =>
   async (dispatch: Dispatch, getState: Function) => {
     try {
@@ -52,6 +54,9 @@ export const fetchAction =
       changeLoadingStatus && dispatch(changeLoadingStatus({ state: 'SUCCESS' }));
       hooks?.onSuccess && (await hooks.onSuccess(dispatch, getState()));
     } catch (e) {
+      if (e.response?.status === 401 && shouldReloginOnAuthError) {
+        dispatch(changeHasSession(false))
+      }
       changeLoadingStatus &&
         dispatch(
           changeLoadingStatus({

@@ -1,5 +1,5 @@
 import { AuthenticationProps, withAuthentication } from '../session/withAuthentication';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { selectGame, selectLoadingStatus } from './store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -19,16 +19,14 @@ import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
 
 const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
-  const {
-    setId,
-    hasSession
-  } = props;
+  const { setId, hasSession } = props;
   const loadingStatus = useSelector(selectLoadingStatus);
   const game = useSelector(selectGame);
   const dispatch = useDispatch();
   const [validationErrors, process, clearValidationErrors] = useUseCaseProcessor();
   const [changeGamePinModal, showChangeGamePinModal, hideChangeGamePinModal] =
     useToggle();
+  const hideChangeGamePinModalRef = useRef(hideChangeGamePinModal);
 
   useEffect(() => {
     props.match.params.id && setId(props.match.params.id);
@@ -55,10 +53,10 @@ const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
   const onChangeGamePin = useCallback(
     (changes: GameChangePin) => {
       if (game) {
-        process(changeGamePin(changes));
+        process(changeGamePin(changes, hideChangeGamePinModalRef.current));
       }
     },
-    [game, process],
+    [game, process, hideChangeGamePinModalRef],
   );
 
   const onStartGame = useCallback(() => {
@@ -66,6 +64,11 @@ const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
       dispatch(startGame());
     }
   }, [game, dispatch]);
+
+  const showChangeGamePinModalAndClearValidation = useCallback(() => {
+    clearValidationErrors();
+    showChangeGamePinModal();
+  }, [clearValidationErrors, showChangeGamePinModal]);
 
   return (
     <Page className="game-page" loading={loadingStatus.state === 'LOADING'}>
@@ -76,7 +79,7 @@ const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
             registrationId={game.registrationId}
             hasPassword={game.hasPassword}
             onStartGame={onStartGame}
-            onChangePin={showChangeGamePinModal}
+            onChangePin={showChangeGamePinModalAndClearValidation}
           />
           <GameInfoPage
             state={game.state}
