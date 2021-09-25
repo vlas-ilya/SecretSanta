@@ -18,7 +18,7 @@ export type GameTitleProps = {
 export const GameTitlePage = (props: GameTitleProps) => (
   <Form>
     <FormItem>
-      <Text type="h1">Тайный санта</Text>
+      <Text type="h1">Тайный Санта</Text>
     </FormItem>
     {props.state === 'INIT' && (
       <>

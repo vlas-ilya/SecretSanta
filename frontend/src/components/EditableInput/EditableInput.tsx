@@ -30,7 +30,7 @@ export const EditableInput = ({
 
   const apply = useCallback(() => {
     onChange(newValue);
-  }, [value, newValue, setNewValue]);
+  }, [newValue, onChange]);
 
   useEffect(() => {
     setNewValue(value || '');
@@ -46,11 +46,11 @@ export const EditableInput = ({
     if (activeElement !== name) {
       showViewComponent();
     }
-  }, [activeElement, showViewComponent]);
+  }, [name, activeElement, showViewComponent]);
 
   useEffect(() => {
     showViewComponent();
-  }, [value]);
+  }, [value, showViewComponent]);
 
   return (
     <div className="EditableInput">

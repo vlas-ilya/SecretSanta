@@ -1,7 +1,7 @@
 {
   "name": "secret-santa",
   "version": "1.0.0",
-  "description": "Тайный санта",
+  "description": "Тайный Санта",
   "scripts": {
     "prettier": "prettier-eslint --write \"$PWD/{frontend,backend}/{src,test,public}/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },

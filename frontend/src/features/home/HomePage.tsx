@@ -25,7 +25,7 @@ const HomePage = () => {
     <Page className="home-page" loading={loadingStatus.state === 'LOADING'}>
       <Form>
         <FormItem>
-          <Text type="h1">Тайный санта</Text>
+          <Text type="h1">Тайный Санта</Text>
         </FormItem>
         <FormButton onClick={onStartGame}>Создать игру</FormButton>
       </Form>

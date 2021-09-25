@@ -1,12 +1,8 @@
-import { GameId, GamePin } from '../../../game/store/model/GameTypes';
-import { PlayerId, PlayerPin } from '../../../player/store/model/PlayerTypes';
+import { Id, Pin } from '../model/SessionTypes';
 
 import fetch from '../../../../utils/fetch';
 
-export const login = async (
-  id: GameId | PlayerId,
-  pin: GamePin | PlayerPin | undefined,
-) => {
+export const login = async (id: Id, pin: Pin | undefined) => {
   await fetch(`/auth/login`).post({
     data: {
       username: id,

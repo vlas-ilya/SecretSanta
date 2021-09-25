@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { Id, Pin } from './store/model/SessionTypes';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  selectHasSession,
+  selectLoadingStatus,
+  selectShouldInputPin,
+  selectWasIncorrectPin,
+} from './store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GameId } from '../game/store/model/GameTypes';
-import { PlayerId } from '../player/store/model/PlayerTypes';
+import { InputPinModal } from './components/InputPinModal';
+import { Page } from '../../components/Page/Page';
 import { checkSession } from './store/useCases/checkSession';
 import { login } from './store/useCases/login';
-import { selectHasSession } from './store/selectors';
 
 export type AuthenticationProps = {
-  setId: (id: GameId | PlayerId) => void;
+  setId: (id: Id) => void;
   hasSession?: boolean;
 };
 
@@ -19,7 +25,10 @@ export const withAuthentication =
   (props: Omit<T, keyof AuthenticationProps>) => {
     const dispatch = useDispatch();
     const hasSession = useSelector(selectHasSession);
-    const [id, setId] = useState<GameId | PlayerId | undefined>(undefined);
+    const shouldInputPin = useSelector(selectShouldInputPin);
+    const loadingStatus = useSelector(selectLoadingStatus);
+    const wasIncorrectPin = useSelector(selectWasIncorrectPin);
+    const [id, setId] = useState<Id | undefined>(undefined);
 
     useEffect(() => {
       if (!id) {
@@ -27,10 +36,30 @@ export const withAuthentication =
       }
       if (hasSession === undefined) {
         dispatch(checkSession());
-      } else if (!hasSession) {
+      } else if (!hasSession && !shouldInputPin) {
         dispatch(login(id, undefined));
       }
-    }, [hasSession, dispatch, id]);
+    }, [id, hasSession, shouldInputPin, dispatch]);
+
+    const loginWithPin = useCallback(
+      (pin: Pin) => {
+        if (id) {
+          dispatch(login(id, pin));
+        }
+      },
+      [id, login, dispatch],
+    );
+
+    if (!hasSession && shouldInputPin) {
+      return (
+        <Page loading={loadingStatus.state === 'LOADING'}>
+          <InputPinModal
+            onInputPin={loginWithPin}
+            wasIncorrectPin={wasIncorrectPin}
+          />
+        </Page>
+      );
+    }
 
     return <WrappedComponent {...(props as T)} setId={setId} hasSession={hasSession} />;
   };
