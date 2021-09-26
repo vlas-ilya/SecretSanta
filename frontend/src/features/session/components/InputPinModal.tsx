@@ -4,18 +4,15 @@ import { FormButton } from '../../../components/FormButton/FormButton';
 import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from '../../../components/FormItem/FormItem';
 import Modal from '../../../components/Modal/Modal';
-import { Text } from '../../../components/Text/Text';
 import { Pin } from '../store/model/SessionTypes';
+import { Text } from '../../../components/Text/Text';
 
 export type InputPasswordModal = {
   onInputPin: (password: Pin) => void;
   wasIncorrectPin?: boolean;
 };
 
-export const InputPinModal = ({
-  onInputPin,
-  wasIncorrectPin,
-}: InputPasswordModal) => {
+export const InputPinModal = ({ onInputPin, wasIncorrectPin }: InputPasswordModal) => {
   const [pin, setPin] = useState('');
 
   const onLogin = useCallback(() => {

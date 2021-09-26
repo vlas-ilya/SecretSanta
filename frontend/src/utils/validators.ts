@@ -23,4 +23,3 @@ export function containsOnlyNumbers<T extends string>(value: T) {
 export function notEmpty<T extends { length: number }>(value: T) {
   return !notNull(value) && value?.length;
 }
-

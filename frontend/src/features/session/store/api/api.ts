@@ -15,6 +15,6 @@ export const checkSession = async (id: Id) => {
   await fetch(`/auth/check_session`).post({
     data: {
       username: id,
-    }
+    },
   });
 };

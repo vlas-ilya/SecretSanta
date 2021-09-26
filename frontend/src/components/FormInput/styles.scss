@@ -1,15 +1,6 @@
 @import '../../theme';
 
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-180deg);
-  }
-}
-
-.form-input {
+.FormInput {
   position: relative;
   margin: 0 0 15px;
 
@@ -17,35 +8,19 @@
     margin: 0;
   }
 
-  &.filled {
-    label {
-      position: absolute;
-      transition: all 0.1s;
+  &-Body {
+    position: relative;
 
-      transform: scale(0.5) translate(0, -30px);
-      font-weight: bold;
-      color: #505050;
+    &-copied {
+      margin-right: 49px;
     }
   }
 
-  .sync {
-    -webkit-tap-highlight-color: transparent;
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    right: 13px;
-    top: 13px;
-    cursor: pointer;
-
-    &.rotation {
-      animation-name: rotation;
-      animation-duration: 0.3s;
-      animation-iteration-count: 1;
-      animation-timing-function: cubic-bezier(0.52, 0.5, 0.25, 1);
-    }
+  &-ValidationMessage {
+    color: $ValidationMessage--color;
   }
 
-  label {
+  &-Label {
     transform-origin: left;
     transition: all 0.2s;
     font-family: 'Roboto', sans-serif;
@@ -55,21 +30,23 @@
     left: 16px;
     color: #909090;
     cursor: auto;
-  }
 
-  .validMessage {
-    color: #bd1d1d;
-  }
+    @media not all and (min-resolution: 0.001dpcm) {
+      @supports (-webkit-appearance: none) {
+        top: 18px;
+      }
+    }
 
-  &.sync {
-    input[type='text'] {
-      padding-right: 45px;
+    &-filled {
+      position: absolute;
+      transition: all 0.1s;
+      transform: scale(0.5) translate(0, -30px);
+      font-weight: bold;
+      color: #505050;
     }
   }
 
-  input[type='text'],
-  input[type='password'],
-  input[type='number'] {
+  &-Input {
     font-family: 'Roboto', sans-serif;
     outline: 0;
     background: #f2f2f2;
@@ -78,6 +55,7 @@
     padding: 15px 15px 13px;
     box-sizing: border-box;
     font-size: 16px;
+    box-shadow: 0 2px 5px 0 rgba(black, 0.2);
 
     border-radius: 0;
     -webkit-appearance: none;
@@ -87,19 +65,54 @@
     &:focus {
       border: 1px solid $input-border-color-hover;
     }
-  }
 
-  &.invalid {
-    input[type='text'] {
-      border: 1px solid #bd1d1d;
+    &-invalid {
+      border-color: $ValidationMessage--color;
+
+      &:hover,
+      &:active,
+      &:focus {
+        border: 1px solid $ValidationMessage-active--color;
+      }
+    }
+
+    &-sync {
+      padding-right: 45px;
     }
   }
 
-  @media not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) {
-      label {
-        top: 18px;
+  &-SyncButton {
+    -webkit-tap-highlight-color: transparent;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: 13px;
+    top: 13px;
+    cursor: pointer;
+
+    &-rotation {
+      animation-name: rotation;
+      animation-duration: 0.3s;
+      animation-iteration-count: 1;
+      animation-timing-function: cubic-bezier(0.52, 0.5, 0.25, 1);
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-180deg);
+        }
       }
+    }
+  }
+
+  &-CopyButton {
+    &-copied {
+      width: 49px;
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   }
 }

@@ -1,6 +1,7 @@
 import { changeGameId, changeLoadingStatus } from '../reducer';
-import { fetchAction } from '../../../../utils/fetch';
+
 import { create } from '../api/api';
+import { fetchAction } from '../../../../utils/fetch';
 
 export const createGame = () =>
   fetchAction(changeLoadingStatus, async (dispatch) => {

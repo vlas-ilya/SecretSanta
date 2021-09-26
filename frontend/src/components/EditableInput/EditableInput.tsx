@@ -96,6 +96,7 @@ const View = ({
         <>
           <span className="EditableInput_NameLabel">{name}</span>
           <span
+            title="Редактировать"
             className="EditableInput_ValueLabel"
             role="button"
             tabIndex={0}

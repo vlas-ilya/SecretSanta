@@ -39,7 +39,7 @@ export const ChangePasswordModal = ({
       ]}
       showCloseButton
       onClose={onClose}
-      title={hasPassword ? 'Смена пароля' : 'Установка пароля' }
+      title={hasPassword ? 'Смена пароля' : 'Установка пароля'}
     >
       {hasPassword && (
         <FormItem>

@@ -1,9 +1,12 @@
 @import '../../theme';
 
+$fuschia: #ff0081;
+$button-bg: $fuschia;
+$button-text-color: #fff;
+$baby-blue: #f8faff;
+
 .form-button {
   margin: 0 0 15px;
-
-  overflow: hidden;
 
   &:last-child {
     margin: 0;
@@ -24,6 +27,10 @@
       &:focus {
         background: $hover-background;
       }
+
+      &:active {
+        box-shadow: 0 1px 2px 0 rgba(black, 0.46);
+      }
     }
 
     @include button();
@@ -38,6 +45,7 @@
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
     cursor: pointer;
+    position: relative;
 
     svg {
       margin-top: 1px;
@@ -57,6 +65,5 @@
         fill: $button-color-grey;
       }
     }
-
   }
 }

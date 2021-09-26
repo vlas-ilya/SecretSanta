@@ -1,12 +1,12 @@
 import { GameId, GamePin } from '../model/GameTypes';
 
+import { AxiosResponse } from 'axios';
 import { Game } from '../model/Game';
 import { GameChanges } from '../model/GameChange';
+import { INVALID_RESPONSE } from '../../../../utils/constants';
 import fetch from '../../../../utils/fetch';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
-import { INVALID_RESPONSE } from '../../../../utils/constants';
-import { AxiosResponse } from 'axios';
 
 export const update = async (
   id: GameId,

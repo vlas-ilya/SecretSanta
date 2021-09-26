@@ -6,9 +6,7 @@ import { LoadingStatus } from './classes/LoadingState';
 import { RootState } from '../store';
 import { changeAuthenticationState } from '../features/session/store/reducer';
 
-export interface Options extends AxiosRequestConfig {
-
-}
+export interface Options extends AxiosRequestConfig {}
 
 const _fetch = (url: string, options: Options = {}) => {
   axios.defaults.withCredentials = true;
@@ -41,7 +39,7 @@ export const fetchAction =
     changeLoadingStatus: ActionCreatorWithPayload<LoadingStatus>,
     action: (dispatch: Dispatch, state: RootState) => Promise<void>,
     hooks?: Hooks,
-    shouldReloginOnAuthError: boolean = true
+    shouldReloginOnAuthError: boolean = true,
   ) =>
   async (dispatch: Dispatch, getState: Function) => {
     try {
@@ -52,7 +50,7 @@ export const fetchAction =
       hooks?.onSuccess && (await hooks.onSuccess(dispatch, getState()));
     } catch (e) {
       if (e.response?.status === 401 && shouldReloginOnAuthError) {
-        dispatch(changeAuthenticationState('SHOULD_LOGIN'))
+        dispatch(changeAuthenticationState('SHOULD_LOGIN'));
       }
       changeLoadingStatus &&
         dispatch(
