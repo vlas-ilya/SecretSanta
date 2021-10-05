@@ -53,17 +53,23 @@ export class Player {
   hasPassword: boolean = false;
 
   @IsString()
-  @Length(5, 255)
+  @Length(5, 255, {
+    message: "Поле 'Имя и Фамилия' должно занимать от 5 до 255 символов",
+  })
   @IsOptional()
   name?: PlayerName;
 
   @IsString()
-  @Length(0, 1000)
+  @Length(0, 1000, {
+    message: "Поле 'Пожелания' должно занимать не более 1000 символов",
+  })
   @IsOptional()
   wish?: PlayerWish;
 
   @IsString()
-  @Length(0, 1000)
+  @Length(0, 1000, {
+    message: "Поле 'Не дарить ни в коем случае' должно занимать не более 1000 символов",
+  })
   @IsOptional()
   taboo?: PlayerTaboo;
 

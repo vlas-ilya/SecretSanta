@@ -10,7 +10,7 @@ export type GamePlayersPageProps = {
   players?: PlayerShortInfo[];
 };
 
-export const GamePlayersPage = (props: GamePlayersPageProps) => (
+export const GamePlayersSection = (props: GamePlayersPageProps) => (
   <Form>
     <FormItem>
       <Text type="h1">Информация об игроках</Text>

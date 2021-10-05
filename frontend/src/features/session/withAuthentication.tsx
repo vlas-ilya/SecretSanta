@@ -51,7 +51,7 @@ export const withAuthentication =
         <Page loading={loadingStatus.state === 'LOADING'}>
           <InputPinModal
             onInputPin={loginWithPin}
-            wasIncorrectPin={authenticationState == 'WAS_INCORRECT_PIN'}
+            wasIncorrectPin={authenticationState === 'WAS_INCORRECT_PIN'}
           />
         </Page>
       );

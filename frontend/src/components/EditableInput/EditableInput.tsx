@@ -17,6 +17,7 @@ export type EditableInputProps = {
   onChange: (value: string) => void;
 };
 
+/* TODO (feat): Добавить textarea */
 export const EditableInput = ({
   name,
   value,

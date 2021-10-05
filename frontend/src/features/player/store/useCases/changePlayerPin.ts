@@ -1,28 +1,43 @@
+import { ValidationError, usecase } from '../../../../utils/usecase/usecase';
 import { changeLoadingStatus, setPlayer } from '../player.reducer';
 
 import { PlayerChangePin } from '../model/PlayerChangePin';
 import { fetchAction } from '../../../../utils/fetch';
 import { update } from '../api/api';
-import { usecase } from '../../../../utils/usecase/usecase';
+import { validateSync } from 'class-validator';
 
-const validator = (changePinMessage: PlayerChangePin) => {
-  return null;
+const validator = (changes: PlayerChangePin) => {
+  const message = new PlayerChangePin(
+    changes.newPin,
+    changes.confirmation,
+    changes.oldPin,
+  );
+  const validationErrors = validateSync(message);
+  return validationErrors.map(
+    (error) =>
+      new ValidationError(
+        error.property,
+        error.constraints?.isLength || error.constraints?.Match || '',
+      ),
+  );
 };
 
-const action = (changePinMessage: PlayerChangePin) =>
+const action = (changePinMessage: PlayerChangePin, callback?: () => void) =>
   fetchAction(changeLoadingStatus, async (dispatch, state) => {
-    if (!state.game.game?.id) {
+    if (!state.player.player?.id) {
       return;
     }
 
-    const player = await update(state.game.game.id, {
+    const Player = await update(state.player.player.id, {
       pin: {
-        oldValue: changePinMessage.oldValue,
-        newValue: changePinMessage.newValue,
+        oldValue: changePinMessage.oldPin,
+        newValue: changePinMessage.newPin,
       },
     });
 
-    dispatch(setPlayer(player));
+    dispatch(setPlayer(Player));
+
+    callback && callback();
   });
 
-const changePlayerPin = usecase(validator, action);
+export const changePlayerPin = usecase(validator, action);

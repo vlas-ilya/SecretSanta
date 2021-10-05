@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import GamePage from './features/game/GamePage';
 import HomePage from './features/home/HomePage';
-//import PlayerPage from './features/player/PlayerPage';
+import PlayerPage from './features/player/PlayerPage';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -18,8 +18,7 @@ const Routes = () => {
         <Switch>
           <Route path="/" component={HomePage} exact />
           <Route path="/game/:id" component={GamePage} />
-          {/*<Route path="/player/registration/:id" component={RegistrationPage} />
-          <Route path="/player/:id" component={PlayerPage} />*/}
+          <Route path="/player/:id" component={PlayerPage} />
         </Switch>
       </Router>
     </div>

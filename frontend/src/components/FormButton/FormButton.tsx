@@ -1,12 +1,6 @@
 import './styles.scss';
 
-import React, {
-  MouseEventHandler,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 
 import classNames from 'classnames';
 

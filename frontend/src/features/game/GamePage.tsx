@@ -3,12 +3,12 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { selectGame, selectLoadingStatus } from './store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ChangePasswordModal } from './components/ChangePasswordModal';
+import { ChangePinModal } from './components/ChangePinModal';
 import { GameChangePin } from './store/model/GameChangePin';
 import { GameChanges } from './store/model/GameChange';
-import { GameInfoPage } from 'features/game/components/GameInfoPage';
-import { GamePlayersPage } from 'features/game/components/GamePlayersPage';
-import { GameTitlePage } from 'features/game/components/GameTitlePage';
+import { GameInfoSection } from 'features/game/components/GameInfoSection';
+import { GamePlayersSection } from 'features/game/components/GamePlayersSection';
+import { GameTitleSection } from 'features/game/components/GameTitleSection';
 import { MatchIdentifiable } from '../../utils/classes/MatchIdentifiable';
 import { Page } from 'components/Page/Page';
 import { changeGameInfo } from './store/useCases/changeGameInfo';
@@ -18,23 +18,27 @@ import { startGame } from './store/useCases/startGame';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
 
-const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
-  const { setId, hasSession } = props;
+const GamePage = ({
+  setId,
+  match,
+  hasSession,
+}: MatchIdentifiable & AuthenticationProps) => {
+  const id = match.params.id;
+
   const loadingStatus = useSelector(selectLoadingStatus);
   const game = useSelector(selectGame);
   const dispatch = useDispatch();
   const [validationErrors, process, clearValidationErrors] = useUseCaseProcessor();
-  const [changeGamePinModal, showChangeGamePinModal, hideChangeGamePinModal] =
-    useToggle();
-  const hideChangeGamePinModalRef = useRef(hideChangeGamePinModal);
+  const [changePinModal, showChangePinModal, hideChangeModal] = useToggle();
+  const hideChangePinModalRef = useRef(hideChangeModal);
 
   useEffect(() => {
-    props.match.params.id && setId(props.match.params.id);
-  }, [dispatch, setId, props.match.params.id]);
+    id && setId(id);
+  }, [dispatch, setId, id]);
 
   useEffect(() => {
-    hasSession && dispatch(loadGameInfo(props.match.params.id));
-  }, [dispatch, hasSession, props.match.params.id]);
+    hasSession && dispatch(loadGameInfo(id));
+  }, [dispatch, hasSession, id]);
 
   const onChangeGameInfo = useCallback(
     (changes: GameChanges) => {
@@ -53,10 +57,10 @@ const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
   const onChangeGamePin = useCallback(
     (changes: GameChangePin) => {
       if (game) {
-        process(changeGamePin(changes, hideChangeGamePinModalRef.current));
+        process(changeGamePin(changes, hideChangePinModalRef.current));
       }
     },
-    [game, process, hideChangeGamePinModalRef],
+    [game, process, hideChangePinModalRef],
   );
 
   const onStartGame = useCallback(() => {
@@ -67,35 +71,35 @@ const GamePage = (props: MatchIdentifiable & AuthenticationProps) => {
 
   const showChangeGamePinModalAndClearValidation = useCallback(() => {
     clearValidationErrors();
-    showChangeGamePinModal();
-  }, [clearValidationErrors, showChangeGamePinModal]);
+    showChangePinModal();
+  }, [clearValidationErrors, showChangePinModal]);
 
   return (
     <Page className="game-page" loading={loadingStatus.state === 'LOADING'}>
       {game && (
         <>
-          <GameTitlePage
+          <GameTitleSection
             state={game.state}
             registrationId={game.registrationId}
             hasPassword={game.hasPassword}
             onStartGame={onStartGame}
             onChangePin={showChangeGamePinModalAndClearValidation}
           />
-          <GameInfoPage
+          <GameInfoSection
             state={game.state}
             title={game.title}
             description={game.description}
             validationErrors={validationErrors}
             clearValidationErrors={clearValidationErrors}
-            onChangeGameInfo={onChangeGameInfo}
+            onChange={onChangeGameInfo}
           />
-          <GamePlayersPage players={game.players} />
-          {changeGamePinModal && (
-            <ChangePasswordModal
+          <GamePlayersSection players={game.players} />
+          {changePinModal && (
+            <ChangePinModal
               hasPassword={game.hasPassword}
               validationErrors={validationErrors}
-              onChangeGamePin={onChangeGamePin}
-              onClose={hideChangeGamePinModal}
+              onSetNewPin={onChangeGamePin}
+              onClose={hideChangeModal}
             />
           )}
         </>

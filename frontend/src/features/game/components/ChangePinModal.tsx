@@ -9,14 +9,14 @@ import Modal from '../../../components/Modal/Modal';
 export type ChangePasswordModalProps = {
   hasPassword: boolean;
   validationErrors: Record<string, string>;
-  onChangeGamePin: (changes: GameChangePin) => void;
+  onSetNewPin: (changes: GameChangePin) => void;
   onClose: () => void;
 };
 
-export const ChangePasswordModal = ({
+export const ChangePinModal = ({
   hasPassword,
   validationErrors,
-  onChangeGamePin,
+  onSetNewPin,
   onClose,
 }: ChangePasswordModalProps) => {
   const [oldPin, setOldPin] = useState('');
@@ -24,8 +24,8 @@ export const ChangePasswordModal = ({
   const [confirmation, setConfirmation] = useState('');
 
   const changeGamePinCallback = useCallback(() => {
-    onChangeGamePin(new GameChangePin(newPin, confirmation, oldPin));
-  }, [oldPin, newPin, confirmation, onChangeGamePin]);
+    onSetNewPin(new GameChangePin(newPin, confirmation, oldPin));
+  }, [oldPin, newPin, confirmation, onSetNewPin]);
 
   return (
     <Modal

@@ -24,6 +24,8 @@ export type FormInputProps = {
   type?: '' | 'password' | 'number';
 };
 
+/* TODO (fix): При наведении на label сбрасывается фокус если поле disabled */
+/* TODO (feat): Сделать поддержку цифровой клавиатуры для поля типа password */
 export const FormInput = (props: FormInputProps) => {
   const formInput = bem('FormInput');
   const [syncClasses, setSyncClasses] = useState(formInput.element('SyncButton'));
@@ -42,10 +44,10 @@ export const FormInput = (props: FormInputProps) => {
       }, 300);
       return () => clearTimeout(timer);
     }
-  }, [startAnimation]);
+  }, [startAnimation, formInput]);
 
   const copyToClipboard = useCallback(() => {
-    const ignored = navigator.clipboard.writeText(props.value || '');
+    navigator.clipboard.writeText(props.value || '').then(() => undefined);
   }, [props.value]);
 
   return (

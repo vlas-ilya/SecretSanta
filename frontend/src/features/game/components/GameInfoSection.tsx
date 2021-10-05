@@ -2,6 +2,7 @@ import { GameDescription, GameId, GameState, GameTitle } from '../store/model/Ga
 
 import { EditableInput } from '../../../components/EditableInput/EditableInput';
 import { Form } from 'components/Form/Form';
+import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
 import { GameChanges } from '../store/model/GameChange';
 import React from 'react';
@@ -13,15 +14,15 @@ export type GameInfoProps = {
   description?: GameDescription;
   validationErrors: Record<string, string>;
   clearValidationErrors: () => void;
-  onChangeGameInfo: (changes: GameChanges) => void;
+  onChange: (changes: GameChanges) => void;
 };
 
-export const GameInfoPage = ({
+export const GameInfoSection = ({
   state,
   title,
   description,
   validationErrors,
-  onChangeGameInfo,
+  onChange,
   clearValidationErrors,
 }: GameInfoProps) => (
   <Form>
@@ -35,7 +36,7 @@ export const GameInfoPage = ({
         validationMessage={validationErrors['title']}
         onStartEditing={clearValidationErrors}
         onChange={(value: GameId) =>
-          onChangeGameInfo({
+          onChange({
             title: { value },
           })
         }
@@ -48,10 +49,18 @@ export const GameInfoPage = ({
         validationMessage={validationErrors['description']}
         onStartEditing={clearValidationErrors}
         onChange={(value: GameDescription) =>
-          onChangeGameInfo({
+          onChange({
             description: { value },
           })
         }
+      />
+    </FormItem>
+    <FormItem>
+      <FormInput
+        name="title"
+        label="Статус игры"
+        value={state === 'INIT' ? 'Подготовка игроков' : 'Запущена'}
+        disabled
       />
     </FormItem>
   </Form>
