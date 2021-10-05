@@ -26,6 +26,7 @@ const PlayerPage = ({
   const dispatch = useDispatch();
   const loadingStatus = useSelector(selectLoadingStatus);
   const player = useSelector(selectPlayer);
+  const playerRef = useRef(player);
   const [validationErrors, process, clearValidationErrors] = useUseCaseProcessor();
   const [changePinModal, showChangePinModal, hideChangePinModal] = useToggle();
   const hideChangePinModalRef = useRef(hideChangePinModal);
@@ -40,25 +41,23 @@ const PlayerPage = ({
 
   const onChangePlayerInfo = useCallback(
     (changes: PlayerChanges) => {
-      if (player) {
+      if (playerRef.current) {
         process(
           changePlayerInfo({
-            player,
+            player: playerRef.current,
             changes,
           }),
         );
       }
     },
-    [player, process],
+    [playerRef, process],
   );
 
   const onChangePlayerPin = useCallback(
     (changes: PlayerChangePin) => {
-      if (player) {
-        process(changePlayerPin(changes, hideChangePinModalRef.current));
-      }
+      process(changePlayerPin(changes, hideChangePinModalRef));
     },
-    [player, process, hideChangePinModalRef],
+    [process, hideChangePinModalRef],
   );
 
   const showChangePlayerPinModalAndClearValidation = useCallback(() => {

@@ -5,6 +5,7 @@ import { PlayerChangePin } from '../model/PlayerChangePin';
 import { fetchAction } from '../../../../utils/fetch';
 import { update } from '../api/api';
 import { validateSync } from 'class-validator';
+import { MutableRefObject } from 'react';
 
 const validator = (changes: PlayerChangePin) => {
   const message = new PlayerChangePin(
@@ -22,7 +23,7 @@ const validator = (changes: PlayerChangePin) => {
   );
 };
 
-const action = (changePinMessage: PlayerChangePin, callback?: () => void) =>
+const action = (changePinMessage: PlayerChangePin, callback?: MutableRefObject<() => void>) =>
   fetchAction(changeLoadingStatus, async (dispatch, state) => {
     if (!state.player.player?.id) {
       return;
@@ -37,7 +38,7 @@ const action = (changePinMessage: PlayerChangePin, callback?: () => void) =>
 
     dispatch(setPlayer(Player));
 
-    callback && callback();
+    callback && callback.current();
   });
 
 export const changePlayerPin = usecase(validator, action);

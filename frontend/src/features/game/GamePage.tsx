@@ -27,6 +27,7 @@ const GamePage = ({
 
   const loadingStatus = useSelector(selectLoadingStatus);
   const game = useSelector(selectGame);
+  const gameRef = useRef(game);
   const dispatch = useDispatch();
   const [validationErrors, process, clearValidationErrors] = useUseCaseProcessor();
   const [changePinModal, showChangePinModal, hideChangeModal] = useToggle();
@@ -42,32 +43,28 @@ const GamePage = ({
 
   const onChangeGameInfo = useCallback(
     (changes: GameChanges) => {
-      if (game) {
+      if (gameRef.current) {
         process(
           changeGameInfo({
-            game,
+            game: gameRef.current,
             changes,
           }),
         );
       }
     },
-    [game, process],
+    [gameRef, process],
   );
 
   const onChangeGamePin = useCallback(
     (changes: GameChangePin) => {
-      if (game) {
-        process(changeGamePin(changes, hideChangePinModalRef.current));
-      }
+      process(changeGamePin(changes, hideChangePinModalRef));
     },
-    [game, process, hideChangePinModalRef],
+    [process, hideChangePinModalRef],
   );
 
   const onStartGame = useCallback(() => {
-    if (game) {
-      dispatch(startGame());
-    }
-  }, [game, dispatch]);
+    dispatch(startGame());
+  }, [dispatch]);
 
   const showChangeGamePinModalAndClearValidation = useCallback(() => {
     clearValidationErrors();
