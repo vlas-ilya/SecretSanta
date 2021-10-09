@@ -4,17 +4,14 @@ import {
   GAME_NEW_STATE_IS_NOT_CORRECT,
   GAME_OLD_PIN_IS_NOT_CORRECT,
   GAME_SHOULD_BE_IN_INIT_STATUS,
-  correctNewState,
-  correctOldPassword,
   isTrue,
   notEmpty,
   notNull,
 } from '../../../../utils/validators';
 import {
+  GameChangePin as GameChangePinVo,
   GameChanges as GameChangesVo,
   Game as GameVo,
-  GameChangePin as GameChangePinVo,
-  GameState as GameStateVo,
 } from 'model';
 
 import { Change } from '../../../../utils/classes/Change';
@@ -24,6 +21,8 @@ import { GamePassword } from './GamePassword';
 import { GamePin } from './GamePin';
 import { GameState } from './GameState';
 import { GameTitle } from './GameTitle';
+
+export type GameWasStarted = boolean;
 
 const fields: (keyof GameVo | 'newPin')[] = ['title', 'description', 'newPin', 'state'];
 const changedFields = (changes: GameChangesVo | GameChangePinVo) =>
@@ -42,20 +41,30 @@ type ChangePassword = {
 type Changes = {} | ChangeTitle | ChangeDescription | ChangeState | ChangePassword;
 
 export class GameChanges {
-  private changes: Changes = {};
+  private constructor(
+    private readonly changes: Changes,
+    private readonly comparePinAndPassword: (
+      pin: string,
+      password: string,
+    ) => Promise<boolean>,
+  ) {}
 
-  private constructor() {}
-
-  static async create(changes: GameChangesVo | GameChangePinVo): Promise<GameChanges> {
+  static async create(
+    changes: GameChangesVo | GameChangePinVo,
+    passwordGenerator: (pin: string) => Promise<string>,
+    comparePinAndPassword: (pin: string, password: string) => Promise<boolean>,
+  ): Promise<GameChanges> {
     notNull(changes, GAME_CHANGES_IS_NULL);
     notEmpty(changedFields(changes), GAME_CHANGES_IS_EMPTY);
-    const gameChanges = new GameChanges();
-    gameChanges.changes = await GameChanges.transform(changes);
-    return gameChanges;
+    return new GameChanges(
+      await GameChanges.transform(changes, passwordGenerator),
+      comparePinAndPassword,
+    );
   }
 
   private static async transform(
     changesVo: GameChangesVo | GameChangePinVo,
+    passwordGenerator: (pin: string) => Promise<string>,
   ): Promise<Changes> {
     const changes: Changes = {};
     if ('title' in changesVo) {
@@ -70,7 +79,7 @@ export class GameChanges {
     }
     if ('newPin' in changesVo) {
       (changes as ChangePassword).password = {
-        value: await GamePassword.create(new GamePin(changesVo.newPin)),
+        value: await GamePassword.create(new GamePin(changesVo.newPin), passwordGenerator),
         oldValue: changesVo.oldPin && (await new GamePin(changesVo.oldPin)),
       };
     }
@@ -82,11 +91,15 @@ export class GameChanges {
     return changes;
   }
 
-  public apply(game: Game): Game {
+  async apply(game: Game): Promise<[Game, GameWasStarted]> {
     'password' in this.changes &&
-      correctOldPassword(game, this.changes, GAME_OLD_PIN_IS_NOT_CORRECT);
+      (await this.correctOldPassword(
+        game,
+        this.changes,
+        GAME_OLD_PIN_IS_NOT_CORRECT,
+      ));
     'state' in this.changes &&
-      correctNewState(game, this.changes, GAME_NEW_STATE_IS_NOT_CORRECT);
+      GameChanges.correctNewState(game, this.changes, GAME_NEW_STATE_IS_NOT_CORRECT);
 
     const newState = this.loadValue(game, 'state');
     const newTitle = this.loadValue(game, 'title');
@@ -114,7 +127,55 @@ export class GameChanges {
     );
     newGame.players.push(...game.players);
 
-    return newGame;
+    return [newGame, GameChanges.gameWasStarted(game.state, newState)];
+  }
+
+  private async correctOldPassword(
+    game: Game,
+    password: {
+      password: {
+        oldValue?: GamePin;
+        value: GamePassword;
+      };
+    },
+    errorMessage: Error,
+  ) {
+    if (game?.password?.value) {
+      const isMatch = await this.comparePinAndPassword(
+        password?.password?.oldValue?.value,
+        game.password.value,
+      );
+      if (!isMatch) {
+        throw errorMessage;
+      }
+    }
+  }
+
+  private static correctNewState(
+    game: Game,
+    state: Change<Game, 'state'>,
+    errorMessage: Error,
+  ) {
+    const oldState = game?.state;
+    const newState = state?.state?.value;
+
+    notEmpty(oldState, errorMessage);
+    notEmpty(newState, errorMessage);
+
+    const correctNewState =
+      (oldState === GameState.INIT && newState === GameState.INIT) ||
+      (oldState === GameState.INIT && newState === GameState.RUN) ||
+      (oldState === GameState.RUN && newState === GameState.RUN) ||
+      (oldState === GameState.RUN && newState === GameState.ENDED) ||
+      (oldState === GameState.ENDED && newState === GameState.ENDED);
+
+    if (!correctNewState) {
+      throw errorMessage;
+    }
+  }
+
+  private static gameWasStarted(currentState: GameState, newState: GameState) {
+    return currentState === GameState.INIT && newState == GameState.RUN;
   }
 
   private loadValue<T extends keyof Game>(game: Game, field: T): Game[T] {

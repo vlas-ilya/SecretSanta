@@ -6,6 +6,7 @@ import { GameId } from './model/do/GameId';
 import { GameState } from './model/do/GameState';
 import { GameStorage } from './game.storage';
 import { Injectable } from '@nestjs/common';
+import { Player } from '../player/model/do/Player';
 import { PlayerState } from '../player/model/do/PlayerState';
 import { PlayerStorage } from '../player/player.storage';
 
@@ -29,19 +30,25 @@ export class GameService {
 
   async update(id: GameId, changes: GameChanges): Promise<Game> {
     const game = await this.get(id);
-    const newGame = changes.apply(game);
-    if (game.state === GameState.INIT && newGame.state == GameState.RUN) {
-      await Promise.all(
-        newGame.players
-          .filter((player) => player.state !== PlayerState.ACTIVE)
-          .map((player) => this.playerStorage.delete(player)),
-      );
-      newGame.calculateTargets();
-      await Promise.all(
-        newGame.players.map((player) => this.playerStorage.update(player)),
-      );
+    const [newVersion, gameWasStarted] = await changes.apply(game);
+    if (gameWasStarted) {
+      await this.removeNotActivePlayers(newVersion.players);
+      newVersion.calculateTargets();
+      await this.savePlayers(newVersion.players);
     }
-    return this.storage.update(newGame);
+    return this.storage.update(newVersion);
+  }
+
+  private async removeNotActivePlayers(players: Player[]) {
+    await Promise.all(
+      players
+        .filter((player) => player.state !== PlayerState.ACTIVE)
+        .map((player) => this.playerStorage.delete(player)),
+    );
+  }
+
+  private async savePlayers(players: Player[]) {
+    await Promise.all(players.map((player) => this.playerStorage.update(player)));
   }
 
   async delete(id: GameId): Promise<void> {

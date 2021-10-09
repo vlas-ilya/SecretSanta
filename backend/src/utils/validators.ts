@@ -1,20 +1,11 @@
-import * as bcrypt from 'bcrypt';
-
 import { BadRequestException } from '../exceptions/BadRequestException';
-import { Change } from './classes/Change';
 import { ConflictException } from '../exceptions/ConflictException';
-import { Game } from '../features/game/model/do/Game';
-import { GamePassword } from '../features/game/model/do/GamePassword';
-import { GamePin } from '../features/game/model/do/GamePin';
-import { GameState } from '../features/game/model/do/GameState';
 import { Interval } from './classes/Interval';
 import { NotFoundException } from '../exceptions/NotFoundException';
-import { Player } from '../features/player/model/do/Player';
-import { PlayerPassword } from '../features/player/model/do/PlayerPassword';
-import { PlayerPin } from '../features/player/model/do/PlayerPin';
 import { UnauthorizedException } from '../exceptions/UnauthorizedException';
 import { isUUID } from '@nestjs/common/utils/is-uuid';
 
+// TODO: Move to model
 export const GAME_ID_IS_NULL = new BadRequestException('GAME_ID_IS_NULL');
 export const GAME_ID_HAS_INCORRECT_FORMAT = new BadRequestException(
   'GAME_ID_HAS_INCORRECT_FORMAT',
@@ -150,71 +141,6 @@ export function containsOnlyNumbers<T extends string>(value: T, errorMessage: Er
 export function notEmpty<T extends { length: number }>(value: T, errorMessage: Error) {
   notNull(value, errorMessage);
   if (!value?.length) {
-    throw errorMessage;
-  }
-}
-
-export async function correctOldPassword(
-  game: Game,
-  password: {
-    password: {
-      oldValue?: GamePin;
-      value: GamePassword;
-    };
-  },
-  errorMessage: Error,
-) {
-  if (game?.password?.value) {
-    const isMatch = await bcrypt.compare(
-      password?.password?.oldValue?.value,
-      game.password.value,
-    );
-    if (!isMatch) {
-      throw errorMessage;
-    }
-  }
-}
-
-export async function correctOldPlayerPassword(
-  player: Player,
-  password: {
-    password: {
-      oldValue?: PlayerPin;
-      value: PlayerPassword;
-    };
-  },
-  errorMessage: Error,
-) {
-  if (player?.password?.value) {
-    const isMatch = await bcrypt.compare(
-      password?.password?.oldValue?.value,
-      player.password.value,
-    );
-    if (!isMatch) {
-      throw errorMessage;
-    }
-  }
-}
-
-export function correctNewState(
-  game: Game,
-  state: Change<Game, 'state'>,
-  errorMessage: Error,
-) {
-  const oldState = game?.state;
-  const newState = state?.state?.value;
-
-  notEmpty(oldState, errorMessage);
-  notEmpty(newState, errorMessage);
-
-  const correctNewState =
-    (oldState === GameState.INIT && newState === GameState.INIT) ||
-    (oldState === GameState.INIT && newState === GameState.RUN) ||
-    (oldState === GameState.RUN && newState === GameState.RUN) ||
-    (oldState === GameState.RUN && newState === GameState.ENDED) ||
-    (oldState === GameState.ENDED && newState === GameState.ENDED);
-
-  if (!correctNewState) {
     throw errorMessage;
   }
 }

@@ -1,5 +1,3 @@
-import * as bcrypt from 'bcrypt';
-
 import {
   GameId as GameIdVo,
   GamePin as GamePinVo,
@@ -13,6 +11,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PlayerId } from '../player/model/do/PlayerId';
 import { PlayerStorage } from '../player/player.storage';
+import { PasswordService } from '../password/password.service';
 
 @Injectable()
 export class AuthService {
@@ -20,12 +19,10 @@ export class AuthService {
     private gameStorage: GameStorage,
     private playerStorage: PlayerStorage,
     private jwtService: JwtService,
+    private passwordService: PasswordService,
   ) {}
 
-  async validate(
-    id: GameIdVo | PlayerIdVo,
-    password: PlayerPinVo | GamePinVo,
-  ): Promise<any> {
+  async validate(id: GameIdVo | PlayerIdVo, pin: PlayerPinVo | GamePinVo): Promise<any> {
     let user: { password: any; id: { value: string } } = await this.gameStorage.find(
       new GameId(id),
     );
@@ -36,7 +33,8 @@ export class AuthService {
 
     if (
       user &&
-      (!user.password || (await bcrypt.compare(password, user.password.value)))
+      (!user.password ||
+        (await this.passwordService.comparePinAndPassword(pin, user.password.value)))
     ) {
       return {
         id: user.id.value,

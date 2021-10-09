@@ -1,5 +1,3 @@
-import * as bcrypt from 'bcrypt';
-
 import {
   PLAYER_PASSWORD_HAS_INCORRECT_FORMAT,
   PLAYER_PASSWORD_IS_NULL,
@@ -23,9 +21,10 @@ export class PlayerPassword {
     return this._value;
   }
 
-  static async create(pin: PlayerPin): Promise<PlayerPassword> {
-    const salt = await bcrypt.genSalt();
-    const hash = await bcrypt.hash(pin.value, salt);
-    return new PlayerPassword(hash);
+  static async create(
+    pin: PlayerPin,
+    passwordGenerator: (pin: string) => Promise<string>,
+  ): Promise<PlayerPassword> {
+    return new PlayerPassword(await passwordGenerator(pin.value));
   }
 }

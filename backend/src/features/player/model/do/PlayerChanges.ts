@@ -1,14 +1,13 @@
 import {
   Change,
-  PlayerChanges as PlayerChangesVo,
   PlayerChangePin as PlayerChangePinVo,
+  PlayerChanges as PlayerChangesVo,
   Player as PlayerVo,
 } from 'model';
 import {
   PLAYER_CHANGES_IS_EMPTY,
   PLAYER_CHANGES_IS_NULL,
   PLAYER_OLD_PIN_IS_NOT_CORRECT,
-  correctOldPlayerPassword,
   notEmpty,
   notNull,
 } from '../../../../utils/validators';
@@ -20,7 +19,6 @@ import { PlayerPin } from './PlayerPin';
 import { PlayerState } from './PlayerState';
 import { PlayerTaboo } from './PlayerTaboo';
 import { PlayerWish } from './PlayerWish';
-import passport from 'passport';
 
 const fields: (keyof PlayerVo | 'newPin')[] = [
   'name',
@@ -29,6 +27,7 @@ const fields: (keyof PlayerVo | 'newPin')[] = [
   'state',
   'newPin',
 ];
+
 const changedFields = (changes: PlayerChangesVo | PlayerChangePinVo) =>
   Object.keys(changes).filter((item) => fields.includes(item as keyof PlayerVo));
 
@@ -44,22 +43,30 @@ type ChangePassword = {
 type Changes = {} | ChangeName | ChangeWish | ChangeTaboo | ChangePassword;
 
 export class PlayerChanges {
-  private changes: Changes = {};
-
-  constructor() {}
+  constructor(
+    private readonly changes: Changes,
+    private readonly comparePinAndPassword: (
+      pin: string,
+      password: string,
+    ) => Promise<boolean>,
+  ) {}
 
   static async create(
     changes: PlayerChangesVo | PlayerChangePinVo,
+    passwordGenerator: (pin: string) => Promise<string>,
+    comparePinAndPassword: (pin: string, password: string) => Promise<boolean>,
   ): Promise<PlayerChanges> {
     notNull(changes, PLAYER_CHANGES_IS_NULL);
     notEmpty(changedFields(changes), PLAYER_CHANGES_IS_EMPTY);
-    const playerChanges = new PlayerChanges();
-    playerChanges.changes = await PlayerChanges.transform(changes);
-    return playerChanges;
+    return new PlayerChanges(
+      await PlayerChanges.transform(changes, passwordGenerator),
+      comparePinAndPassword,
+    );
   }
 
   private static async transform(
     changesVo: PlayerChangesVo | PlayerChangePinVo,
+    passwordGenerator: (pin: string) => Promise<string>,
   ): Promise<Changes> {
     const changes: Changes = {};
     if ('name' in changesVo) {
@@ -79,7 +86,10 @@ export class PlayerChanges {
     }
     if ('newPin' in changesVo) {
       (changes as ChangePassword).password = {
-        value: await PlayerPassword.create(new PlayerPin(changesVo.newPin)),
+        value: await PlayerPassword.create(
+          new PlayerPin(changesVo.newPin),
+          passwordGenerator,
+        ),
         oldValue: changesVo.oldPin && new PlayerPin(changesVo.oldPin),
       };
     }
@@ -88,7 +98,7 @@ export class PlayerChanges {
 
   async apply(player: Player): Promise<Player> {
     'password' in this.changes &&
-      (await correctOldPlayerPassword(
+      (await this.correctOldPlayerPassword(
         player,
         this.changes,
         PLAYER_OLD_PIN_IS_NOT_CORRECT,
@@ -99,13 +109,13 @@ export class PlayerChanges {
     const newTaboo = this.loadValue(player, 'taboo');
     const newPassword = this.loadValue(player, 'password');
 
-    const needToChangeStatus = !(
+    const needToChangeStatusToActive = !(
       Object.keys(this.changes).length === 1 && 'password' in this.changes
     );
 
     return new Player(
       player.id,
-      needToChangeStatus ? PlayerState.ACTIVE : player.state,
+      needToChangeStatusToActive ? PlayerState.ACTIVE : player.state,
       player.game,
       newName,
       newPassword,
@@ -113,6 +123,27 @@ export class PlayerChanges {
       newTaboo,
       player.target,
     );
+  }
+
+  private async correctOldPlayerPassword(
+    player: Player,
+    password: {
+      password: {
+        oldValue?: PlayerPin;
+        value: PlayerPassword;
+      };
+    },
+    errorMessage: Error,
+  ) {
+    if (player?.password?.value) {
+      const isMatch = await this.comparePinAndPassword(
+        password?.password?.oldValue?.value,
+        player.password.value,
+      );
+      if (!isMatch) {
+        throw errorMessage;
+      }
+    }
   }
 
   private loadValue<T extends keyof Player>(game: Player, field: T): Player[T] {

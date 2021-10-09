@@ -18,6 +18,7 @@ import {
 
 import { Connection } from 'typeorm';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { PasswordService } from '../password/password.service';
 import { PlayerChanges } from './model/do/PlayerChanges';
 import { PlayerId } from './model/do/PlayerId';
 import { PlayerService } from './player.service';
@@ -26,7 +27,11 @@ import { wrapAllMethodsInTransaction } from '../../utils/transaction';
 
 @Controller('/api/player')
 export class PlayerController {
-  constructor(private service: PlayerService, private readonly connection: Connection) {
+  constructor(
+    private service: PlayerService,
+    private readonly connection: Connection,
+    private readonly passwordService: PasswordService,
+  ) {
     this.service = wrapAllMethodsInTransaction(connection, service);
   }
 
@@ -55,7 +60,11 @@ export class PlayerController {
   ): Promise<PlayerVo> {
     const player = await this.service.update(
       new PlayerId(id),
-      await PlayerChanges.create(request),
+      await PlayerChanges.create(
+        request,
+        this.passwordService.generatePasswordByPin,
+        this.passwordService.comparePinAndPassword,
+      ),
     );
     return player.toVo();
   }
