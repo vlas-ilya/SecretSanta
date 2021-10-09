@@ -1,4 +1,5 @@
 import { AuthenticationProps, withAuthentication } from '../session/withAuthentication';
+import { PLAYER_CHANGE_PIN_MAX_LENGTH, PlayerChangePin } from 'model';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { selectLoadingStatus, selectPlayer } from './store/player.selectors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +8,7 @@ import { ChangePinModal } from '../../components/ChangePinModal/ChangePinModal';
 import { GameInfoSection } from './components/GameInfoSection';
 import { MatchIdentifiable } from '../../utils/classes/MatchIdentifiable';
 import { Page } from '../../components/Page/Page';
-import { PlayerChangePin } from './store/model/PlayerChangePin';
-import { PlayerChanges } from './store/model/PlayerChange';
+import { PlayerChanges } from 'model';
 import { PlayerInfoSection } from './components/PlayerInfoSection';
 import { changePlayerInfo } from './store/useCases/changePlayerInfo';
 import { changePlayerPin } from './store/useCases/changePlayerPin';
@@ -96,6 +96,7 @@ const PlayerPage = ({
               onSetNewPin={onChangePlayerPin}
               onClose={hideChangePinModal}
               makeChanges={PlayerChangePin.build}
+              maxLength={PLAYER_CHANGE_PIN_MAX_LENGTH}
             />
           )}
         </>

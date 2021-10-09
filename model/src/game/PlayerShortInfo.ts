@@ -1,5 +1,6 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
-import { PlayerName, PlayerState } from '../../../player/store/model/PlayerTypes';
+import { PLAYER_NAME_MAX_LENGTH, PLAYER_NAME_MIN_LENGTH } from '../player/constants';
+import { PlayerName, PlayerState } from '../player/PlayerTypes';
 
 export class PlayerShortInfo {
   constructor(state: PlayerState, name?: PlayerName) {
@@ -12,7 +13,7 @@ export class PlayerShortInfo {
   state: PlayerState;
 
   @IsString()
-  @Length(5, 255) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(PLAYER_NAME_MIN_LENGTH, PLAYER_NAME_MAX_LENGTH)
   @IsOptional()
   name?: PlayerName;
 }

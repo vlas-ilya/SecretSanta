@@ -4,7 +4,7 @@ import { FormButton } from '../../../components/FormButton/FormButton';
 import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from '../../../components/FormItem/FormItem';
 import Modal from '../../../components/Modal/Modal';
-import { Pin } from '../store/model/SessionTypes';
+import { Pin } from 'model';
 import { Text } from '../../../components/Text/Text';
 
 export type InputPasswordModal = {

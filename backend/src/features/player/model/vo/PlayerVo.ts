@@ -10,6 +10,7 @@ export type PlayerTabooVo = string;
 export type PlayerPasswordVo = string;
 export type PlayerPinVo = string;
 
+// TODO: Move to model project
 export class PlayerVo {
   constructor(
     public id: PlayerIdVo,

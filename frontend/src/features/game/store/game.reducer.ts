@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { Game } from './model/Game';
-import { GameChanges } from './model/GameChange';
-import { LoadingStatus } from '../../../utils/classes/LoadingState';
+import { Game } from 'model';
+import { GameChanges } from 'model';
+import { LoadingStatus } from 'model';
 import { plainToClass } from 'class-transformer';
 
 export type State = {

@@ -7,6 +7,7 @@ import {
 
 import { Interval } from '../../../../utils/classes/Interval';
 
+// TODO: Move to model project
 export const PLAYER_TABOO_MIN_LENGTH = 0;
 export const PLAYER_TABOO_MAX_LENGTH = 1000;
 

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { GameId } from '../../game/store/model/GameTypes';
-import { LoadingStatus } from '../../../utils/classes/LoadingState';
+import { GameId } from 'model';
+import { LoadingStatus } from 'model';
 
 export interface State {
   loadingStatus: LoadingStatus;

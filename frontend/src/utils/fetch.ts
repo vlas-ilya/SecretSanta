@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import { LoadingStatus } from './classes/LoadingState';
+import { LoadingStatus } from 'model';
 import { RootState } from '../store';
 import { changeAuthenticationState } from '../features/session/store/session.reducer';
 

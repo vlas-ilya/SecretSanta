@@ -2,7 +2,7 @@ import * as api from '../api/session.api';
 
 import { changeAuthenticationState, changeLoadingStatus } from '../session.reducer';
 
-import { Id } from '../model/SessionTypes';
+import { Id } from 'model';
 import { fetchAction } from '../../../../utils/fetch';
 
 export const checkSession = (id: Id) =>

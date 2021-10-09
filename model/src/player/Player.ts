@@ -8,6 +8,17 @@ import {
   ValidateNested,
 } from 'class-validator';
 import {
+  PLAYER_NAME_ERROR_MESSAGE,
+  PLAYER_NAME_MAX_LENGTH,
+  PLAYER_NAME_MIN_LENGTH,
+  PLAYER_TABOO_ERROR_MESSAGE,
+  PLAYER_TABOO_MAX_LENGTH,
+  PLAYER_TABOO_MIN_LENGTH,
+  PLAYER_WISH_ERROR_MESSAGE,
+  PLAYER_WISH_MAX_LENGTH,
+  PLAYER_WISH_MIN_LENGTH,
+} from './constants';
+import {
   PlayerId,
   PlayerName,
   PlayerState,
@@ -53,23 +64,23 @@ export class Player {
   hasPassword: boolean = false;
 
   @IsString()
-  @Length(5, 255, {
-    message: "Поле 'Имя и Фамилия' должно занимать от 5 до 255 символов",
-  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(PLAYER_NAME_MIN_LENGTH, PLAYER_NAME_MAX_LENGTH, {
+    message: PLAYER_NAME_ERROR_MESSAGE,
+  })
   @IsOptional()
   name?: PlayerName;
 
   @IsString()
-  @Length(0, 1000, {
-    message: "Поле 'Пожелания' должно занимать не более 1000 символов",
-  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(PLAYER_WISH_MIN_LENGTH, PLAYER_WISH_MAX_LENGTH, {
+    message: PLAYER_WISH_ERROR_MESSAGE,
+  })
   @IsOptional()
   wish?: PlayerWish;
 
   @IsString()
-  @Length(0, 1000, {
-    message: "Поле 'Не дарить ни в коем случае' должно занимать не более 1000 символов",
-  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(PLAYER_TABOO_MIN_LENGTH, PLAYER_TABOO_MAX_LENGTH, {
+    message: PLAYER_TABOO_ERROR_MESSAGE,
+  })
   @IsOptional()
   taboo?: PlayerTaboo;
 

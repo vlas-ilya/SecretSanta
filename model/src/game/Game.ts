@@ -1,4 +1,12 @@
 import {
+  GAME_DESCRIPTION_ERROR_MESSAGE,
+  GAME_DESCRIPTION_MAX_LENGTH,
+  GAME_DESCRIPTION_MIN_LENGTH,
+  GAME_TITLE_ERROR_MESSAGE,
+  GAME_TITLE_MAX_LENGTH,
+  GAME_TITLE_MIN_LENGTH,
+} from './constants';
+import {
   GameDescription,
   GameId,
   GameState,
@@ -54,16 +62,16 @@ export class Game {
   hasPassword: boolean;
 
   @IsString()
-  @Length(10, 255, {
-    message: 'Заголовок должен занимать от 10 до 255 символов',
-  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(GAME_TITLE_MIN_LENGTH, GAME_TITLE_MAX_LENGTH, {
+    message: GAME_TITLE_ERROR_MESSAGE,
+  })
   @IsOptional()
   title?: GameTitle;
 
   @IsString()
-  @Length(10, 1000, {
-    message: 'Описание должно занимать от 10 до 255 символов',
-  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(GAME_DESCRIPTION_MIN_LENGTH, GAME_DESCRIPTION_MAX_LENGTH, {
+    message: GAME_DESCRIPTION_ERROR_MESSAGE,
+  })
   @IsOptional()
   description?: GameDescription;
 

@@ -7,6 +7,7 @@ import {
 
 import { Interval } from '../../../../utils/classes/Interval';
 
+// TODO: Move to model project
 export const PLAYER_NAME_MIN_LENGTH = 5;
 export const PLAYER_NAME_MAX_LENGTH = 255;
 

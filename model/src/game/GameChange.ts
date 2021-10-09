@@ -1,4 +1,4 @@
-import { Change } from '../../../../utils/classes/Change';
+import { Change } from '../utils/classes/Change';
 import { Game } from './Game';
 
 export class GameChange {

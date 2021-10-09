@@ -1,6 +1,6 @@
 import { changeLoadingStatus, setGame } from '../game.reducer';
 
-import { GameId } from '../model/GameTypes';
+import { GameId } from 'model';
 import { fetchAction } from '../../../../utils/fetch';
 import { get } from '../api/game.api';
 

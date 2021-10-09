@@ -5,6 +5,7 @@ import {
   GameTitleVo,
 } from '../../../game/model/vo/GameVo';
 
+// TODO: Move to model project
 export class GameShortInfoVo {
   constructor(
     public id: GameIdVo,

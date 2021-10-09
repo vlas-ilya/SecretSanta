@@ -3,8 +3,10 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { selectGame, selectLoadingStatus } from './store/game.selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GameChangePin } from './store/model/GameChangePin';
-import { GameChanges } from './store/model/GameChange';
+import { ChangePinModal } from '../../components/ChangePinModal/ChangePinModal';
+import { GAME_CHANGE_PIN_MAX_LENGTH } from 'model';
+import { GameChangePin } from 'model';
+import { GameChanges } from 'model';
 import { GameInfoSection } from 'features/game/components/GameInfoSection';
 import { GamePlayersSection } from 'features/game/components/GamePlayersSection';
 import { GameTitleSection } from 'features/game/components/GameTitleSection';
@@ -16,7 +18,6 @@ import { loadGameInfo } from './store/useCases/loadGameInfo';
 import { startGame } from './store/useCases/startGame';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
-import { ChangePinModal } from '../../components/ChangePinModal/ChangePinModal';
 
 const GamePage = ({
   setId,
@@ -35,11 +36,11 @@ const GamePage = ({
 
   useEffect(() => {
     gameRef.current = game;
-  }, [game, gameRef])
+  }, [game, gameRef]);
 
   useEffect(() => {
     hideChangePinModalRef.current = hideChangeModal;
-  }, [hideChangePinModalRef, hideChangeModal])
+  }, [hideChangePinModalRef, hideChangeModal]);
 
   useEffect(() => {
     id && setId(id);
@@ -106,6 +107,7 @@ const GamePage = ({
               onSetNewPin={onChangeGamePin}
               onClose={hideChangeModal}
               makeChanges={GameChangePin.build}
+              maxLength={GAME_CHANGE_PIN_MAX_LENGTH}
             />
           )}
         </>

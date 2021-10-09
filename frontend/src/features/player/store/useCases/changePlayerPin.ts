@@ -1,11 +1,11 @@
 import { ValidationError, usecase } from '../../../../utils/usecase/usecase';
 import { changeLoadingStatus, setPlayer } from '../player.reducer';
 
-import { PlayerChangePin } from '../model/PlayerChangePin';
+import { MutableRefObject } from 'react';
+import { PlayerChangePin } from 'model';
 import { fetchAction } from '../../../../utils/fetch';
 import { update } from '../api/player.api';
 import { validateSync } from 'class-validator';
-import { MutableRefObject } from 'react';
 
 const validator = (changes: PlayerChangePin) => {
   const message = new PlayerChangePin(
@@ -23,7 +23,10 @@ const validator = (changes: PlayerChangePin) => {
   );
 };
 
-const action = (changePinMessage: PlayerChangePin, callback?: MutableRefObject<() => void>) =>
+const action = (
+  changePinMessage: PlayerChangePin,
+  callback?: MutableRefObject<() => void>,
+) =>
   fetchAction(changeLoadingStatus, async (dispatch, state) => {
     if (!state.player.player?.id) {
       return;

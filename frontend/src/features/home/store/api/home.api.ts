@@ -1,4 +1,4 @@
-import { GameId } from '../../../game/store/model/GameTypes';
+import { GameId } from 'model';
 import fetch from '../../../../utils/fetch';
 
 export const create = async (): Promise<GameId> => {

@@ -1,6 +1,6 @@
 import * as api from '../api/session.api';
 
-import { Id, Pin } from '../model/SessionTypes';
+import { Id, Pin } from 'model';
 import { changeAuthenticationState, changeLoadingStatus } from '../session.reducer';
 
 import { fetchAction } from '../../../../utils/fetch';

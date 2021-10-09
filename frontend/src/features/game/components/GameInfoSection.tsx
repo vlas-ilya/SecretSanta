@@ -1,10 +1,17 @@
-import { GameDescription, GameId, GameState, GameTitle } from '../store/model/GameTypes';
+import {
+  GAME_DESCRIPTION_MAX_LENGTH,
+  GAME_TITLE_MAX_LENGTH,
+  GameDescription,
+  GameId,
+  GameState,
+  GameTitle,
+} from 'model';
 
 import { EditableInput } from '../../../components/EditableInput/EditableInput';
 import { Form } from 'components/Form/Form';
 import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
-import { GameChanges } from '../store/model/GameChange';
+import { GameChanges } from 'model';
 import React from 'react';
 import { Text } from 'components/Text/Text';
 
@@ -35,7 +42,7 @@ export const GameInfoSection = ({
         value={title}
         validationMessage={validationErrors['title']}
         onStartEditing={clearValidationErrors}
-        maxLength={255} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
+        maxLength={GAME_TITLE_MAX_LENGTH}
         onChange={(value: GameId) =>
           onChange({
             title: { value },
@@ -49,7 +56,7 @@ export const GameInfoSection = ({
         value={description}
         validationMessage={validationErrors['description']}
         onStartEditing={clearValidationErrors}
-        maxLength={1000} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
+        maxLength={GAME_DESCRIPTION_MAX_LENGTH}
         onChange={(value: GameDescription) =>
           onChange({
             description: { value },

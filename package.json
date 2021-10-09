@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Тайный Санта",
   "scripts": {
-    "prettier": "prettier-eslint --write \"$PWD/{frontend,backend}/{src,test,public}/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+    "prettier": "prettier-eslint --write \"$PWD/{frontend,backend,model}/{src,test,public}/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "repository": {
     "type": "git",

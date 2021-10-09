@@ -1,0 +1,15 @@
+{
+  "name": "model",
+  "version": "1.0.0",
+  "description": "model",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "devDependencies": {
+    "class-transformer": "0.4.0",
+    "class-validator": "0.13.1",
+    "typescript": "4.3.5"
+  }
+}

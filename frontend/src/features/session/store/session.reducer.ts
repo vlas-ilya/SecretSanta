@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { AuthenticationState } from './model/SessionTypes';
-import { LoadingStatus } from '../../../utils/classes/LoadingState';
+import { AuthenticationState } from 'model';
+import { LoadingStatus } from 'model';
 
 export type State = {
   loadingStatus: LoadingStatus;

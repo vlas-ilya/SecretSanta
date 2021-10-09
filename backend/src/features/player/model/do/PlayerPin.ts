@@ -9,6 +9,7 @@ import {
 } from '../../../../utils/validators';
 import { Interval } from '../../../../utils/classes/Interval';
 
+// TODO: Move to model project
 export const PLAYER_PIN_MIN_LENGTH = 4;
 export const PLAYER_PIN_MAX_LENGTH = 8;
 

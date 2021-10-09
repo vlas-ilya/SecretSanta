@@ -1,12 +1,12 @@
 import './styles.scss';
 
-import { bem } from '../../utils/bem';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { ReactComponent as Back } from '../../resources/images/back.svg';
 import { FormButton } from '../FormButton/FormButton';
 import { FormInput } from '../FormInput/FormInput';
 import { ReactComponent as Save } from '../../resources/images/save.svg';
+import { bem } from '../../utils/bem';
 import { useSharedState } from '../../utils/hooks/useSharedState';
 import { useToggle } from '../../utils/hooks/useToggle';
 

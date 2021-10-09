@@ -1,9 +1,9 @@
-import { PlayerId, PlayerPin } from '../model/PlayerTypes';
+import { PlayerId, PlayerPin } from 'model';
 
 import { AxiosResponse } from 'axios';
 import { INVALID_RESPONSE } from '../../../../utils/constants';
-import { Player } from '../model/Player';
-import { PlayerChanges } from '../model/PlayerChange';
+import { Player } from 'model';
+import { PlayerChanges } from 'model';
 import fetch from '../../../../utils/fetch';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';

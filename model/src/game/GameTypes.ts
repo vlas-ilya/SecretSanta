@@ -1,4 +1,4 @@
-import { Id, Pin } from '../../../session/store/model/SessionTypes';
+import { Id, Pin } from '../session/SessionTypes';
 
 export type GameId = Id;
 export type RegistrationId = string;

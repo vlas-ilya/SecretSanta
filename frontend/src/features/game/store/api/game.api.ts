@@ -1,8 +1,8 @@
-import { GameId, GamePin } from '../model/GameTypes';
+import { GameId, GamePin } from 'model';
 
 import { AxiosResponse } from 'axios';
-import { Game } from '../model/Game';
-import { GameChanges } from '../model/GameChange';
+import { Game } from 'model';
+import { GameChanges } from 'model';
 import { INVALID_RESPONSE } from '../../../../utils/constants';
 import fetch from '../../../../utils/fetch';
 import { plainToClass } from 'class-transformer';

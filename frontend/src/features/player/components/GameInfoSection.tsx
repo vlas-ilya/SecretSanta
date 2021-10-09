@@ -1,7 +1,7 @@
 import { Form } from 'components/Form/Form';
 import { FormInput } from 'components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
-import { GameShortInfo } from '../store/model/GameShortInfo';
+import { GameShortInfo } from 'model';
 import React from 'react';
 import { Text } from 'components/Text/Text';
 

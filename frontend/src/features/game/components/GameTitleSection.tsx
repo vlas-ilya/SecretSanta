@@ -1,4 +1,4 @@
-import { GameState, RegistrationId } from '../store/model/GameTypes';
+import { GameState, RegistrationId } from 'model';
 
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';

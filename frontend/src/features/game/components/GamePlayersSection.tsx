@@ -2,7 +2,7 @@ import { Form } from 'components/Form/Form';
 import { FormItem } from 'components/FormItem/FormItem';
 import { List } from 'components/List/List';
 import { ListItem } from 'components/List/ListItem';
-import { PlayerShortInfo } from '../store/model/PlayerShortInfo';
+import { PlayerShortInfo } from 'model';
 import React from 'react';
 import { Text } from 'components/Text/Text';
 

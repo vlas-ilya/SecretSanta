@@ -1,11 +1,18 @@
-import { PlayerName, PlayerTaboo, PlayerWish } from '../store/model/PlayerTypes';
+import {
+  PLAYER_NAME_MAX_LENGTH,
+  PLAYER_TABOO_MAX_LENGTH,
+  PLAYER_WISH_MAX_LENGTH,
+  PlayerName,
+  PlayerTaboo,
+  PlayerWish,
+} from 'model';
 
-import { EditableInput } from '../../../components/EditableInput/EditableInput';
+import { EditableInput } from 'components/EditableInput/EditableInput';
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
 import { FormItem } from 'components/FormItem/FormItem';
-import { GameState } from '../../game/store/model/GameTypes';
-import { PlayerChanges } from '../store/model/PlayerChange';
+import { GameState } from 'model';
+import { PlayerChanges } from 'model';
 import React from 'react';
 import { Text } from 'components/Text/Text';
 
@@ -42,7 +49,7 @@ export const PlayerInfoSection = ({
           value={name}
           validationMessage={validationErrors['name']}
           onStartEditing={clearValidationErrors}
-          maxLength={255} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
+          maxLength={PLAYER_NAME_MAX_LENGTH}
           onChange={(value: PlayerName) =>
             onChange({
               name: { value },
@@ -58,7 +65,7 @@ export const PlayerInfoSection = ({
         value={wish}
         validationMessage={validationErrors['wish']}
         onStartEditing={clearValidationErrors}
-        maxLength={1000} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
+        maxLength={PLAYER_WISH_MAX_LENGTH}
         onChange={(value: PlayerWish) =>
           onChange({
             wish: { value },
@@ -73,7 +80,7 @@ export const PlayerInfoSection = ({
         value={taboo}
         validationMessage={validationErrors['taboo']}
         onStartEditing={clearValidationErrors}
-        maxLength={1000} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
+        maxLength={PLAYER_TABOO_MAX_LENGTH}
         onChange={(value: PlayerTaboo) =>
           onChange({
             taboo: { value },

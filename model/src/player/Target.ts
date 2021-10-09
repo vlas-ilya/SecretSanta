@@ -1,4 +1,12 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import {
+  PLAYER_NAME_MAX_LENGTH,
+  PLAYER_NAME_MIN_LENGTH,
+  PLAYER_TABOO_MAX_LENGTH,
+  PLAYER_TABOO_MIN_LENGTH,
+  PLAYER_WISH_MAX_LENGTH,
+  PLAYER_WISH_MIN_LENGTH,
+} from './constants';
 import { PlayerName, PlayerState, PlayerTaboo, PlayerWish } from './PlayerTypes';
 
 export class Target {
@@ -19,17 +27,17 @@ export class Target {
   state: PlayerState;
 
   @IsString()
-  @Length(5, 255) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(PLAYER_NAME_MIN_LENGTH, PLAYER_NAME_MAX_LENGTH)
   @IsOptional()
   name?: PlayerName;
 
   @IsString()
-  @Length(0, 1000) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(PLAYER_WISH_MIN_LENGTH, PLAYER_WISH_MAX_LENGTH)
   @IsOptional()
   wish?: PlayerWish;
 
   @IsString()
-  @Length(0, 1000) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(PLAYER_TABOO_MIN_LENGTH, PLAYER_TABOO_MAX_LENGTH)
   @IsOptional()
   taboo?: PlayerTaboo;
 }

@@ -8,8 +8,8 @@ import {
   tryToRestoreFromBackup,
 } from '../game.reducer';
 
-import { Game } from '../model/Game';
-import { GameChange } from '../model/GameChange';
+import { Game } from 'model';
+import { GameChange } from 'model';
 import { fetchAction } from '../../../../utils/fetch';
 import { plainToClass } from 'class-transformer';
 import { update } from '../api/game.api';

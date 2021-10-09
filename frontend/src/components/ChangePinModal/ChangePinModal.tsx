@@ -11,6 +11,7 @@ export type ChangePinModalProps<T> = {
   onSetNewPin: (changes: T) => void;
   onClose: () => void;
   makeChanges: (newPin: string, confirmation: string, oldPin: string) => T;
+  maxLength: number;
 };
 
 export function ChangePinModal<T>({
@@ -19,6 +20,7 @@ export function ChangePinModal<T>({
   onSetNewPin,
   onClose,
   makeChanges,
+  maxLength,
 }: ChangePinModalProps<T>) {
   const [oldPin, setOldPin] = useState('');
   const [newPin, setNewPin] = useState('');
@@ -53,7 +55,7 @@ export function ChangePinModal<T>({
             validMessage={validationErrors['oldPin']}
             value={oldPin}
             onChange={setOldPin}
-            maxLength={8} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
+            maxLength={maxLength}
           />
         </FormItem>
       )}
@@ -67,7 +69,7 @@ export function ChangePinModal<T>({
           validMessage={validationErrors['newPin']}
           value={newPin}
           onChange={setNewPin}
-          maxLength={8} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
+          maxLength={maxLength}
         />
       </FormItem>
       <FormItem>
@@ -80,7 +82,7 @@ export function ChangePinModal<T>({
           validMessage={validationErrors['confirmation']}
           value={confirmation}
           onChange={setConfirmation}
-          maxLength={8} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
+          maxLength={maxLength}
         />
       </FormItem>
     </Modal>

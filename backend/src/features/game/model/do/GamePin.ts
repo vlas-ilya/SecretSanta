@@ -10,6 +10,7 @@ import {
 import { GamePinVo } from '../vo/GameVo';
 import { Interval } from '../../../../utils/classes/Interval';
 
+// TODO: Move to model project
 export const GAME_PIN_MIN_LENGTH = 4;
 export const GAME_PIN_MAX_LENGTH = 8;
 

@@ -1,4 +1,4 @@
-import { Id, Pin } from '../model/SessionTypes';
+import { Id, Pin } from 'model';
 
 import fetch from '../../../../utils/fetch';
 

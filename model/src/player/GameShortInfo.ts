@@ -1,9 +1,10 @@
 import {
-  GameDescription,
-  GameId,
-  GameState,
-  GameTitle,
-} from '../../../game/store/model/GameTypes';
+  GAME_DESCRIPTION_MAX_LENGTH,
+  GAME_DESCRIPTION_MIN_LENGTH,
+  GAME_TITLE_MAX_LENGTH,
+  GAME_TITLE_MIN_LENGTH,
+} from '../game/constants';
+import { GameDescription, GameId, GameState, GameTitle } from '../game/GameTypes';
 import { IsEnum, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 
 export class GameShortInfo {
@@ -28,12 +29,12 @@ export class GameShortInfo {
   state: GameState = GameState.INIT;
 
   @IsString()
-  @Length(10, 255) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(GAME_TITLE_MIN_LENGTH, GAME_TITLE_MAX_LENGTH)
   @IsOptional()
   title?: GameTitle;
 
   @IsString()
-  @Length(10, 1000) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
+  @Length(GAME_DESCRIPTION_MIN_LENGTH, GAME_DESCRIPTION_MAX_LENGTH)
   @IsOptional()
   description?: GameDescription;
 }

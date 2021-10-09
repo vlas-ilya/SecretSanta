@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { LoadingStatus } from '../../../utils/classes/LoadingState';
-import { Player } from './model/Player';
-import { PlayerChanges } from './model/PlayerChange';
+import { LoadingStatus } from 'model';
+import { Player } from 'model';
+import { PlayerChanges } from 'model';
 
 export interface State {
   loadingStatus: LoadingStatus;

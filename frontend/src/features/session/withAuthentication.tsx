@@ -1,6 +1,9 @@
-import { Id, Pin } from './store/model/SessionTypes';
+import { Id, Pin } from 'model';
 import React, { useCallback, useEffect, useState } from 'react';
-import { selectAuthenticationState, selectLoadingStatus } from './store/session.selectors';
+import {
+  selectAuthenticationState,
+  selectLoadingStatus,
+} from './store/session.selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { InputPinModal } from './components/InputPinModal';

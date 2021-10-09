@@ -9,6 +9,7 @@ export type GameTitleVo = string;
 export type GameDescriptionVo = string;
 export type GameStateVo = 'INIT' | 'RUN' | 'ENDED';
 
+// TODO: Move to model project
 export class GameVo {
   constructor(
     public id: GameIdVo,
