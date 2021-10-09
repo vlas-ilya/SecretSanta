@@ -10,7 +10,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { GameChangesVo, GameIdVo, GameVo } from './model/vo/GameVo';
+import { GameChanges as GameChangesVo, GameId as GameIdVo, Game as GameVo } from 'model';
 
 import { Connection } from 'typeorm';
 import { GameChanges } from './model/do/GameChanges';

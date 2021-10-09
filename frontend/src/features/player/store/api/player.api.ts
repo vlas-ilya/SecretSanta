@@ -1,4 +1,4 @@
-import { PlayerId, PlayerPin } from 'model';
+import { PlayerChangePin, PlayerId, PlayerPin } from 'model';
 
 import { AxiosResponse } from 'axios';
 import { INVALID_RESPONSE } from '../../../../utils/constants';
@@ -20,14 +20,7 @@ export const get = async (id: PlayerId): Promise<Player> => {
 
 export const update = async (
   id: PlayerId,
-  changes:
-    | {
-        pin: {
-          oldValue?: PlayerPin;
-          newValue: PlayerPin;
-        };
-      }
-    | PlayerChanges,
+  changes: PlayerChangePin | PlayerChanges,
 ): Promise<Player> => {
   const response = await fetch(`/api/player/${id}`).put({
     data: changes,

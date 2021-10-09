@@ -1,4 +1,10 @@
 import {
+  Change,
+  PlayerChanges as PlayerChangesVo,
+  PlayerChangePin as PlayerChangePinVo,
+  Player as PlayerVo,
+} from 'model';
+import {
   PLAYER_CHANGES_IS_EMPTY,
   PLAYER_CHANGES_IS_NULL,
   PLAYER_OLD_PIN_IS_NOT_CORRECT,
@@ -6,19 +12,18 @@ import {
   notEmpty,
   notNull,
 } from '../../../../utils/validators';
-import { PlayerChangesVo, PlayerVo } from '../vo/PlayerVo';
 
-import { Change } from '../../../../utils/classes/Change';
 import { Player } from './Player';
 import { PlayerName } from './PlayerName';
 import { PlayerPassword } from './PlayerPassword';
+import { PlayerPin } from './PlayerPin';
 import { PlayerState } from './PlayerState';
 import { PlayerTaboo } from './PlayerTaboo';
 import { PlayerWish } from './PlayerWish';
-import { PlayerPin } from './PlayerPin';
+import passport from 'passport';
 
-const fields: (keyof PlayerVo | 'pin')[] = ['name', 'wish', 'taboo', 'state', 'pin'];
-const changedFields = (changes: PlayerChangesVo) =>
+const fields: (keyof PlayerVo | 'newPin')[] = ['name', 'wish', 'taboo', 'state', 'newPin'];
+const changedFields = (changes: PlayerChangesVo | PlayerChangePinVo) =>
   Object.keys(changes).filter((item) => fields.includes(item as keyof PlayerVo));
 
 type ChangeName = Change<Player, 'name'>;
@@ -37,7 +42,9 @@ export class PlayerChanges {
 
   constructor() {}
 
-  static async create(changes: PlayerChangesVo): Promise<PlayerChanges> {
+  static async create(
+    changes: PlayerChangesVo | PlayerChangePinVo,
+  ): Promise<PlayerChanges> {
     notNull(changes, PLAYER_CHANGES_IS_NULL);
     notEmpty(changedFields(changes), PLAYER_CHANGES_IS_EMPTY);
     const playerChanges = new PlayerChanges();
@@ -45,7 +52,9 @@ export class PlayerChanges {
     return playerChanges;
   }
 
-  private static async transform(changesVo: PlayerChangesVo): Promise<Changes> {
+  private static async transform(
+    changesVo: PlayerChangesVo | PlayerChangePinVo,
+  ): Promise<Changes> {
     const changes: Changes = {};
     if ('name' in changesVo) {
       (changes as ChangeName).name = {
@@ -62,10 +71,10 @@ export class PlayerChanges {
         value: new PlayerTaboo(changesVo.taboo.value),
       };
     }
-    if ('pin' in changesVo) {
+    if ('newPin' in changesVo) {
       (changes as ChangePassword).password = {
-        value: await PlayerPassword.create(new PlayerPin(changesVo.pin.newValue)),
-        oldValue: changesVo.pin.oldValue && new PlayerPin(changesVo.pin.oldValue),
+        value: await PlayerPassword.create(new PlayerPin(changesVo.newPin)),
+        oldValue: changesVo.oldPin && new PlayerPin(changesVo.oldPin),
       };
     }
     return changes;
@@ -84,9 +93,11 @@ export class PlayerChanges {
     const newTaboo = this.loadValue(player, 'taboo');
     const newPassword = this.loadValue(player, 'password');
 
+    const needToChangeStatus = !(Object.keys(this.changes).length === 1 && 'password' in this.changes);
+
     return new Player(
       player.id,
-      PlayerState.ACTIVE,
+      needToChangeStatus ? PlayerState.ACTIVE : player.state,
       player.game,
       newName,
       newPassword,

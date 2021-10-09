@@ -9,10 +9,13 @@ import { GameDescription } from './GameDescription';
 import { GameDto } from '../dto/GameDto';
 import { GameId } from './GameId';
 import { GamePassword } from './GamePassword';
-import { GameShortInfoVo } from '../../../player/model/vo/GameShortInfoVo';
 import { GameState } from './GameState';
 import { GameTitle } from './GameTitle';
-import { GameVo } from '../vo/GameVo';
+import {
+  GameShortInfo as GameShortInfoVo,
+  Game as GameVo,
+  GameState as GameStateVo,
+} from 'model';
 import { Player } from '../../../player/model/do/Player';
 import { PlayerDto } from '../../../player/model/dto/PlayerDto';
 import { PlayerState } from '../../../player/model/do/PlayerState';
@@ -67,20 +70,20 @@ export class Game {
     return new GameVo(
       this.id.value,
       this.registrationId.value,
-      this.state,
-      this.players
-        .filter((player) => player.state === 'ACTIVE')
-        .map((player) => player.toShortInfoVo()),
+      GameStateVo[this.state],
       this.password != null,
       this.title?.value,
       this.description?.value,
+      this.players
+        .filter((player) => player.state === 'ACTIVE')
+        .map((player) => player.toShortInfoVo()),
     );
   }
 
   public toShortInfoVo(): GameShortInfoVo {
     return new GameShortInfoVo(
       this.id.value,
-      this.state,
+      GameStateVo[this.state],
       this.title?.value,
       this.description?.value,
     );

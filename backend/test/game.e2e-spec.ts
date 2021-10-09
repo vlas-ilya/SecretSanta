@@ -1,18 +1,11 @@
-import * as cookieParser from 'cookie-parser';
 import * as request from 'supertest';
 
-import { Test, TestingModule } from '@nestjs/testing';
+import { createApp, login } from './utils';
 
-import { AppModule } from '../src/app.module';
 import { INestApplication } from '@nestjs/common';
 import { isUUID } from '@nestjs/common/utils/is-uuid';
-import { createApp, login } from './utils';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { getConnectionOptions } from 'typeorm';
-import { GameModule } from '../src/features/game/game.module';
-import { PlayerModule } from '../src/features/player/player.module';
-import { AuthModule } from '../src/features/auth/auth.module';
 
+// TODO (fix): fix tests
 describe('GameController (e2e)', () => {
   let app: INestApplication;
 
@@ -42,8 +35,8 @@ describe('GameController (e2e)', () => {
       'id',
       'registrationId',
       'state',
-      'players',
       'hasPassword',
+      'players',
     ]);
   });
 
@@ -76,10 +69,10 @@ describe('GameController (e2e)', () => {
       'id',
       'registrationId',
       'state',
-      'players',
       'hasPassword',
       'title',
       'description',
+      'players',
     ]);
   });
 
@@ -131,8 +124,8 @@ describe('GameController (e2e)', () => {
       'id',
       'registrationId',
       'state',
-      'players',
       'hasPassword',
+      'players',
     ]);
   });
 

@@ -3,6 +3,12 @@ import {
   PLAYER_STATE_IS_NULL,
   notNull,
 } from '../../../../utils/validators';
+import {
+  PlayerShortInfo as PlayerShortInfoVo,
+  Player as PlayerVo,
+  Target as TargetVo,
+  PlayerState as PlayerStateVo,
+} from 'model';
 
 import { Game } from '../../../game/model/do/Game';
 import { GameDto } from '../../../game/model/dto/GameDto';
@@ -10,12 +16,9 @@ import { PlayerDto } from '../dto/PlayerDto';
 import { PlayerId } from './PlayerId';
 import { PlayerName } from './PlayerName';
 import { PlayerPassword } from './PlayerPassword';
-import { PlayerShortInfoVo } from '../../../game/model/vo/PlayerShortInfoVo';
 import { PlayerState } from './PlayerState';
 import { PlayerTaboo } from './PlayerTaboo';
-import { PlayerVo } from '../vo/PlayerVo';
 import { PlayerWish } from './PlayerWish';
-import { TargetVo } from '../vo/TargetVo';
 import { ifExist } from '../../../../utils/ifExist';
 
 export class Player {
@@ -72,7 +75,7 @@ export class Player {
   toVo(): PlayerVo {
     return new PlayerVo(
       this.id.value,
-      this.state,
+      PlayerStateVo[this.state],
       this.password != null,
       this.name?.value,
       this.wish?.value,
@@ -83,12 +86,12 @@ export class Player {
   }
 
   toShortInfoVo(): PlayerShortInfoVo {
-    return new PlayerShortInfoVo(this.state, this.name?.value);
+    return new PlayerShortInfoVo(PlayerStateVo[this.state], this.name?.value);
   }
 
   toTargetVo(): TargetVo {
     return new TargetVo(
-      this.state,
+      PlayerStateVo[this.state],
       this.name?.value,
       this.wish?.value,
       this.taboo?.value,

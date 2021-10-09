@@ -4,12 +4,9 @@ import {
   inInterval,
   notNull,
 } from '../../../../utils/validators';
+import { GAME_TITLE_MAX_LENGTH, GAME_TITLE_MIN_LENGTH } from 'model';
 
 import { Interval } from '../../../../utils/classes/Interval';
-
-// TODO: Move to model project
-export const GAME_TITLE_MIN_LENGTH = 10;
-export const GAME_TITLE_MAX_LENGTH = 255;
 
 export class GameTitle {
   constructor(private _value: string) {

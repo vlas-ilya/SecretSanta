@@ -7,12 +7,9 @@ import {
   notNull,
 } from '../../../../utils/validators';
 
-import { GamePinVo } from '../vo/GameVo';
+import { GamePin as GamePinVo } from 'model';
 import { Interval } from '../../../../utils/classes/Interval';
-
-// TODO: Move to model project
-export const GAME_PIN_MIN_LENGTH = 4;
-export const GAME_PIN_MAX_LENGTH = 8;
+import { GAME_CHANGE_PIN_MAX_LENGTH, GAME_CHANGE_PIN_MIN_LENGTH } from 'model';
 
 export class GamePin {
   private readonly _value;
@@ -22,7 +19,7 @@ export class GamePin {
     containsOnlyNumbers(pin, GAME_PIN_HAS_INCORRECT_FORMAT);
     inInterval(
       pin,
-      new Interval(GAME_PIN_MIN_LENGTH, GAME_PIN_MAX_LENGTH),
+      new Interval(GAME_CHANGE_PIN_MIN_LENGTH, GAME_CHANGE_PIN_MAX_LENGTH),
       GAME_PIN_HAS_INCORRECT_LENGTH,
     );
     this._value = pin;

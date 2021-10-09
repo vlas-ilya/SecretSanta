@@ -1,4 +1,4 @@
-export const enum PlayerState {
+export enum PlayerState {
   INIT = 'INIT',
   ACTIVE = 'ACTIVE',
 }

@@ -6,7 +6,6 @@ import { Injectable } from '@nestjs/common';
 import { RegistrationId } from './model/do/RegistrationId';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
-import { GameVo } from './model/vo/GameVo';
 import { GameState } from './model/do/GameState';
 
 @Injectable()

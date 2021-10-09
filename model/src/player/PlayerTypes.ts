@@ -9,3 +9,4 @@ export type PlayerName = string;
 export type PlayerWish = string;
 export type PlayerTaboo = string;
 export type PlayerPin = Pin;
+export type PlayerPassword = string;

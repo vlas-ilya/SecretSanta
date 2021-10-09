@@ -1,17 +1,9 @@
-import * as cookieParser from 'cookie-parser';
 import * as request from 'supertest';
 
-import { Test, TestingModule } from '@nestjs/testing';
-
-import { AppModule } from '../src/app.module';
-import { AuthModule } from '../src/features/auth/auth.module';
-import { GameModule } from '../src/features/game/game.module';
 import { INestApplication } from '@nestjs/common';
-import { PlayerModule } from '../src/features/player/player.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { getConnectionOptions } from 'typeorm';
 import { createApp } from './utils';
 
+// TODO (fix): fix tests
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
 

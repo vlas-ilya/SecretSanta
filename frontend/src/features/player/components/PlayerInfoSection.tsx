@@ -28,6 +28,7 @@ export type PlayerInfoProps = {
   onShowChangePlayerPinModal: () => void;
 };
 
+// TODO (feat): show registration status
 export const PlayerInfoSection = ({
   name,
   wish,

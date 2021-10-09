@@ -1,4 +1,4 @@
-export const PLAYER_NAME_MIN_LENGTH = 10;
+export const PLAYER_NAME_MIN_LENGTH = 5;
 export const PLAYER_NAME_MAX_LENGTH = 255;
 export const PLAYER_NAME_ERROR_MESSAGE = `Поле 'Имя и Фамилия' должно занимать от ${PLAYER_NAME_MIN_LENGTH} до ${PLAYER_NAME_MAX_LENGTH} символов`;
 

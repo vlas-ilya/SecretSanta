@@ -7,7 +7,7 @@ import {
   notNull,
 } from '../../../../utils/validators';
 
-import { PlayerPasswordVo } from '../vo/PlayerVo';
+import { PlayerPassword as PlayerPasswordVo } from 'model';
 import { PlayerPin } from './PlayerPin';
 
 export class PlayerPassword {

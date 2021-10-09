@@ -10,7 +10,12 @@ import {
   notEmpty,
   notNull,
 } from '../../../../utils/validators';
-import { GameChangesVo, GameVo } from '../vo/GameVo';
+import {
+  GameChanges as GameChangesVo,
+  Game as GameVo,
+  GameChangePin as GameChangePinVo,
+  GameState as GameStateVo,
+} from 'model';
 
 import { Change } from '../../../../utils/classes/Change';
 import { Game } from './Game';
@@ -20,8 +25,8 @@ import { GamePin } from './GamePin';
 import { GameState } from './GameState';
 import { GameTitle } from './GameTitle';
 
-const fields: (keyof GameVo | 'pin')[] = ['title', 'description', 'pin', 'state'];
-const changedFields = (changes: GameChangesVo) =>
+const fields: (keyof GameVo | 'newPin')[] = ['title', 'description', 'newPin', 'state'];
+const changedFields = (changes: GameChangesVo | GameChangePinVo) =>
   Object.keys(changes).filter((item) => fields.includes(item as keyof GameVo));
 
 type ChangeTitle = Change<Game, 'title'>;
@@ -41,7 +46,7 @@ export class GameChanges {
 
   private constructor() {}
 
-  static async create(changes: GameChangesVo): Promise<GameChanges> {
+  static async create(changes: GameChangesVo | GameChangePinVo): Promise<GameChanges> {
     notNull(changes, GAME_CHANGES_IS_NULL);
     notEmpty(changedFields(changes), GAME_CHANGES_IS_EMPTY);
     const gameChanges = new GameChanges();
@@ -49,7 +54,9 @@ export class GameChanges {
     return gameChanges;
   }
 
-  private static async transform(changesVo: GameChangesVo): Promise<Changes> {
+  private static async transform(
+    changesVo: GameChangesVo | GameChangePinVo,
+  ): Promise<Changes> {
     const changes: Changes = {};
     if ('title' in changesVo) {
       (changes as ChangeTitle).title = {
@@ -61,15 +68,15 @@ export class GameChanges {
         value: new GameDescription(changesVo.description.value),
       };
     }
-    if ('pin' in changesVo) {
+    if ('newPin' in changesVo) {
       (changes as ChangePassword).password = {
-        value: await GamePassword.create(new GamePin(changesVo.pin.newValue)),
-        oldValue: changesVo.pin.oldValue && (await new GamePin(changesVo.pin.oldValue)),
+        value: await GamePassword.create(new GamePin(changesVo.newPin)),
+        oldValue: changesVo.oldPin && (await new GamePin(changesVo.oldPin)),
       };
     }
     if ('state' in changesVo) {
       (changes as ChangeState).state = {
-        value: changesVo.state.value as GameState,
+        value: GameState[changesVo.state.value],
       };
     }
     return changes;

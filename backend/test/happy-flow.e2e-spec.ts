@@ -1,22 +1,21 @@
-import * as cookieParser from 'cookie-parser';
 import * as request from 'supertest';
 
-import { GameChangesVo, GamePinVo, GameVo } from '../src/features/game/model/vo/GameVo';
 import {
-  PlayerChangesVo,
-  PlayerPinVo,
-  PlayerVo,
-} from '../src/features/player/model/vo/PlayerVo';
-import { Test, TestingModule } from '@nestjs/testing';
+  GameChanges as GameChangesVo,
+  GamePin as GamePinVo,
+  GameState,
+  Game as GameVo,
+} from 'model';
+import {
+  PlayerChanges as PlayerChangesVo,
+  PlayerPin as PlayerPinVo,
+  Player as PlayerVo,
+} from 'model';
+import { createApp, login } from './utils';
 
 import { INestApplication } from '@nestjs/common';
-import { createApp, login } from './utils';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { getConnectionOptions } from 'typeorm';
-import { GameModule } from '../src/features/game/game.module';
-import { PlayerModule } from '../src/features/player/player.module';
-import { AuthModule } from '../src/features/auth/auth.module';
 
+// TODO (fix): fix tests
 describe('Happy Flow (e2e)', () => {
   let app: INestApplication;
 
@@ -221,7 +220,7 @@ describe('Happy Flow (e2e)', () => {
 
     const newStartedGame = await changeGame(game, {
       state: {
-        value: 'RUN',
+        value: GameState.RUN,
       },
     });
 

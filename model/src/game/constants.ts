@@ -1,8 +1,8 @@
-export const GAME_TITLE_MIN_LENGTH = 10;
+export const GAME_TITLE_MIN_LENGTH = 5;
 export const GAME_TITLE_MAX_LENGTH = 255;
 export const GAME_TITLE_ERROR_MESSAGE = `Заголовок должен занимать от ${GAME_TITLE_MIN_LENGTH} до ${GAME_TITLE_MAX_LENGTH} символов`;
 
-export const GAME_DESCRIPTION_MIN_LENGTH = 10;
+export const GAME_DESCRIPTION_MIN_LENGTH = 5;
 export const GAME_DESCRIPTION_MAX_LENGTH = 1000;
 export const GAME_DESCRIPTION_ERROR_MESSAGE = `Описание должен занимать от ${GAME_DESCRIPTION_MIN_LENGTH} до ${GAME_DESCRIPTION_MAX_LENGTH} символов`;
 

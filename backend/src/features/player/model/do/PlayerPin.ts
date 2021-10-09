@@ -1,4 +1,4 @@
-import { PlayerPinVo } from '../vo/PlayerVo';
+import { PlayerPin as PlayerPinVo } from 'model';
 import {
   containsOnlyNumbers,
   inInterval,
@@ -8,10 +8,7 @@ import {
   PLAYER_PIN_IS_NULL,
 } from '../../../../utils/validators';
 import { Interval } from '../../../../utils/classes/Interval';
-
-// TODO: Move to model project
-export const PLAYER_PIN_MIN_LENGTH = 4;
-export const PLAYER_PIN_MAX_LENGTH = 8;
+import { PLAYER_CHANGE_PIN_MAX_LENGTH, PLAYER_CHANGE_PIN_MIN_LENGTH } from 'model';
 
 export class PlayerPin {
   private readonly _value;
@@ -21,7 +18,7 @@ export class PlayerPin {
     containsOnlyNumbers(pin, PLAYER_PIN_HAS_INCORRECT_FORMAT);
     inInterval(
       pin,
-      new Interval(PLAYER_PIN_MIN_LENGTH, PLAYER_PIN_MAX_LENGTH),
+      new Interval(PLAYER_CHANGE_PIN_MIN_LENGTH, PLAYER_CHANGE_PIN_MAX_LENGTH),
       PLAYER_PIN_HAS_INCORRECT_LENGTH,
     );
     this._value = pin;

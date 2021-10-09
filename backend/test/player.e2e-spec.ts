@@ -1,19 +1,11 @@
-import * as cookieParser from 'cookie-parser';
 import * as request from 'supertest';
 
-import { Test, TestingModule } from '@nestjs/testing';
-
-import { AppModule } from '../src/app.module';
-import { GameVo } from '../src/features/game/model/vo/GameVo';
+import { Game as GameVo } from 'model';
 import { INestApplication } from '@nestjs/common';
 import { isUUID } from '@nestjs/common/utils/is-uuid';
 import { createApp, login } from './utils';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { getConnectionOptions } from 'typeorm';
-import { GameModule } from '../src/features/game/game.module';
-import { PlayerModule } from '../src/features/player/player.module';
-import { AuthModule } from '../src/features/auth/auth.module';
 
+// TODO (fix): fix tests
 describe('PlayerController (e2e)', () => {
   let app: INestApplication;
   let game: GameVo;

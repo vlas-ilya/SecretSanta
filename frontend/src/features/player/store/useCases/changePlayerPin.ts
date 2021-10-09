@@ -32,12 +32,7 @@ const action = (
       return;
     }
 
-    const Player = await update(state.player.player.id, {
-      pin: {
-        oldValue: changePinMessage.oldPin,
-        newValue: changePinMessage.newPin,
-      },
-    });
+    const Player = await update(state.player.player.id, changePinMessage);
 
     dispatch(setPlayer(Player));
 

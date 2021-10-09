@@ -1,4 +1,4 @@
-import { GameId, GamePin } from 'model';
+import { GameChangePin, GameId, GamePin } from 'model';
 
 import { AxiosResponse } from 'axios';
 import { Game } from 'model';
@@ -11,12 +11,7 @@ import { validate } from 'class-validator';
 export const update = async (
   id: GameId,
   changes:
-    | {
-        pin: {
-          oldValue?: GamePin;
-          newValue: GamePin;
-        };
-      }
+    | GameChangePin
     | {
         state: 'RUN';
       }

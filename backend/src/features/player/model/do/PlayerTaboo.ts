@@ -6,10 +6,7 @@ import {
 } from '../../../../utils/validators';
 
 import { Interval } from '../../../../utils/classes/Interval';
-
-// TODO: Move to model project
-export const PLAYER_TABOO_MIN_LENGTH = 0;
-export const PLAYER_TABOO_MAX_LENGTH = 1000;
+import { PLAYER_TABOO_MAX_LENGTH, PLAYER_TABOO_MIN_LENGTH } from 'model';
 
 export class PlayerTaboo {
   constructor(private _value: string) {

@@ -7,7 +7,7 @@ import {
   notNull,
 } from '../../../../utils/validators';
 
-import { GamePasswordVo, GamePinVo } from '../vo/GameVo';
+import { GamePassword as GamePasswordVo, GamePin as GamePinVo } from 'model';
 import { GamePin } from './GamePin';
 
 export type InitValue =

@@ -1,12 +1,14 @@
+import * as cookieParser from 'cookie-parser';
 import * as request from 'supertest';
+
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { AuthModule } from '../src/features/auth/auth.module';
+import { GameModule } from '../src/features/game/game.module';
+import { INestApplication } from '@nestjs/common';
+import { PlayerModule } from '../src/features/player/player.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
-import { GameModule } from '../src/features/game/game.module';
-import { PlayerModule } from '../src/features/player/player.module';
-import { AuthModule } from '../src/features/auth/auth.module';
-import * as cookieParser from 'cookie-parser';
-import { INestApplication } from '@nestjs/common';
 
 export const login = async (
   app: any,

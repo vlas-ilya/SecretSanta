@@ -9,7 +9,12 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { PlayerChangesVo, PlayerIdVo, PlayerVo } from './model/vo/PlayerVo';
+import {
+  PlayerChanges as PlayerChangesVo,
+  PlayerId as PlayerIdVo,
+  Player as PlayerVo,
+  RegistrationId as RegistrationIdVo,
+} from 'model';
 
 import { Connection } from 'typeorm';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -17,7 +22,6 @@ import { PlayerChanges } from './model/do/PlayerChanges';
 import { PlayerId } from './model/do/PlayerId';
 import { PlayerService } from './player.service';
 import { RegistrationId } from '../game/model/do/RegistrationId';
-import { RegistrationIdVo } from '../game/model/vo/GameVo';
 import { wrapAllMethodsInTransaction } from '../../utils/transaction';
 
 @Controller('/api/player')

@@ -1,4 +1,4 @@
-export const enum GameState {
+export enum GameState {
   INIT = 'INIT',
   RUN = 'RUN',
   ENDED = 'ENDED',

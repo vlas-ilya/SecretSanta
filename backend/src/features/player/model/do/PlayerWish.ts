@@ -6,10 +6,7 @@ import {
 } from '../../../../utils/validators';
 
 import { Interval } from '../../../../utils/classes/Interval';
-
-// TODO: Move to model project
-export const PLAYER_WISH_MIN_LENGTH = 0;
-export const PLAYER_WISH_MAX_LENGTH = 1000;
+import { PLAYER_WISH_MAX_LENGTH, PLAYER_WISH_MIN_LENGTH } from 'model';
 
 export class PlayerWish {
   constructor(private _value: string) {

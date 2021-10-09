@@ -1,7 +1,11 @@
 import * as bcrypt from 'bcrypt';
 
-import { GameIdVo, GamePinVo } from '../game/model/vo/GameVo';
-import { PlayerIdVo, PlayerPinVo } from '../player/model/vo/PlayerVo';
+import {
+  GameId as GameIdVo,
+  GamePin as GamePinVo,
+  PlayerId as PlayerIdVo,
+  PlayerPin as PlayerPinVo,
+} from 'model';
 
 import { GameId } from '../game/model/do/GameId';
 import { GameStorage } from '../game/game.storage';
