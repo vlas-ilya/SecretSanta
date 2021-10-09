@@ -32,6 +32,7 @@ export class GameController {
     return gameId.value;
   }
 
+  // TODO (fix): return 0 players after starting game
   @Get('/:id')
   @UseGuards(JwtAuthGuard)
   async get(@Param('id') id: GameIdVo): Promise<GameVo> {

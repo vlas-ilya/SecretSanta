@@ -16,6 +16,8 @@ import { loadPlayerInfo } from './store/useCases/loadPlayerInfo';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
 
+// TODO (fix): edit in RUN status
+// TODO (feat): show target's information
 const PlayerPage = ({
   setId,
   hasSession,

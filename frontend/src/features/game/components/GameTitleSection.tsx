@@ -45,7 +45,6 @@ export const GameTitleSection = (props: GameTitleProps) => (
           <FormButton className="grey" onClick={props.onChangePin}>
             {props.hasPassword ? 'Изменить пароль' : 'Установить пароль'}
           </FormButton>
-          {/* TODO (fix): Не работает кнопка "Начать игру" */}
           <FormButton onClick={props.onStartGame}>Начать игру</FormButton>
         </div>
         <FormItem>

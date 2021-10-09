@@ -12,9 +12,6 @@ export const update = async (
   id: GameId,
   changes:
     | GameChangePin
-    | {
-        state: 'RUN';
-      }
     | GameChanges,
 ): Promise<Game> => {
   const response = await fetch(`/api/game/${id}`).put({

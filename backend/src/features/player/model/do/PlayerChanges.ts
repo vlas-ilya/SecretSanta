@@ -22,7 +22,13 @@ import { PlayerTaboo } from './PlayerTaboo';
 import { PlayerWish } from './PlayerWish';
 import passport from 'passport';
 
-const fields: (keyof PlayerVo | 'newPin')[] = ['name', 'wish', 'taboo', 'state', 'newPin'];
+const fields: (keyof PlayerVo | 'newPin')[] = [
+  'name',
+  'wish',
+  'taboo',
+  'state',
+  'newPin',
+];
 const changedFields = (changes: PlayerChangesVo | PlayerChangePinVo) =>
   Object.keys(changes).filter((item) => fields.includes(item as keyof PlayerVo));
 
@@ -93,7 +99,9 @@ export class PlayerChanges {
     const newTaboo = this.loadValue(player, 'taboo');
     const newPassword = this.loadValue(player, 'password');
 
-    const needToChangeStatus = !(Object.keys(this.changes).length === 1 && 'password' in this.changes);
+    const needToChangeStatus = !(
+      Object.keys(this.changes).length === 1 && 'password' in this.changes
+    );
 
     return new Player(
       player.id,
