@@ -26,6 +26,10 @@ export function useSharedState<T>(name: string, initState: T): [T, (state: T) =>
   const oldSetState = useRef<(value: State<T>) => void>(setState);
 
   useEffect(() => {
+    oldSetState.current = setState;
+  }, [oldSetState, setState]);
+
+  useEffect(() => {
     globalState[name] = globalState[name] || {
       state: initState,
       setState: (state) => {

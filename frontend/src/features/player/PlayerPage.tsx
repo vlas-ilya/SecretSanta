@@ -32,6 +32,14 @@ const PlayerPage = ({
   const hideChangePinModalRef = useRef(hideChangePinModal);
 
   useEffect(() => {
+    playerRef.current = player;
+  }, [playerRef, player]);
+
+  useEffect(() => {
+    hideChangePinModalRef.current = hideChangePinModal;
+  }, [hideChangePinModalRef, hideChangePinModal]);
+
+  useEffect(() => {
     id && setId(id);
   }, [dispatch, setId, id]);
 

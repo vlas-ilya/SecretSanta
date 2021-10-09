@@ -1,6 +1,7 @@
 import './styles.scss';
 
-import React, { ReactNode, useCallback, useEffect, useState } from 'react';
+import { bem } from '../../utils/bem';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { ReactComponent as Back } from '../../resources/images/back.svg';
 import { FormButton } from '../FormButton/FormButton';
@@ -19,7 +20,6 @@ export type EditableInputProps = {
 };
 
 /* TODO (feat): Добавить textarea */
-/* TODO (fix): Padding с права не работает */
 export const EditableInput = ({
   name,
   value,
@@ -28,13 +28,10 @@ export const EditableInput = ({
   onChange,
   maxLength,
 }: EditableInputProps) => {
+  const editableInput = bem('EditableInput');
   const [isEdit, showEditComponent, showViewComponent] = useToggle();
   const [newValue, setNewValue] = useState(value || '');
   const [activeElement, setActiveElement] = useSharedState('editable-input', '');
-
-  const apply = useCallback(() => {
-    onChange(newValue);
-  }, [newValue, onChange]);
 
   useEffect(() => {
     setNewValue(value || '');
@@ -56,104 +53,69 @@ export const EditableInput = ({
     showViewComponent();
   }, [value, showViewComponent]);
 
+  const apply = useCallback(() => {
+    onChange(newValue);
+  }, [newValue, onChange]);
+
+  const onPressEnter = useCallback(
+    ({ code }) => {
+      if (code === 'Enter') {
+        showEditComponentAndUpdateState();
+      }
+    },
+    [showEditComponentAndUpdateState],
+  );
+
   return (
-    <div className="EditableInput">
+    <div className={editableInput()}>
       {isEdit ? (
-        <Edit
-          name={name}
-          onChange={setNewValue}
-          apply={apply}
-          validationMessage={validationMessage}
-          showViewComponent={showViewComponent}
-          value={newValue}
-          maxLength={maxLength}
-        />
+        <div className={editableInput.element('Edit')}>
+          <div className={editableInput.element('ViewContent')}>
+            <FormInput
+              className={editableInput.element('ValueEdit')}
+              name={name}
+              label={name}
+              value={newValue}
+              onChange={setNewValue}
+              validMessage={validationMessage}
+              onEnter={apply}
+              autoFocus
+              maxLength={maxLength}
+            />
+          </div>
+          <FormButton
+            classNameContainer={editableInput.element('ShowViewButton')}
+            className="grey"
+            onClick={showViewComponent}
+          >
+            <Back />
+          </FormButton>
+          <FormButton
+            classNameContainer={editableInput.element('ApplyButton')}
+            onClick={apply}
+          >
+            <Save />
+          </FormButton>
+        </div>
       ) : (
-        <View name={name} showEditComponent={showEditComponentAndUpdateState}>
-          {value}
-        </View>
+        <div className={editableInput.element('View')}>
+          <div className={editableInput.element('ViewContent')}>
+            <>
+              <span className={editableInput.element('NameLabel')}>{name}</span>
+              <span
+                title="Редактировать"
+                className={editableInput.element('ValueLabel')}
+                role="button"
+                tabIndex={0}
+                onKeyPress={onPressEnter}
+                onClick={showEditComponent}
+              >
+                {value}
+              </span>
+            </>
+          </div>
+        </div>
       )}
     </div>
   );
 };
-
-const View = ({
-  name,
-  children,
-  showEditComponent,
-}: {
-  name?: string;
-  children: ReactNode;
-  showEditComponent: () => void;
-}) => {
-  const onPressEnter = useCallback(
-    ({ code }) => {
-      if (code === 'Enter') {
-        showEditComponent();
-      }
-    },
-    [showEditComponent],
-  );
-
-  return (
-    <div className="EditableInput_View">
-      <div className="EditableInput_ViewContent">
-        <>
-          <span className="EditableInput_NameLabel">{name}</span>
-          <span
-            title="Редактировать"
-            className="EditableInput_ValueLabel"
-            role="button"
-            tabIndex={0}
-            onKeyPress={onPressEnter}
-            onClick={showEditComponent}
-          >
-            {children}
-          </span>
-        </>
-      </div>
-    </div>
-  );
-};
-
-const Edit = ({
-  name,
-  value,
-  validationMessage,
-  onChange,
-  apply,
-  showViewComponent,
-  maxLength,
-}: {
-  name: string;
-  value: string;
-  validationMessage?: string;
-  onChange: (value: string) => void;
-  apply: () => void;
-  showViewComponent: () => void;
-  maxLength?: number;
-}) => (
-  <div className="EditableInput_Edit">
-    <FormInput
-      className="EditableInput_ValueEdit"
-      name={name}
-      label={name}
-      value={value}
-      onChange={onChange}
-      validMessage={validationMessage}
-      onEnter={apply}
-      autoFocus
-      maxLength={maxLength}
-    />
-    <FormButton
-      classNameContainer="EditableInput_ShowViewButton"
-      className="grey"
-      onClick={showViewComponent}
-    >
-      <Back />
-    </FormButton>
-    <FormButton classNameContainer="EditableInput_ApplyButton" onClick={apply}>
-      <Save />
-    </FormButton>
-  </div>
-);
