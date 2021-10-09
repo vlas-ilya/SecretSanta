@@ -1,11 +1,14 @@
 import './styles.scss';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ReactComponent as Copy } from '../../resources/images/copy.svg';
 import { FormButton } from '../FormButton/FormButton';
+import { ReactComponent as Hide } from '../../resources/images/hide.svg';
+import { ReactComponent as Show } from '../../resources/images/show.svg';
 import { bem } from '../../utils/bem';
 import sync from 'resources/images/sync.svg';
+import { useToggle } from '../../utils/hooks/useToggle';
 
 export type FormInputProps = {
   name: string;
@@ -17,19 +20,52 @@ export type FormInputProps = {
   onEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   autoComplete?: 'off' | 'on';
   onSync?: Function;
+  digits?: boolean;
   copied?: boolean;
   readOnly?: boolean;
   disabled?: boolean;
   autoFocus?: boolean;
-  type?: '' | 'password' | 'number';
+  maxLength?: number;
+  type?: '' | 'password' | 'number' | 'text';
 };
 
-/* TODO (fix): При наведении на label сбрасывается фокус если поле disabled */
-/* TODO (feat): Сделать поддержку цифровой клавиатуры для поля типа password */
-export const FormInput = (props: FormInputProps) => {
+/* TODO (feat): Сделать поддержку цифровой клавиатуры  для мобильного телефона для поля типа password */
+export const FormInput = ({
+  value,
+  type,
+  onChange,
+  onSync,
+  copied,
+  name,
+  validMessage,
+  label,
+  autoFocus,
+  autoComplete,
+  disabled,
+  readOnly,
+  className,
+  onEnter,
+  digits,
+  maxLength,
+}: FormInputProps) => {
   const formInput = bem('FormInput');
   const [syncClasses, setSyncClasses] = useState(formInput.element('SyncButton'));
   const [startAnimation, setStartAnimation] = useState(false);
+  const [isPasswordHidden, showPassword, hidePassword] = useToggle();
+  const [realType, setRealType] = useState(type);
+  const input = useRef<HTMLInputElement>(null);
+
+  const showPasswordAndSetTypeNumber = useCallback(() => {
+    setRealType('text');
+    showPassword();
+    input.current?.focus();
+  }, [setRealType, showPassword]);
+
+  const hidePasswordAndSetTypePassword = useCallback(() => {
+    setRealType('password');
+    hidePassword();
+    input.current?.focus();
+  }, [setRealType, hidePassword]);
 
   useEffect(() => {
     if (startAnimation) {
@@ -47,67 +83,104 @@ export const FormInput = (props: FormInputProps) => {
   }, [startAnimation, formInput]);
 
   const copyToClipboard = useCallback(() => {
-    navigator.clipboard.writeText(props.value || '').then(() => undefined);
-  }, [props.value]);
+    navigator.clipboard.writeText(value || '').then(() => undefined);
+    input.current?.focus();
+  }, [value]);
+
+  const onChangeHandler = useCallback(
+    (e) => {
+      onChange &&
+        onChange(digits ? e.target.value.replace(/\D/g, '') : e.target.value, e);
+    },
+    [onChange, digits],
+  );
+
+  const onSyncHandler = useCallback(() => {
+    setStartAnimation(true);
+    onSync && onSync();
+    input.current?.focus();
+  }, [onSync, setStartAnimation]);
+
+  const onKeyPress = useCallback(
+    (e) => {
+      onEnter && e.key === 'Enter' && onEnter(e);
+    },
+    [onEnter],
+  );
 
   return (
     <div className={formInput()}>
       <div
         className={formInput.element('Body', {
-          copied: props.copied,
+          copied,
         })}
       >
         <label
           className={formInput.element('Label', {
-            filled: props.value,
+            filled: value,
           })}
-          htmlFor={props.name}
+          htmlFor={name}
         >
-          {props.validMessage ? (
-            <span className={formInput.element('ValidationMessage')}>
-              {props.validMessage}
-            </span>
+          {validMessage ? (
+            <span className={formInput.element('ValidationMessage')}>{validMessage}</span>
           ) : (
-            props.label
+            label
           )}
         </label>
-        {!!props.onSync && (
+
+        {type === 'password' &&
+          (isPasswordHidden ? (
+            <Show
+              className={formInput.element('TogglePassword')}
+              onClick={hidePasswordAndSetTypePassword}
+              role="button"
+            />
+          ) : (
+            <Hide
+              className={formInput.element('TogglePassword')}
+              onClick={showPasswordAndSetTypeNumber}
+              role="button"
+            />
+          ))}
+
+        {!!onSync && (
           <img
             className={syncClasses}
             src={sync}
             alt=""
             role="button"
-            onClick={() => {
-              setStartAnimation(true);
-              props.onSync && props.onSync();
-            }}
+            onClick={onSyncHandler}
           />
         )}
+
         <input
           className={formInput.element('Input', {
-            invalid: props.validMessage,
-            sync: props.onSync,
+            invalid: validMessage,
+            sync: onSync,
+            togglePassword: type === 'password',
           })}
-          autoFocus={props.autoFocus}
-          id={props.name}
-          name={props.name}
-          type={props.type || 'text'}
-          value={props.value}
-          autoComplete={props.autoComplete}
-          onKeyPress={(e) => props.onEnter && e.key === 'Enter' && props.onEnter(e)}
-          onChange={(e) => props.onChange && props.onChange(e.target.value, e)}
-          readOnly={props.readOnly}
-          disabled={props.disabled}
+          ref={input}
+          autoFocus={autoFocus}
+          id={name}
+          name={name}
+          type={realType || 'text'}
+          readOnly={readOnly}
+          disabled={disabled}
+          autoComplete={autoComplete}
+          value={value}
+          onKeyPress={onKeyPress}
+          onChange={onChangeHandler}
+          maxLength={maxLength}
         />
       </div>
-      {props.copied && (
+      {copied && (
         <FormButton
           classNameContainer={formInput.element(
             'CopyButton',
             {
-              copied: props.copied,
+              copied,
             },
-            props.className,
+            className,
           )}
           onClick={copyToClipboard}
         >

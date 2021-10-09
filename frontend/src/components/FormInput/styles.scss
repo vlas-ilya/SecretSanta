@@ -79,6 +79,21 @@
     &-sync {
       padding-right: 45px;
     }
+
+    &-togglePassword {
+      padding-right: 45px;
+    }
+  }
+
+  &-TogglePassword {
+    -webkit-tap-highlight-color: transparent;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: 13px;
+    top: 13px;
+    cursor: pointer;
+    color: $color1;
   }
 
   &-SyncButton {
@@ -115,4 +130,13 @@
       right: 0;
     }
   }
+}
+
+
+.FormInput-TogglePassword ~ .FormInput-SyncButton {
+  right: 45px;
+}
+
+.FormInput-Input-sync.FormInput-Input-togglePassword {
+  padding-right: 80px;
 }

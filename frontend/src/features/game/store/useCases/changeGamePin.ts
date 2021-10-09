@@ -1,9 +1,9 @@
 import { ValidationError, usecase } from '../../../../utils/usecase/usecase';
-import { changeLoadingStatus, setGame } from '../reducer';
+import { changeLoadingStatus, setGame } from '../game.reducer';
 
 import { GameChangePin } from '../model/GameChangePin';
 import { fetchAction } from '../../../../utils/fetch';
-import { update } from '../api/api';
+import { update } from '../api/game.api';
 import { validateSync } from 'class-validator';
 import { MutableRefObject } from 'react';
 

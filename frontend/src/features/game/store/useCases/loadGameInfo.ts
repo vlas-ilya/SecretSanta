@@ -1,8 +1,8 @@
-import { changeLoadingStatus, setGame } from '../reducer';
+import { changeLoadingStatus, setGame } from '../game.reducer';
 
 import { GameId } from '../model/GameTypes';
 import { fetchAction } from '../../../../utils/fetch';
-import { get } from '../api/api';
+import { get } from '../api/game.api';
 
 export const loadGameInfo = (id: GameId) =>
   fetchAction(changeLoadingStatus, async (dispatch) => {

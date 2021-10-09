@@ -15,15 +15,18 @@ export type EditableInputProps = {
   validationMessage?: string;
   onStartEditing: () => void;
   onChange: (value: string) => void;
+  maxLength?: number;
 };
 
 /* TODO (feat): Добавить textarea */
+/* TODO (fix): Padding с права не работает */
 export const EditableInput = ({
   name,
   value,
   onStartEditing,
   validationMessage,
   onChange,
+  maxLength,
 }: EditableInputProps) => {
   const [isEdit, showEditComponent, showViewComponent] = useToggle();
   const [newValue, setNewValue] = useState(value || '');
@@ -63,6 +66,7 @@ export const EditableInput = ({
           validationMessage={validationMessage}
           showViewComponent={showViewComponent}
           value={newValue}
+          maxLength={maxLength}
         />
       ) : (
         <View name={name} showEditComponent={showEditComponentAndUpdateState}>
@@ -119,6 +123,7 @@ const Edit = ({
   onChange,
   apply,
   showViewComponent,
+  maxLength,
 }: {
   name: string;
   value: string;
@@ -126,6 +131,7 @@ const Edit = ({
   onChange: (value: string) => void;
   apply: () => void;
   showViewComponent: () => void;
+  maxLength?: number;
 }) => (
   <div className="EditableInput_Edit">
     <FormInput
@@ -137,6 +143,7 @@ const Edit = ({
       validMessage={validationMessage}
       onEnter={apply}
       autoFocus
+      maxLength={maxLength}
     />
     <FormButton
       classNameContainer="EditableInput_ShowViewButton"

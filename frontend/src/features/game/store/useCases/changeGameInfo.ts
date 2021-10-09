@@ -6,13 +6,13 @@ import {
   clearBackup,
   setGame,
   tryToRestoreFromBackup,
-} from '../reducer';
+} from '../game.reducer';
 
 import { Game } from '../model/Game';
 import { GameChange } from '../model/GameChange';
 import { fetchAction } from '../../../../utils/fetch';
 import { plainToClass } from 'class-transformer';
-import { update } from '../api/api';
+import { update } from '../api/game.api';
 import { validateSync } from 'class-validator';
 
 const validator = (change: GameChange): ValidationError[] => {

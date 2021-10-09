@@ -24,7 +24,7 @@ export const GameInfoSection = (props: GameInfoProps) => (
     </FormItem>
     <FormItem>
       <FormInput
-        name="title"
+        name="description"
         label="Информация об игре"
         value={props.game.description || 'Нет информации'}
         disabled
@@ -32,7 +32,7 @@ export const GameInfoSection = (props: GameInfoProps) => (
     </FormItem>
     <FormItem>
       <FormInput
-        name="title"
+        name="state"
         label="Статус игры"
         value={props.game.state === 'INIT' ? 'Подготовка игроков' : 'Запущена'}
         disabled

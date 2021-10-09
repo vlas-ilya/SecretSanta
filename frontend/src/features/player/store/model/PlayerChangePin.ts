@@ -12,18 +12,22 @@ export class PlayerChangePin {
     this.confirmation = confirmation;
   }
 
+  static build(newPin: PlayerPin, confirmation: PlayerPin, oldPin?: PlayerPin): PlayerChangePin {
+    return new PlayerChangePin(newPin, confirmation, oldPin);
+  }
+
   @IsOptional()
   @IsDecimal()
   @Length(4, 8, {
     message: 'Пинкод должен сожержать от 4 до 8 символов',
-  })
+  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   oldPin?: PlayerPin;
 
   @IsNotEmpty()
   @IsDecimal()
   @Length(4, 8, {
     message: 'Пинкод должен сожержать от 4 до 8 символов',
-  })
+  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   newPin: PlayerPin;
 
   @IsNotEmpty()
@@ -33,6 +37,6 @@ export class PlayerChangePin {
   })
   @Length(4, 8, {
     message: 'Пинкод должен сожержать от 4 до 8 символов',
-  })
+  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   confirmation: PlayerPin;
 }

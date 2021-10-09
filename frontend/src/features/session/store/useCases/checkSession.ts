@@ -1,6 +1,6 @@
-import * as api from '../api/api';
+import * as api from '../api/session.api';
 
-import { changeAuthenticationState, changeLoadingStatus } from '../reducer';
+import { changeAuthenticationState, changeLoadingStatus } from '../session.reducer';
 
 import { Id } from '../model/SessionTypes';
 import { fetchAction } from '../../../../utils/fetch';

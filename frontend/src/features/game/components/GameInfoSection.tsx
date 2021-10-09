@@ -35,6 +35,7 @@ export const GameInfoSection = ({
         value={title}
         validationMessage={validationErrors['title']}
         onStartEditing={clearValidationErrors}
+        maxLength={255} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
         onChange={(value: GameId) =>
           onChange({
             title: { value },
@@ -48,6 +49,7 @@ export const GameInfoSection = ({
         value={description}
         validationMessage={validationErrors['description']}
         onStartEditing={clearValidationErrors}
+        maxLength={1000} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
         onChange={(value: GameDescription) =>
           onChange({
             description: { value },

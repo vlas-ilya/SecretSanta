@@ -12,7 +12,7 @@ import { Player } from '../model/Player';
 import { PlayerChange } from '../model/PlayerChange';
 import { fetchAction } from '../../../../utils/fetch';
 import { plainToClass } from 'class-transformer';
-import { update } from '../api/api';
+import { update } from '../api/player.api';
 import { validateSync } from 'class-validator';
 
 const validator = (change: PlayerChange) => {

@@ -28,12 +28,12 @@ export class GameShortInfo {
   state: GameState = GameState.INIT;
 
   @IsString()
-  @Length(10, 255)
+  @Length(10, 255) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   @IsOptional()
   title?: GameTitle;
 
   @IsString()
-  @Length(10, 1000)
+  @Length(10, 1000) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   @IsOptional()
   description?: GameDescription;
 }

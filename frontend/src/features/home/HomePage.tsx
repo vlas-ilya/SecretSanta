@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { selectGameId, selectLoadingStatus } from './store/selectors';
+import { selectGameId, selectLoadingStatus } from './store/home.selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Form } from 'components/Form/Form';

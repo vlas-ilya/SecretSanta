@@ -4,7 +4,7 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 import { LoadingStatus } from './classes/LoadingState';
 import { RootState } from '../store';
-import { changeAuthenticationState } from '../features/session/store/reducer';
+import { changeAuthenticationState } from '../features/session/store/session.reducer';
 
 export interface Options extends AxiosRequestConfig {}
 

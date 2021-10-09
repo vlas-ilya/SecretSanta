@@ -56,14 +56,14 @@ export class Game {
   @IsString()
   @Length(10, 255, {
     message: 'Заголовок должен занимать от 10 до 255 символов',
-  })
+  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   @IsOptional()
   title?: GameTitle;
 
   @IsString()
   @Length(10, 1000, {
     message: 'Описание должно занимать от 10 до 255 символов',
-  })
+  }) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   @IsOptional()
   description?: GameDescription;
 

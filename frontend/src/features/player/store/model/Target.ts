@@ -19,17 +19,17 @@ export class Target {
   state: PlayerState;
 
   @IsString()
-  @Length(5, 255)
+  @Length(5, 255) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   @IsOptional()
   name?: PlayerName;
 
   @IsString()
-  @Length(0, 1000)
+  @Length(0, 1000) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   @IsOptional()
   wish?: PlayerWish;
 
   @IsString()
-  @Length(0, 1000)
+  @Length(0, 1000) // TODO (fix): Вынести константы в глобальные параметры для обоих проектов
   @IsOptional()
   taboo?: PlayerTaboo;
 }

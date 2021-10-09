@@ -1,9 +1,9 @@
 import { AuthenticationProps, withAuthentication } from '../session/withAuthentication';
 import React, { useCallback, useEffect, useRef } from 'react';
-import { selectLoadingStatus, selectPlayer } from './store/selectors';
+import { selectLoadingStatus, selectPlayer } from './store/player.selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ChangePinModal } from './components/ChangePinModal';
+import { ChangePinModal } from '../../components/ChangePinModal/ChangePinModal';
 import { GameInfoSection } from './components/GameInfoSection';
 import { MatchIdentifiable } from '../../utils/classes/MatchIdentifiable';
 import { Page } from '../../components/Page/Page';
@@ -87,6 +87,7 @@ const PlayerPage = ({
               validationErrors={validationErrors}
               onSetNewPin={onChangePlayerPin}
               onClose={hideChangePinModal}
+              makeChanges={PlayerChangePin.build}
             />
           )}
         </>

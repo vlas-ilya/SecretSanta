@@ -42,6 +42,7 @@ export const PlayerInfoSection = ({
           value={name}
           validationMessage={validationErrors['name']}
           onStartEditing={clearValidationErrors}
+          maxLength={255} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
           onChange={(value: PlayerName) =>
             onChange({
               name: { value },
@@ -57,6 +58,7 @@ export const PlayerInfoSection = ({
         value={wish}
         validationMessage={validationErrors['wish']}
         onStartEditing={clearValidationErrors}
+        maxLength={1000} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
         onChange={(value: PlayerWish) =>
           onChange({
             wish: { value },
@@ -71,6 +73,7 @@ export const PlayerInfoSection = ({
         value={taboo}
         validationMessage={validationErrors['taboo']}
         onStartEditing={clearValidationErrors}
+        maxLength={1000} /*TODO (fix): Вынести константы в глобальные параметры для обоих проектов*/
         onChange={(value: PlayerTaboo) =>
           onChange({
             taboo: { value },

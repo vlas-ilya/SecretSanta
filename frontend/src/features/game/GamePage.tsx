@@ -1,9 +1,8 @@
 import { AuthenticationProps, withAuthentication } from '../session/withAuthentication';
 import React, { useCallback, useEffect, useRef } from 'react';
-import { selectGame, selectLoadingStatus } from './store/selectors';
+import { selectGame, selectLoadingStatus } from './store/game.selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ChangePinModal } from './components/ChangePinModal';
 import { GameChangePin } from './store/model/GameChangePin';
 import { GameChanges } from './store/model/GameChange';
 import { GameInfoSection } from 'features/game/components/GameInfoSection';
@@ -17,6 +16,7 @@ import { loadGameInfo } from './store/useCases/loadGameInfo';
 import { startGame } from './store/useCases/startGame';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
+import { ChangePinModal } from '../../components/ChangePinModal/ChangePinModal';
 
 const GamePage = ({
   setId,
@@ -97,6 +97,7 @@ const GamePage = ({
               validationErrors={validationErrors}
               onSetNewPin={onChangeGamePin}
               onClose={hideChangeModal}
+              makeChanges={GameChangePin.build}
             />
           )}
         </>
