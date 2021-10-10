@@ -4,7 +4,7 @@ import { FormButton } from '../../../components/FormButton/FormButton';
 import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from '../../../components/FormItem/FormItem';
 import Modal from '../../../components/Modal/Modal';
-import { Pin } from 'model';
+import { GAME_CHANGE_PIN_MAX_LENGTH, Pin } from 'model';
 import { Text } from '../../../components/Text/Text';
 
 export type InputPasswordModal = {
@@ -38,6 +38,8 @@ export const InputPinModal = ({ onInputPin, wasIncorrectPin }: InputPasswordModa
           <FormInput
             name="pin"
             type="password"
+            digits
+            maxLength={GAME_CHANGE_PIN_MAX_LENGTH}
             label="Введите пин-код"
             validMessage={wasIncorrectPin ? 'Некорректный пин-код' : ''}
             value={pin}
