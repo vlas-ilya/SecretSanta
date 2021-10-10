@@ -82,7 +82,6 @@ export class Game {
 
   public toShortInfoVo(): GameShortInfoVo {
     return new GameShortInfoVo(
-      this.id.value,
       GameStateVo[this.state],
       this.title?.value,
       this.description?.value,

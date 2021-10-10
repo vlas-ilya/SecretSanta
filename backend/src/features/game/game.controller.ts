@@ -17,11 +17,16 @@ import { GameChanges } from './model/do/GameChanges';
 import { GameId } from './model/do/GameId';
 import { GameService } from './game.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { PasswordService } from '../password/password.service';
 import { wrapAllMethodsInTransaction } from '../../utils/transaction';
 
 @Controller('/api/game')
 export class GameController {
-  constructor(private service: GameService, private readonly connection: Connection) {
+  constructor(
+    private service: GameService,
+    private readonly connection: Connection,
+    private readonly passwordService: PasswordService,
+  ) {
     this.service = wrapAllMethodsInTransaction(connection, service);
   }
 
@@ -48,7 +53,11 @@ export class GameController {
   ): Promise<GameVo> {
     const game = await this.service.update(
       new GameId(id),
-      await GameChanges.create(request),
+      await GameChanges.create(
+        request,
+        this.passwordService.generatePasswordByPin,
+        this.passwordService.comparePinAndPassword,
+      ),
     );
     return game.toVo();
   }

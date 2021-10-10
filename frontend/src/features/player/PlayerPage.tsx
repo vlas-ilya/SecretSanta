@@ -10,6 +10,7 @@ import { MatchIdentifiable } from '../../utils/classes/MatchIdentifiable';
 import { Page } from '../../components/Page/Page';
 import { PlayerChanges } from 'model';
 import { PlayerInfoSection } from './components/PlayerInfoSection';
+import { TargetInfoSection } from './components/TargetInfoSection';
 import { changePlayerInfo } from './store/useCases/changePlayerInfo';
 import { changePlayerPin } from './store/useCases/changePlayerPin';
 import { loadPlayerInfo } from './store/useCases/loadPlayerInfo';
@@ -17,7 +18,6 @@ import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
 
 // TODO (fix): edit in RUN status
-// TODO (feat): show target's information
 const PlayerPage = ({
   setId,
   hasSession,
@@ -102,6 +102,13 @@ const PlayerPage = ({
             />
           )}
         </>
+      )}
+      {player?.target && (
+        <TargetInfoSection
+          name={player.target.name}
+          wish={player.target.wish}
+          taboo={player.target.taboo}
+        />
       )}
     </Page>
   );

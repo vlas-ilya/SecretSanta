@@ -1,0 +1,32 @@
+.FieldView {
+  display: block;
+  position: relative;
+
+  &-View {
+    display: block;
+    position: relative;
+  }
+
+  &-ViewContent {
+    display: block;
+    position: relative;
+    margin-right: 90px;
+  }
+
+  &-NameLabel {
+    font-weight: bold;
+    margin-right: 5px;
+
+    &:after {
+      content: ':';
+    }
+  }
+
+  &-ValueLabel {
+    position: relative;
+
+    &-empty {
+      color: #909090;
+    }
+  }
+}
