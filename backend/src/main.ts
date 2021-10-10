@@ -1,11 +1,21 @@
-import { AppModule } from './app.module';
-import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
+import * as expressStaticGzip from 'express-static-gzip';
+
+import { AppModule } from './app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { NestFactory } from '@nestjs/core';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(cookieParser());
-  await app.listen(8080);
+  app.use(
+    '/',
+    expressStaticGzip(join(__dirname, '..', '..', 'client', 'build'), {
+      enableBrotli: true,
+    }),
+  );
+  await app.listen(8081);
 }
 
 bootstrap()

@@ -30,7 +30,7 @@ export class GameController {
     this.service = wrapAllMethodsInTransaction(connection, service);
   }
 
-  @Post()
+  @Post('/create')
   @HttpCode(HttpStatus.CREATED)
   async create(): Promise<GameIdVo> {
     const gameId = await this.service.create();

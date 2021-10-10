@@ -25,6 +25,8 @@ const Routes = () => {
   );
 };
 
+// TODO (feat): Отображать информацию об ошибках
+// TODO (feat): Задеплоить на сервер
 const App = hot(Routes);
 
 ReactDOM.render(

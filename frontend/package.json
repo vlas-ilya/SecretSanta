@@ -7,7 +7,7 @@
     "build": "react-scripts build && gzip -krf build/**/*.{ignored,html,css,js,png}",
     "test": "react-scripts test"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:8081",
   "eslintConfig": {
     "extends": "react-app"
   },
