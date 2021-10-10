@@ -10,6 +10,7 @@
 
   &-Body {
     position: relative;
+    overflow: hidden;
 
     &-copied {
       margin-right: 49px;
@@ -18,6 +19,7 @@
 
   &-ValidationMessage {
     color: $ValidationMessage--color;
+    white-space: nowrap;
   }
 
   &-Label {
