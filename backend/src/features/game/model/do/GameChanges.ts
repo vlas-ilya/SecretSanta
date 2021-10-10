@@ -2,6 +2,7 @@ import {
   GAME_CHANGES_IS_EMPTY,
   GAME_CHANGES_IS_NULL,
   GAME_NEW_STATE_IS_NOT_CORRECT,
+  GAME_NOT_ENOUGH_PLAYERS,
   GAME_OLD_PIN_IS_NOT_CORRECT,
   GAME_SHOULD_BE_IN_INIT_STATUS,
   isTrue,
@@ -21,6 +22,7 @@ import { GamePassword } from './GamePassword';
 import { GamePin } from './GamePin';
 import { GameState } from './GameState';
 import { GameTitle } from './GameTitle';
+import { PlayerState } from '../../../player/model/do/PlayerState';
 
 export type GameWasStarted = boolean;
 
@@ -79,7 +81,10 @@ export class GameChanges {
     }
     if ('newPin' in changesVo) {
       (changes as ChangePassword).password = {
-        value: await GamePassword.create(new GamePin(changesVo.newPin), passwordGenerator),
+        value: await GamePassword.create(
+          new GamePin(changesVo.newPin),
+          passwordGenerator,
+        ),
         oldValue: changesVo.oldPin && (await new GamePin(changesVo.oldPin)),
       };
     }
@@ -93,11 +98,7 @@ export class GameChanges {
 
   async apply(game: Game): Promise<[Game, GameWasStarted]> {
     'password' in this.changes &&
-      (await this.correctOldPassword(
-        game,
-        this.changes,
-        GAME_OLD_PIN_IS_NOT_CORRECT,
-      ));
+      (await this.correctOldPassword(game, this.changes, GAME_OLD_PIN_IS_NOT_CORRECT));
     'state' in this.changes &&
       GameChanges.correctNewState(game, this.changes, GAME_NEW_STATE_IS_NOT_CORRECT);
 
@@ -117,6 +118,14 @@ export class GameChanges {
       );
     }
 
+    const gameWasStarted = GameChanges.gameWasStarted(game.state, newState);
+    if (gameWasStarted) {
+      isTrue(
+        game.players.filter((player) => player.state === PlayerState.ACTIVE).length >= 2,
+        GAME_NOT_ENOUGH_PLAYERS,
+      );
+    }
+
     const newGame = new Game(
       game.id,
       game.registrationId,
@@ -127,7 +136,7 @@ export class GameChanges {
     );
     newGame.players.push(...game.players);
 
-    return [newGame, GameChanges.gameWasStarted(game.state, newState)];
+    return [newGame, gameWasStarted];
   }
 
   private async correctOldPassword(

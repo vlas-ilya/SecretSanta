@@ -35,6 +35,7 @@ export const GAME_PASSWORD_IS_NOT_CORRECT = new BadRequestException(
 );
 export const GAME_CHANGES_IS_NULL = new BadRequestException('GAME_CHANGES_IS_NULL');
 export const GAME_CHANGES_IS_EMPTY = new BadRequestException('GAME_CHANGES_IS_EMPTY');
+export const GAME_NOT_ENOUGH_PLAYERS = new BadRequestException('GAME_NOT_ENOUGH_PLAYERS');
 export const GAME_OLD_PIN_IS_NOT_CORRECT = new BadRequestException(
   'GAME_OLD_PIN_IS_NOT_CORRECT',
 );
