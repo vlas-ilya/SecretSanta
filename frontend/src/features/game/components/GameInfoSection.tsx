@@ -40,6 +40,7 @@ export const GameInfoSection = ({
       <EditableInput
         name="Заголовок"
         value={title}
+        disabled={state !== GameState.INIT}
         validationMessage={validationErrors['title']}
         onStartEditing={clearValidationErrors}
         maxLength={GAME_TITLE_MAX_LENGTH}
@@ -54,6 +55,7 @@ export const GameInfoSection = ({
       <EditableInput
         name="Описание"
         value={description}
+        disabled={state !== GameState.INIT}
         validationMessage={validationErrors['description']}
         onStartEditing={clearValidationErrors}
         maxLength={GAME_DESCRIPTION_MAX_LENGTH}

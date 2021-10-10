@@ -19,7 +19,6 @@ import { startGame } from './store/useCases/startGame';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
 
-// TODO (fix): edit in RUN status
 const GamePage = ({
   setId,
   match,

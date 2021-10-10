@@ -3,6 +3,7 @@ import './styles.scss';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { ReactComponent as Back } from '../../resources/images/back.svg';
+import { FieldView } from '../FieldView/FieldView';
 import { FormButton } from '../FormButton/FormButton';
 import { FormInput } from '../FormInput/FormInput';
 import { ReactComponent as Save } from '../../resources/images/save.svg';
@@ -17,6 +18,7 @@ export type EditableInputProps = {
   onStartEditing: () => void;
   onChange: (value: string) => void;
   maxLength?: number;
+  disabled?: boolean;
 };
 
 /* TODO (feat): Добавить textarea */
@@ -27,6 +29,7 @@ export const EditableInput = ({
   validationMessage,
   onChange,
   maxLength,
+  disabled,
 }: EditableInputProps) => {
   const editableInput = bem('EditableInput');
   const [isEdit, showEditComponent, showViewComponent] = useToggle();
@@ -65,6 +68,10 @@ export const EditableInput = ({
     },
     [showEditComponentAndUpdateState],
   );
+
+  if (disabled) {
+    return <FieldView name={name} value={value} />;
+  }
 
   return (
     <div className={editableInput()}>

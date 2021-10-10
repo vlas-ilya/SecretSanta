@@ -147,7 +147,7 @@ export function notEmpty<T extends { length: number }>(value: T, errorMessage: E
 
 export function correctHash<T extends string>(value: T, errorMessage: Error) {
   notEmpty(value, errorMessage);
-  // TODO: проверить регэкспом
+  // TODO (feat): проверить регэкспом
 }
 
 export function isTrue(condition: boolean, error: Error) {

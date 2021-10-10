@@ -1,7 +1,9 @@
 import {
+  GameState,
   PLAYER_NAME_MAX_LENGTH,
   PLAYER_TABOO_MAX_LENGTH,
   PLAYER_WISH_MAX_LENGTH,
+  PlayerChanges,
   PlayerName,
   PlayerTaboo,
   PlayerWish,
@@ -11,8 +13,6 @@ import { EditableInput } from 'components/EditableInput/EditableInput';
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
 import { FormItem } from 'components/FormItem/FormItem';
-import { GameState } from 'model';
-import { PlayerChanges } from 'model';
 import React from 'react';
 import { Text } from 'components/Text/Text';
 
@@ -30,6 +30,7 @@ export type PlayerInfoProps = {
 
 // TODO (feat): show registration status
 export const PlayerInfoSection = ({
+  gameState,
   name,
   wish,
   taboo,
@@ -48,6 +49,7 @@ export const PlayerInfoSection = ({
         <EditableInput
           name="Имя и Фамилия"
           value={name}
+          disabled={gameState !== GameState.INIT}
           validationMessage={validationErrors['name']}
           onStartEditing={clearValidationErrors}
           maxLength={PLAYER_NAME_MAX_LENGTH}
@@ -64,6 +66,7 @@ export const PlayerInfoSection = ({
       <EditableInput
         name="Пожелания"
         value={wish}
+        disabled={gameState !== GameState.INIT}
         validationMessage={validationErrors['wish']}
         onStartEditing={clearValidationErrors}
         maxLength={PLAYER_WISH_MAX_LENGTH}
@@ -79,6 +82,7 @@ export const PlayerInfoSection = ({
       <EditableInput
         name="Не дарить ни в коем случае"
         value={taboo}
+        disabled={gameState !== GameState.INIT}
         validationMessage={validationErrors['taboo']}
         onStartEditing={clearValidationErrors}
         maxLength={PLAYER_TABOO_MAX_LENGTH}
@@ -89,13 +93,17 @@ export const PlayerInfoSection = ({
         }
       />
     </FormItem>
-    <div className="actions">
-      <FormButton className="grey" onClick={onShowChangePlayerPinModal}>
-        {hasPassword ? 'Изменить пароль' : 'Установить пароль'}
-      </FormButton>
-    </div>
-    <FormItem>
-      <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
-    </FormItem>
+    {gameState === GameState.INIT && (
+      <>
+        <div className="actions">
+          <FormButton className="grey" onClick={onShowChangePlayerPinModal}>
+            {hasPassword ? 'Изменить пароль' : 'Установить пароль'}
+          </FormButton>
+        </div>
+        <FormItem>
+          <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
+        </FormItem>
+      </>
+    )}
   </Form>
 );

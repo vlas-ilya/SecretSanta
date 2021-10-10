@@ -73,7 +73,7 @@ export function ChangePinModal<T>({
         />
       </FormItem>
       <FormItem>
-        {/* TODO (feat): Сделать цифровую клавиатуру */}
+        {/* TODO (feat): Сделать цифровую клавиатуру для мобильного телефона */}
         <FormInput
           digits
           name="confirmation"
