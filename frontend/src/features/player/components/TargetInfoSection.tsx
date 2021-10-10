@@ -15,7 +15,7 @@ export type PlayerInfoProps = {
 export const TargetInfoSection = ({ name, wish, taboo }: PlayerInfoProps) => (
   <Form>
     <FormItem>
-      <Text type="h1">Ваш тайный санта</Text>
+      <Text type="h1">Вы будете Тайным Сантой для...</Text>
     </FormItem>
     <FormItem>
       <FormItem>
