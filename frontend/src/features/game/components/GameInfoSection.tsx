@@ -8,6 +8,7 @@ import {
 } from 'model';
 
 import { EditableInput } from '../../../components/EditableInput/EditableInput';
+import { FieldView } from '../../../components/FieldView/FieldView';
 import { Form } from 'components/Form/Form';
 import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
@@ -67,11 +68,9 @@ export const GameInfoSection = ({
       />
     </FormItem>
     <FormItem>
-      <FormInput
-        name="title"
-        label="Статус игры"
+      <FieldView
+        name="Статус игры"
         value={state === 'INIT' ? 'Подготовка игроков' : 'Запущена'}
-        disabled
       />
     </FormItem>
   </Form>
