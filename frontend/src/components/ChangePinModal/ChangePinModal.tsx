@@ -33,11 +33,11 @@ export function ChangePinModal<T>({
   return (
     <Modal
       actions={[
-        <FormButton key="close" className="grey" onClick={onClose}>
-          Отмена
-        </FormButton>,
         <FormButton key="change" onClick={changeGamePinCallback}>
           Сохранить
+        </FormButton>,
+        <FormButton key="close" className="grey" onClick={onClose}>
+          Отмена
         </FormButton>,
       ]}
       showCloseButton
