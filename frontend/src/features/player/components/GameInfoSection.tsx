@@ -25,7 +25,7 @@ export const GameInfoSection = (props: GameInfoProps) => (
     <FormItem>
       <FormInput
         name="description"
-        label="Информация об игре"
+        label="Описание игры"
         value={props.game.description || 'Нет информации'}
         disabled
       />

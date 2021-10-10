@@ -38,7 +38,7 @@ export const GameInfoSection = ({
     </FormItem>
     <FormItem>
       <EditableInput
-        name="Заголовок"
+        name="Название игры"
         value={title}
         disabled={state !== GameState.INIT}
         validationMessage={validationErrors['title']}
@@ -53,7 +53,7 @@ export const GameInfoSection = ({
     </FormItem>
     <FormItem>
       <EditableInput
-        name="Описание"
+        name="Описание игры"
         value={description}
         disabled={state !== GameState.INIT}
         validationMessage={validationErrors['description']}

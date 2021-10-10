@@ -19,7 +19,7 @@ export const FieldView = ({ name, value, empty }: FieldViewProps) => {
           <span
             className={fieldView.element('ValueLabel', { empty })}
           >
-            {value || 'Не указано'}
+            {value || 'Нет информации'}
           </span>
         </>
       </div>
