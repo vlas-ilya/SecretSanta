@@ -46,6 +46,9 @@ export const PlayerInfoSection = ({
     <FormItem>
       <Text type="h1">Информация об игроке</Text>
     </FormItem>
+    {state === PlayerState.INIT && (
+      <Text type="p">Для участия в игре вам необходимо указать информацию о себе</Text>
+    )}
     <FormItem>
       <FormItem>
         <EditableInput
@@ -95,9 +98,6 @@ export const PlayerInfoSection = ({
         }
       />
     </FormItem>
-    {state === PlayerState.INIT && (
-      <Text type="p">Для участия в игре вам необходимо указать информацию о себе</Text>
-    )}
     {gameState === GameState.INIT && (
       <>
         {!hasPassword && (
