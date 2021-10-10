@@ -36,25 +36,26 @@ export const GameTitleSection = (props: GameTitleProps) => (
             value={`${window.location.origin}/api/player/register/${props.registrationId}`}
           />
         </FormItem>
-        <FormItem>
-          <Text type="p">
-            После регистрации всех игроков нажмите кнопку «Начать игру»
-          </Text>
-          {!props.hasPassword && (
-            <Text type="p">Чтобы защитить эту страницу, вы можете установить пин-код</Text>
-          )}
-          <Text type="p">
-            Незабудьте созранить ссылку на данную страницу, без нее вы не сможете зайти в
-            игру
-          </Text>
-        </FormItem>
-        <div className="actions">
-          <FormButton onClick={props.onStartGame}>Начать игру</FormButton>
-          <FormButton className="grey" onClick={props.onChangePin}>
-            {props.hasPassword ? 'Изменить пин-код' : 'Установить пин-код'}
-          </FormButton>
-        </div>
       </>
     )}
+    <FormItem>
+      {props.state === 'INIT' && (
+        <Text type="p">После регистрации всех игроков нажмите кнопку «Начать игру»</Text>
+      )}
+      {!props.hasPassword && (
+        <Text type="p">Чтобы защитить эту страницу, вы можете установить пин-код</Text>
+      )}
+      <Text type="p">
+        Незабудьте созранить ссылку на данную страницу, без нее вы не сможете зайти в игру
+      </Text>
+    </FormItem>
+    <div className="actions">
+      {props.state === 'INIT' && (
+        <FormButton onClick={props.onStartGame}>Начать игру</FormButton>
+      )}
+      <FormButton className="grey" onClick={props.onChangePin}>
+        {props.hasPassword ? 'Изменить пин-код' : 'Установить пин-код'}
+      </FormButton>
+    </div>
   </Form>
 );

@@ -71,7 +71,6 @@ export const PlayerInfoSection = ({
       <EditableInput
         name="Пожелания"
         value={wish}
-        disabled={gameState !== GameState.INIT}
         validationMessage={validationErrors['wish']}
         onStartEditing={clearValidationErrors}
         maxLength={PLAYER_WISH_MAX_LENGTH}
@@ -87,7 +86,6 @@ export const PlayerInfoSection = ({
       <EditableInput
         name="Не дарить ни в коем случае"
         value={taboo}
-        disabled={gameState !== GameState.INIT}
         validationMessage={validationErrors['taboo']}
         onStartEditing={clearValidationErrors}
         maxLength={PLAYER_TABOO_MAX_LENGTH}

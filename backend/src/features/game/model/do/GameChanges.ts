@@ -107,17 +107,6 @@ export class GameChanges {
     const newDescription = this.loadValue(game, 'description');
     const newPassword = this.loadValue(game, 'password');
 
-    if (newState !== GameState.INIT) {
-      isTrue(
-        !newTitle || newTitle.value === game.title?.value,
-        GAME_SHOULD_BE_IN_INIT_STATUS,
-      );
-      isTrue(
-        !newDescription || newDescription.value === game.description?.value,
-        GAME_SHOULD_BE_IN_INIT_STATUS,
-      );
-    }
-
     const gameWasStarted = GameChanges.gameWasStarted(game.state, newState);
     if (gameWasStarted) {
       isTrue(

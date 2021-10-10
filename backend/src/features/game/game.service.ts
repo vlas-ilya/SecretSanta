@@ -36,7 +36,8 @@ export class GameService {
       newVersion.calculateTargets();
       await this.savePlayers(newVersion.players);
     }
-    return this.storage.update(newVersion);
+    await this.storage.update(newVersion);
+    return await this.get(id);
   }
 
   private async removeNotActivePlayers(players: Player[]) {

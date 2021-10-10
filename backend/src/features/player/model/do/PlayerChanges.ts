@@ -5,9 +5,12 @@ import {
   Player as PlayerVo,
 } from 'model';
 import {
+  GAME_SHOULD_BE_IN_INIT_STATUS,
   PLAYER_CHANGES_IS_EMPTY,
   PLAYER_CHANGES_IS_NULL,
   PLAYER_OLD_PIN_IS_NOT_CORRECT,
+  isFalse,
+  isTrue,
   notEmpty,
   notNull,
 } from '../../../../utils/validators';
@@ -103,6 +106,11 @@ export class PlayerChanges {
         this.changes,
         PLAYER_OLD_PIN_IS_NOT_CORRECT,
       ));
+
+    isFalse(
+      player.game.state !== 'INIT' && 'name' in this.changes,
+      GAME_SHOULD_BE_IN_INIT_STATUS,
+    );
 
     const newName = this.loadValue(player, 'name');
     const newWish = this.loadValue(player, 'wish');
