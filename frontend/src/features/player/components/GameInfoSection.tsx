@@ -4,6 +4,7 @@ import { FormItem } from 'components/FormItem/FormItem';
 import { GameShortInfo } from 'model';
 import React from 'react';
 import { Text } from 'components/Text/Text';
+import { FieldView } from '../../../components/FieldView/FieldView';
 
 export type GameInfoProps = {
   game: GameShortInfo;
@@ -15,28 +16,13 @@ export const GameInfoSection = (props: GameInfoProps) => (
       <Text type="h1">Информация об игре</Text>
     </FormItem>
     <FormItem>
-      <FormInput
-        name="title"
-        label="Название игры"
-        value={props.game.title || 'Нет информации'}
-        disabled
-      />
+      <FieldView name="Название игры" value={props.game.title} empty={!props.game.title}/>
     </FormItem>
     <FormItem>
-      <FormInput
-        name="description"
-        label="Описание игры"
-        value={props.game.description || 'Нет информации'}
-        disabled
-      />
+      <FieldView name="Описание игры" value={props.game.description} empty={!props.game.description}/>
     </FormItem>
     <FormItem>
-      <FormInput
-        name="state"
-        label="Статус игры"
-        value={props.game.state === 'INIT' ? 'Подготовка игроков' : 'Запущена'}
-        disabled
-      />
+      <FieldView name="Статус игры" value={props.game.state === 'INIT' ? 'Подготовка игроков' : 'Запущена'}/>
     </FormItem>
   </Form>
 );

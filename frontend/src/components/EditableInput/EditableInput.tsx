@@ -72,7 +72,7 @@ export const EditableInput = ({
   );
 
   if (disabled) {
-    return <FieldView name={name} value={value} />;
+    return <FieldView name={name} value={value} empty={!value} />;
   }
 
   return (
