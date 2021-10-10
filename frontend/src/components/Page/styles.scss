@@ -7,6 +7,10 @@
   justify-content: center;
   padding: 20px;
 
+  @media screen and (max-width: 800px) {
+    padding: 20px 0;
+  }
+
   &.loading {
     .page-wrapper {
       overflow: hidden;
@@ -48,8 +52,16 @@
       max-width: 1200px;
       padding: 0 40px;
 
-      @media screen and (max-width: 970px) {
-        padding: 0 20px;
+      @media screen and (max-width: 800px) {
+        padding: 0;
+        width: 680px;
+        margin: 0 auto;
+      }
+
+      @media screen and (max-width: 680px) {
+        padding: 0;
+        width: auto;
+        margin: 0 auto;
       }
 
       .form-content {

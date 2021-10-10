@@ -8,6 +8,17 @@
   background: $form-background;
   padding: 20px;
 
+  @media screen and (max-width: 400px) {
+    width: 382px;
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  @media screen and (max-width: 390px) {
+    width: auto;
+    margin: 10px 4px;
+  }
+
   .actions {
     display: flex;
     flex-wrap: wrap;
