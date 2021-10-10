@@ -119,7 +119,7 @@ export const EditableInput = ({
                 onKeyPress={onPressEnter}
                 onClick={showEditComponentAndUpdateState}
               >
-                {value}
+                {value || "Нет информации"}
               </span>
             </>
           </div>
