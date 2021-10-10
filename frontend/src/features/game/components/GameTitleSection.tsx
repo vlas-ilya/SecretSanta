@@ -31,7 +31,7 @@ export const GameTitleSection = (props: GameTitleProps) => (
           <FormInput
             name="registrationId"
             readOnly
-            copied
+            copied={window.isSecureContext}
             label="Ссылка для регистрации"
             value={`${window.location.origin}/api/player/register/${props.registrationId}`}
           />
