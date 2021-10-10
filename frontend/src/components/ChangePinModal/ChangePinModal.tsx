@@ -42,7 +42,7 @@ export function ChangePinModal<T>({
       ]}
       showCloseButton
       onClose={onClose}
-      title={hasPassword ? 'Изменить пин-код' : 'Установить пин-код'}
+      title={hasPassword ? 'Изменение пин-кода' : 'Установка пин-кода'}
     >
       {hasPassword && (
         <FormItem>
