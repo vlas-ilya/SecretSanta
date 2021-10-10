@@ -1,4 +1,4 @@
-import { GameChangePin, GameId, GamePin } from 'model';
+import { GameChangePin, GameId } from 'model';
 
 import { AxiosResponse } from 'axios';
 import { Game } from 'model';

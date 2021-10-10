@@ -8,8 +8,7 @@ import { update } from '../api/game.api';
 import { validateSync } from 'class-validator';
 
 const validator = (changes: GameChangePin) => {
-  const message = new GameChangePin(changes.newPin, changes.confirmation, changes.oldPin);
-  const validationErrors = validateSync(message);
+  const validationErrors = validateSync(changes);
   return validationErrors.map(
     (error) =>
       new ValidationError(

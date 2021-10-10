@@ -10,7 +10,12 @@ export type ChangePinModalProps<T> = {
   validationErrors: Record<string, string>;
   onSetNewPin: (changes: T) => void;
   onClose: () => void;
-  makeChanges: (newPin: string, confirmation: string, oldPin: string) => T;
+  makeChanges: (
+    newPin: string,
+    confirmation: string,
+    oldPin: string,
+    hasPassword: boolean,
+  ) => T;
   maxLength: number;
 };
 
@@ -27,8 +32,8 @@ export function ChangePinModal<T>({
   const [confirmation, setConfirmation] = useState('');
 
   const changeGamePinCallback = useCallback(() => {
-    onSetNewPin(makeChanges(newPin, confirmation, oldPin));
-  }, [oldPin, newPin, confirmation, onSetNewPin, makeChanges]);
+    onSetNewPin(makeChanges(newPin, confirmation, oldPin, hasPassword));
+  }, [oldPin, newPin, confirmation, hasPassword, onSetNewPin, makeChanges]);
 
   return (
     <Modal

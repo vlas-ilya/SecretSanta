@@ -1,4 +1,4 @@
-import { PlayerChangePin, PlayerId, PlayerPin } from 'model';
+import { PlayerChangePin, PlayerId } from 'model';
 
 import { AxiosResponse } from 'axios';
 import { INVALID_RESPONSE } from '../../../../utils/constants';
