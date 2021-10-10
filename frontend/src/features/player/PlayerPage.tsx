@@ -84,6 +84,7 @@ const PlayerPage = ({
             name={player?.name}
             wish={player?.wish}
             taboo={player?.taboo}
+            state={player?.state}
             hasPassword={player?.hasPassword}
             validationErrors={validationErrors}
             clearValidationErrors={clearValidationErrors}

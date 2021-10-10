@@ -5,6 +5,7 @@ import {
   PLAYER_WISH_MAX_LENGTH,
   PlayerChanges,
   PlayerName,
+  PlayerState,
   PlayerTaboo,
   PlayerWish,
 } from 'model';
@@ -21,6 +22,7 @@ export type PlayerInfoProps = {
   name?: PlayerName;
   wish?: PlayerWish;
   taboo?: PlayerTaboo;
+  state?: PlayerState;
   hasPassword?: boolean;
   validationErrors: Record<string, string>;
   clearValidationErrors: () => void;
@@ -28,12 +30,12 @@ export type PlayerInfoProps = {
   onShowChangePlayerPinModal: () => void;
 };
 
-// TODO (feat): show registration status
 export const PlayerInfoSection = ({
   gameState,
   name,
   wish,
   taboo,
+  state,
   validationErrors,
   clearValidationErrors,
   onChange,
@@ -93,6 +95,9 @@ export const PlayerInfoSection = ({
         }
       />
     </FormItem>
+    {state === PlayerState.INIT && (
+      <Text type="p">Для участия в игре вам необходимо указать информацию о себе</Text>
+    )}
     {gameState === GameState.INIT && (
       <>
         <div className="actions">
