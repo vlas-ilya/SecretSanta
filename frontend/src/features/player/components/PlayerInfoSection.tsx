@@ -100,16 +100,16 @@ export const PlayerInfoSection = ({
     )}
     {gameState === GameState.INIT && (
       <>
+        {!hasPassword && (
+          <FormItem>
+            <Text type="p">Чтобы защитить эту страницу, вы можете установить пин-код</Text>
+          </FormItem>
+        )}
         <div className="actions">
           <FormButton className="grey" onClick={onShowChangePlayerPinModal}>
             {hasPassword ? 'Изменить пин-код' : 'Установить пин-код'}
           </FormButton>
         </div>
-        {!hasPassword && (
-          <FormItem>
-            <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
-          </FormItem>
-        )}
       </>
     )}
   </Form>
