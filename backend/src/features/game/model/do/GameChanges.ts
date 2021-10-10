@@ -71,12 +71,12 @@ export class GameChanges {
     const changes: Changes = {};
     if ('title' in changesVo) {
       (changes as ChangeTitle).title = {
-        value: new GameTitle(changesVo.title.value),
+        value: new GameTitle(changesVo.title.value.trim()),
       };
     }
     if ('description' in changesVo) {
       (changes as ChangeDescription).description = {
-        value: new GameDescription(changesVo.description.value),
+        value: new GameDescription(changesVo.description.value.trim()),
       };
     }
     if ('newPin' in changesVo) {

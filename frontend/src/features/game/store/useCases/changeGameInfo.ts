@@ -18,6 +18,8 @@ import { validateSync } from 'class-validator';
 const validator = (change: GameChange): ValidationError[] => {
   const game = plainToClass(Game, change.game);
   game.applyChanges(change.changes);
+  game.title = game.title?.trim() || game.title;
+  game.description = game.description?.trim() || game.description;
   const validationErrors = validateSync(game);
   return validationErrors.map(
     (error) => new ValidationError(error.property, error.constraints?.isLength || ''),

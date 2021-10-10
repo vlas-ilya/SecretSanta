@@ -18,6 +18,9 @@ import { validateSync } from 'class-validator';
 const validator = (change: PlayerChange) => {
   const player = plainToClass(Player, change.player);
   player.applyChanges(change.changes);
+  player.name = player.name?.trim() || player.name;
+  player.wish = player.wish?.trim() || player.wish;
+  player.taboo = player.taboo?.trim() || player.taboo;
   const validationErrors = validateSync(player);
   return validationErrors.map(
     (error) => new ValidationError(error.property, error.constraints?.isLength || ''),

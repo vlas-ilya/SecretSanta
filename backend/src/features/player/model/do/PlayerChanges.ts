@@ -71,17 +71,17 @@ export class PlayerChanges {
     const changes: Changes = {};
     if ('name' in changesVo) {
       (changes as ChangeName).name = {
-        value: new PlayerName(changesVo.name.value),
+        value: new PlayerName(changesVo.name.value.trim()),
       };
     }
     if ('wish' in changesVo) {
       (changes as ChangeWish).wish = {
-        value: new PlayerWish(changesVo.wish.value),
+        value: new PlayerWish(changesVo.wish.value.trim()),
       };
     }
     if ('taboo' in changesVo) {
       (changes as ChangeTaboo).taboo = {
-        value: new PlayerTaboo(changesVo.taboo.value),
+        value: new PlayerTaboo(changesVo.taboo.value.trim()),
       };
     }
     if ('newPin' in changesVo) {
