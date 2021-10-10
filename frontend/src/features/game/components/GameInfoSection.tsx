@@ -10,7 +10,6 @@ import {
 import { EditableInput } from '../../../components/EditableInput/EditableInput';
 import { FieldView } from '../../../components/FieldView/FieldView';
 import { Form } from 'components/Form/Form';
-import { FormInput } from '../../../components/FormInput/FormInput';
 import { FormItem } from 'components/FormItem/FormItem';
 import { GameChanges } from 'model';
 import React from 'react';

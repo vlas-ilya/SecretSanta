@@ -40,16 +40,20 @@ export const GameTitleSection = (props: GameTitleProps) => (
           <Text type="p">
             После регистрации всех игроков нажмите кнопку «Начать игру»
           </Text>
+          {!props.hasPassword && (
+            <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
+          )}
+          <Text type="p">
+            Незабудьте созранить ссылку на данную страницу, без нее вы не сможете зайти в
+            игру
+          </Text>
         </FormItem>
         <div className="actions">
-          <FormButton className="grey" onClick={props.onChangePin}>
-            {props.hasPassword ? 'Изменить пароль' : 'Установить пароль'}
-          </FormButton>
           <FormButton onClick={props.onStartGame}>Начать игру</FormButton>
+          <FormButton className="grey" onClick={props.onChangePin}>
+            {props.hasPassword ? 'Изменить пин-код' : 'Установить пин-код'}
+          </FormButton>
         </div>
-        <FormItem>
-          <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
-        </FormItem>
       </>
     )}
   </Form>

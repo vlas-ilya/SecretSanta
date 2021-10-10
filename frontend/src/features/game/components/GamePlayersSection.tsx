@@ -20,9 +20,7 @@ export const GamePlayersSection = (props: GamePlayersPageProps) => (
         {props.players?.map((player, index) => (
           <ListItem key={index}>{player.name}</ListItem>
         ))}
-        { !props.players?.length &&
-          <ListItem>Еще нет ни одного игрока</ListItem>
-        }
+        {!props.players?.length && <ListItem>Еще нет ни одного игрока</ListItem>}
       </List>
     </FormItem>
   </Form>

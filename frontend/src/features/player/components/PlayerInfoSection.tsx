@@ -102,12 +102,14 @@ export const PlayerInfoSection = ({
       <>
         <div className="actions">
           <FormButton className="grey" onClick={onShowChangePlayerPinModal}>
-            {hasPassword ? 'Изменить пароль' : 'Установить пароль'}
+            {hasPassword ? 'Изменить пин-код' : 'Установить пин-код'}
           </FormButton>
         </div>
-        <FormItem>
-          <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
-        </FormItem>
+        {!hasPassword && (
+          <FormItem>
+            <Text type="p">Чтобы защитить эту страницу, вы можете установить пароль</Text>
+          </FormItem>
+        )}
       </>
     )}
   </Form>
