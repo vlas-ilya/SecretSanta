@@ -49,8 +49,10 @@ export const EditableInput = ({
   useEffect(() => {
     if (activeElement !== name) {
       showViewComponent();
+    } else {
+      showEditComponent();
     }
-  }, [name, activeElement, showViewComponent]);
+  }, [name, activeElement, showViewComponent, showEditComponent]);
 
   useEffect(() => {
     showViewComponent();
@@ -115,7 +117,7 @@ export const EditableInput = ({
                 role="button"
                 tabIndex={0}
                 onKeyPress={onPressEnter}
-                onClick={showEditComponent}
+                onClick={showEditComponentAndUpdateState}
               >
                 {value}
               </span>
