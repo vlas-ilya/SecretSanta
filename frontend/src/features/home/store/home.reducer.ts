@@ -1,14 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { GameId } from 'model';
+import { ErrorCode, GameId } from 'model';
 import { LoadingStatus } from 'model';
+import { errorCode } from '../../../utils/constants/errorCode';
 
 export interface State {
   loadingStatus: LoadingStatus;
   gameId?: GameId;
   alert?: {
     value: string;
-    code: string;
+    code: ErrorCode;
     date: Date;
   };
 }
@@ -25,9 +26,9 @@ export const home = createSlice({
     changeGameId: (state: State, action: PayloadAction<GameId>) => {
       state.gameId = action.payload;
     },
-    changeAlert: (state: State, action: PayloadAction<string>) => {
+    changeAlert: (state: State, action: PayloadAction<ErrorCode>) => {
       state.alert = {
-        value: action.payload,
+        value: errorCode(action.payload),
         code: action.payload,
         date: new Date(),
       };

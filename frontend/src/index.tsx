@@ -29,7 +29,6 @@ const Routes = () => {
   );
 };
 
-// TODO (feat): Добавить переводы ошибок
 const App = hot(Routes);
 
 ReactDOM.render(

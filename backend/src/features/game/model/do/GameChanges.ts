@@ -1,20 +1,11 @@
 import {
-  GAME_CHANGES_IS_EMPTY,
-  GAME_CHANGES_IS_NULL,
-  GAME_NEW_STATE_IS_NOT_CORRECT,
-  GAME_NOT_ENOUGH_PLAYERS,
-  GAME_OLD_PIN_IS_NOT_CORRECT,
-  GAME_SHOULD_BE_IN_INIT_STATUS,
-  isTrue,
-  notEmpty,
-  notNull,
-} from '../../../../utils/validators';
-import {
   GameChangePin as GameChangePinVo,
   GameChanges as GameChangesVo,
   Game as GameVo,
 } from 'model';
+import { isTrue, notEmpty, notNull } from '../../../../utils/validators';
 
+import { BadRequestException } from '../../../../exceptions/BadRequestException';
 import { Change } from '../../../../utils/classes/Change';
 import { Game } from './Game';
 import { GameDescription } from './GameDescription';
@@ -56,8 +47,8 @@ export class GameChanges {
     passwordGenerator: (pin: string) => Promise<string>,
     comparePinAndPassword: (pin: string, password: string) => Promise<boolean>,
   ): Promise<GameChanges> {
-    notNull(changes, GAME_CHANGES_IS_NULL);
-    notEmpty(changedFields(changes), GAME_CHANGES_IS_EMPTY);
+    notNull(changes, new BadRequestException('GAME_CHANGES_IS_NULL'));
+    notEmpty(changedFields(changes), new BadRequestException('GAME_CHANGES_IS_EMPTY'));
     return new GameChanges(
       await GameChanges.transform(changes, passwordGenerator),
       comparePinAndPassword,
@@ -98,9 +89,17 @@ export class GameChanges {
 
   async apply(game: Game): Promise<[Game, GameWasStarted]> {
     'password' in this.changes &&
-      (await this.correctOldPassword(game, this.changes, GAME_OLD_PIN_IS_NOT_CORRECT));
+      (await this.correctOldPassword(
+        game,
+        this.changes,
+        new BadRequestException('GAME_OLD_PIN_IS_NOT_CORRECT'),
+      ));
     'state' in this.changes &&
-      GameChanges.correctNewState(game, this.changes, GAME_NEW_STATE_IS_NOT_CORRECT);
+      GameChanges.correctNewState(
+        game,
+        this.changes,
+        new BadRequestException('GAME_NEW_STATE_IS_NOT_CORRECT'),
+      );
 
     const newState = this.loadValue(game, 'state');
     const newTitle = this.loadValue(game, 'title');
@@ -111,7 +110,7 @@ export class GameChanges {
     if (gameWasStarted) {
       isTrue(
         game.players.filter((player) => player.state === PlayerState.ACTIVE).length >= 2,
-        GAME_NOT_ENOUGH_PLAYERS,
+        new BadRequestException('GAME_NOT_ENOUGH_PLAYERS'),
       );
     }
 

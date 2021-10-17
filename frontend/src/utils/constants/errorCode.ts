@@ -1,0 +1,52 @@
+import { ErrorCode } from 'model';
+
+const defaultMessage = 'Что-то пошло не так';
+
+const errorCodes: Record<ErrorCode, string> = {
+  GAME_ID_IS_NULL: defaultMessage,
+  GAME_ID_HAS_INCORRECT_FORMAT: defaultMessage,
+  REGISTRATION_ID_IS_NULL: defaultMessage,
+  GAME_STATE_IS_NULL: defaultMessage,
+  GAME_DESCRIPTION_IS_NULL: defaultMessage,
+  GAME_DESCRIPTION_HAS_INCORRECT_LENGTH: defaultMessage,
+  GAME_TITLE_IS_NULL: defaultMessage,
+  GAME_TITLE_HAS_INCORRECT_LENGTH: defaultMessage,
+  GAME_PIN_IS_NULL: defaultMessage,
+  GAME_PIN_HAS_INCORRECT_FORMAT: defaultMessage,
+  GAME_PIN_HAS_INCORRECT_LENGTH: defaultMessage,
+  GAME_PASSWORD_IS_NULL: defaultMessage,
+  GAME_PASSWORD_IS_NOT_CORRECT: defaultMessage,
+  GAME_CHANGES_IS_NULL: defaultMessage,
+  GAME_CHANGES_IS_EMPTY: defaultMessage,
+  GAME_NOT_ENOUGH_PLAYERS: 'Недостаточно игроков для начала игры',
+  GAME_OLD_PIN_IS_NOT_CORRECT: 'Старый пин-код указан неверно',
+  GAME_NEW_STATE_IS_NOT_CORRECT: defaultMessage,
+  GAME_SHOULD_BE_IN_INIT_STATUS: defaultMessage,
+  GAME_NOT_FOUND: 'Игра с таким идентификатором не найдена',
+  GAME_PASSWORD_IS_INCORRECT: defaultMessage,
+  PLAYER_ID_IS_NULL: defaultMessage,
+  PLAYER_ID_HAS_INCORRECT_FORMAT: defaultMessage,
+  PLAYER_PASSWORD_IS_NULL: defaultMessage,
+  PLAYER_PASSWORD_HAS_INCORRECT_FORMAT: defaultMessage,
+  PLAYER_PIN_IS_NULL: defaultMessage,
+  PLAYER_PIN_HAS_INCORRECT_FORMAT: defaultMessage,
+  PLAYER_PIN_HAS_INCORRECT_LENGTH: defaultMessage,
+  PLAYER_NAME_IS_NULL: defaultMessage,
+  PLAYER_NAME_HAS_INCORRECT_LENGTH: defaultMessage,
+  PLAYER_TABOO_IS_NULL: defaultMessage,
+  PLAYER_TABOO_HAS_INCORRECT_LENGTH: defaultMessage,
+  PLAYER_WISH_IS_NULL: defaultMessage,
+  PLAYER_WISH_HAS_INCORRECT_LENGTH: defaultMessage,
+  PLAYER_STATE_IS_NULL: defaultMessage,
+  PLAYER_NOT_FOUND: 'Игрок с таким идентификатором не найден',
+  PLAYER_PASSWORD_IS_INCORRECT: defaultMessage,
+  PLAYER_CHANGES_IS_NULL: defaultMessage,
+  PLAYER_CHANGES_IS_EMPTY: defaultMessage,
+  PLAYER_OLD_PIN_IS_NOT_CORRECT: 'Старый пин-код указан неверно',
+  START_SHOULD_BE_NOT_NULL: defaultMessage,
+  END_SHOULD_BE_NOT_NULL: defaultMessage,
+  START_SHOULD_BE_GREATER_END: defaultMessage,
+};
+
+export const errorCode = (errorCode: ErrorCode): string =>
+  errorCodes[errorCode] ?? defaultMessage;

@@ -4,17 +4,9 @@ import {
   PlayerChanges as PlayerChangesVo,
   Player as PlayerVo,
 } from 'model';
-import {
-  GAME_SHOULD_BE_IN_INIT_STATUS,
-  PLAYER_CHANGES_IS_EMPTY,
-  PLAYER_CHANGES_IS_NULL,
-  PLAYER_OLD_PIN_IS_NOT_CORRECT,
-  isFalse,
-  isTrue,
-  notEmpty,
-  notNull,
-} from '../../../../utils/validators';
+import { isFalse, notEmpty, notNull } from '../../../../utils/validators';
 
+import { BadRequestException } from '../../../../exceptions/BadRequestException';
 import { Player } from './Player';
 import { PlayerName } from './PlayerName';
 import { PlayerPassword } from './PlayerPassword';
@@ -59,8 +51,8 @@ export class PlayerChanges {
     passwordGenerator: (pin: string) => Promise<string>,
     comparePinAndPassword: (pin: string, password: string) => Promise<boolean>,
   ): Promise<PlayerChanges> {
-    notNull(changes, PLAYER_CHANGES_IS_NULL);
-    notEmpty(changedFields(changes), PLAYER_CHANGES_IS_EMPTY);
+    notNull(changes, new BadRequestException('PLAYER_CHANGES_IS_NULL'));
+    notEmpty(changedFields(changes), new BadRequestException('PLAYER_CHANGES_IS_EMPTY'));
     return new PlayerChanges(
       await PlayerChanges.transform(changes, passwordGenerator),
       comparePinAndPassword,
@@ -104,12 +96,12 @@ export class PlayerChanges {
       (await this.correctOldPlayerPassword(
         player,
         this.changes,
-        PLAYER_OLD_PIN_IS_NOT_CORRECT,
+        new BadRequestException('PLAYER_OLD_PIN_IS_NOT_CORRECT'),
       ));
 
     isFalse(
       player.game.state !== 'INIT' && 'name' in this.changes,
-      GAME_SHOULD_BE_IN_INIT_STATUS,
+      new BadRequestException('GAME_SHOULD_BE_IN_INIT_STATUS'),
     );
 
     const newName = this.loadValue(player, 'name');

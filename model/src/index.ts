@@ -18,3 +18,5 @@ export * from './session/SessionTypes';
 export * from './utils/classes/Change';
 export * from './utils/classes/LoadingState';
 export * from './utils/matchDecorator';
+
+export * from './utils/constants/errors';

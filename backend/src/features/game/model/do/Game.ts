@@ -1,26 +1,22 @@
 import {
-  GAME_ID_IS_NULL,
-  GAME_STATE_IS_NULL,
-  REGISTRATION_ID_IS_NULL,
-  notNull,
-} from '../../../../utils/validators';
+  GameShortInfo as GameShortInfoVo,
+  GameState as GameStateVo,
+  Game as GameVo,
+} from 'model';
 
+import { BadRequestException } from '../../../../exceptions/BadRequestException';
 import { GameDescription } from './GameDescription';
 import { GameDto } from '../dto/GameDto';
 import { GameId } from './GameId';
 import { GamePassword } from './GamePassword';
 import { GameState } from './GameState';
 import { GameTitle } from './GameTitle';
-import {
-  GameShortInfo as GameShortInfoVo,
-  Game as GameVo,
-  GameState as GameStateVo,
-} from 'model';
 import { Player } from '../../../player/model/do/Player';
 import { PlayerDto } from '../../../player/model/dto/PlayerDto';
 import { PlayerState } from '../../../player/model/do/PlayerState';
 import { RegistrationId } from './RegistrationId';
 import { ifExist } from '../../../../utils/ifExist';
+import { notNull } from '../../../../utils/validators';
 
 export class Game {
   private _players: Player[] = [];
@@ -33,9 +29,9 @@ export class Game {
     private _description?: GameDescription,
     private _password?: GamePassword,
   ) {
-    notNull(_id, GAME_ID_IS_NULL);
-    notNull(_registrationId, REGISTRATION_ID_IS_NULL);
-    notNull(_state, GAME_STATE_IS_NULL);
+    notNull(_id, new BadRequestException('GAME_ID_IS_NULL'));
+    notNull(_registrationId, new BadRequestException('REGISTRATION_ID_IS_NULL'));
+    notNull(_state, new BadRequestException('GAME_STATE_IS_NULL'));
   }
 
   get players(): Player[] {

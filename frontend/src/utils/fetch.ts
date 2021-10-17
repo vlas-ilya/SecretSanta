@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import { LoadingStatus } from 'model';
+import { ErrorCode, LoadingStatus } from 'model';
 import { RootState } from '../store';
 import { changeAuthenticationState } from '../features/session/store/session.reducer';
 
@@ -37,7 +37,7 @@ export type Hooks = {
 export const fetchAction =
   (
     changeLoadingStatus: ActionCreatorWithPayload<LoadingStatus>,
-    changeAlert: ActionCreatorWithPayload<string>,
+    changeAlert: ActionCreatorWithPayload<ErrorCode>,
     action: (dispatch: Dispatch, state: RootState) => Promise<void>,
     hooks?: Hooks,
     shouldReloginOnAuthError: boolean = true,

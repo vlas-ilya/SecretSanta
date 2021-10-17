@@ -1,14 +1,13 @@
-import { GAME_NOT_FOUND, notNull } from '../../utils/validators';
-
 import { Game } from './model/do/Game';
 import { GameChanges } from './model/do/GameChanges';
 import { GameId } from './model/do/GameId';
-import { GameState } from './model/do/GameState';
 import { GameStorage } from './game.storage';
 import { Injectable } from '@nestjs/common';
+import { NotFoundException } from '../../exceptions/NotFoundException';
 import { Player } from '../player/model/do/Player';
 import { PlayerState } from '../player/model/do/PlayerState';
 import { PlayerStorage } from '../player/player.storage';
+import { notNull } from '../../utils/validators';
 
 @Injectable()
 export class GameService {
@@ -24,7 +23,7 @@ export class GameService {
 
   async get(id: GameId): Promise<Game> {
     const game = await this.storage.find(id);
-    notNull(game, GAME_NOT_FOUND);
+    notNull(game, new NotFoundException('GAME_NOT_FOUND'));
     return game;
   }
 

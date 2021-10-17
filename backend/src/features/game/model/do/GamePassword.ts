@@ -1,11 +1,7 @@
-import {
-  GAME_PASSWORD_IS_NOT_CORRECT,
-  GAME_PASSWORD_IS_NULL,
-  correctHash,
-  notNull,
-} from '../../../../utils/validators';
 import { GamePassword as GamePasswordVo, GamePin as GamePinVo } from 'model';
+import { correctHash, notNull } from '../../../../utils/validators';
 
+import { BadRequestException } from '../../../../exceptions/BadRequestException';
 import { GamePin } from './GamePin';
 
 export type InitValue =
@@ -20,8 +16,8 @@ export class GamePassword {
   private readonly _value;
 
   constructor(password: GamePasswordVo) {
-    notNull(password, GAME_PASSWORD_IS_NULL);
-    correctHash(password, GAME_PASSWORD_IS_NOT_CORRECT);
+    notNull(password, new BadRequestException('GAME_PASSWORD_IS_NULL'));
+    correctHash(password, new BadRequestException('GAME_PASSWORD_IS_NOT_CORRECT'));
     this._value = password;
   }
 

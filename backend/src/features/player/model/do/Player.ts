@@ -1,15 +1,11 @@
 import {
-  PLAYER_ID_IS_NULL,
-  PLAYER_STATE_IS_NULL,
-  notNull,
-} from '../../../../utils/validators';
-import {
   PlayerShortInfo as PlayerShortInfoVo,
+  PlayerState as PlayerStateVo,
   Player as PlayerVo,
   Target as TargetVo,
-  PlayerState as PlayerStateVo,
 } from 'model';
 
+import { BadRequestException } from '../../../../exceptions/BadRequestException';
 import { Game } from '../../../game/model/do/Game';
 import { GameDto } from '../../../game/model/dto/GameDto';
 import { PlayerDto } from '../dto/PlayerDto';
@@ -20,6 +16,7 @@ import { PlayerState } from './PlayerState';
 import { PlayerTaboo } from './PlayerTaboo';
 import { PlayerWish } from './PlayerWish';
 import { ifExist } from '../../../../utils/ifExist';
+import { notNull } from '../../../../utils/validators';
 
 export class Player {
   constructor(
@@ -32,8 +29,8 @@ export class Player {
     private _taboo?: PlayerTaboo,
     private _target?: Player,
   ) {
-    notNull(_id, PLAYER_ID_IS_NULL);
-    notNull(_id, PLAYER_STATE_IS_NULL);
+    notNull(_id, new BadRequestException('PLAYER_ID_IS_NULL'));
+    notNull(_id, new BadRequestException('PLAYER_STATE_IS_NULL'));
   }
 
   get id(): PlayerId {
