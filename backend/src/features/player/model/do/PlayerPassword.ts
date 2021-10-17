@@ -9,7 +9,10 @@ export class PlayerPassword {
 
   constructor(password: PlayerPasswordVo) {
     notNull(password, new BadRequestException('PLAYER_PASSWORD_IS_NULL'));
-    correctHash(password, new BadRequestException('PLAYER_PASSWORD_HAS_INCORRECT_FORMAT'));
+    correctHash(
+      password,
+      new BadRequestException('PLAYER_PASSWORD_HAS_INCORRECT_FORMAT'),
+    );
     this._value = password;
   }
 

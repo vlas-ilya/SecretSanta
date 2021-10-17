@@ -1,7 +1,4 @@
-import {
-  GAME_DESCRIPTION_MAX_LENGTH,
-  GAME_DESCRIPTION_MIN_LENGTH,
-} from 'model';
+import { GAME_DESCRIPTION_MAX_LENGTH, GAME_DESCRIPTION_MIN_LENGTH } from 'model';
 import { inInterval, notNull } from '../../../../utils/validators';
 
 import { BadRequestException } from '../../../../exceptions/BadRequestException';

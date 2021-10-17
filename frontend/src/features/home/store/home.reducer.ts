@@ -1,6 +1,6 @@
+import { ErrorCode, GameId } from 'model';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { ErrorCode, GameId } from 'model';
 import { LoadingStatus } from 'model';
 import { errorCode } from '../../../utils/constants/errorCode';
 
