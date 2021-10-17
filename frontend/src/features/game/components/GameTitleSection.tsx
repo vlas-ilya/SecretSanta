@@ -46,7 +46,7 @@ export const GameTitleSection = (props: GameTitleProps) => (
         <Text type="p">Чтобы защитить эту страницу, вы можете установить пин-код</Text>
       )}
       <Text type="p">
-        Незабудьте созранить ссылку на данную страницу, без нее вы не сможете зайти в игру
+        <strong>Незабудьте сохранить ссылку на данную страницу! Без нее вы не сможете зайти в игру</strong>
       </Text>
     </FormItem>
     <div className="actions">
