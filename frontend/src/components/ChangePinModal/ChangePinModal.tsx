@@ -51,7 +51,6 @@ export function ChangePinModal<T>({
     >
       {hasPassword && (
         <FormItem>
-          {/* TODO (feat): Сделать цифровую клавиатуру для мобильного телефона */}
           <FormInput
             digits
             name="oldPin"
@@ -65,7 +64,6 @@ export function ChangePinModal<T>({
         </FormItem>
       )}
       <FormItem>
-        {/* TODO (feat): Сделать цифровую клавиатуру для мобильного телефона */}
         <FormInput
           digits
           name="pin"
@@ -78,7 +76,6 @@ export function ChangePinModal<T>({
         />
       </FormItem>
       <FormItem>
-        {/* TODO (feat): Сделать цифровую клавиатуру для мобильного телефона */}
         <FormInput
           digits
           name="confirmation"

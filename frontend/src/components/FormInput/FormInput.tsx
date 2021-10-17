@@ -29,7 +29,6 @@ export type FormInputProps = {
   type?: '' | 'password' | 'number' | 'text';
 };
 
-/* TODO (feat): Сделать поддержку цифровой клавиатуры  для мобильного телефона для поля типа password */
 export const FormInput = ({
   value,
   type,
@@ -165,6 +164,7 @@ export const FormInput = ({
             sync: onSync,
             togglePassword: type === 'password',
           })}
+          inputMode={digits ? 'numeric' : 'text'}
           ref={input}
           autoFocus={autoFocus}
           id={name}
