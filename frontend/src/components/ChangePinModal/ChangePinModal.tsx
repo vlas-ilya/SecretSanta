@@ -60,6 +60,7 @@ export function ChangePinModal<T>({
             value={oldPin}
             onChange={setOldPin}
             maxLength={maxLength}
+            autoComplete="off"
           />
         </FormItem>
       )}
@@ -73,6 +74,7 @@ export function ChangePinModal<T>({
           value={newPin}
           onChange={setNewPin}
           maxLength={maxLength}
+          autoComplete="off"
         />
       </FormItem>
       <FormItem>
@@ -85,6 +87,7 @@ export function ChangePinModal<T>({
           value={confirmation}
           onChange={setConfirmation}
           maxLength={maxLength}
+          autoComplete="off"
         />
       </FormItem>
     </Modal>
