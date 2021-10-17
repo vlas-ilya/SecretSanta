@@ -15,6 +15,25 @@
     &-copied {
       margin-right: 49px;
     }
+
+    &:after {
+      z-index: 0;
+      content: ' ';
+      width: 10px;
+      height: 47px;
+      display: block;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      background: $editBackgroundColor;
+    }
+
+    &-togglePassword,
+    &-sync {
+      &:after {
+        width: 50px;
+      }
+    }
   }
 
   &-ValidationMessage {
@@ -89,6 +108,7 @@
   }
 
   &-TogglePassword {
+    z-index: 1;
     -webkit-tap-highlight-color: transparent;
     position: absolute;
     width: 25px;
@@ -104,6 +124,7 @@
   }
 
   &-SyncButton {
+    z-index: 1;
     -webkit-tap-highlight-color: transparent;
     position: absolute;
     width: 25px;

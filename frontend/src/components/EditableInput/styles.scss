@@ -5,6 +5,12 @@
   position: relative;
 }
 
+.EditableInput {
+  .FormInput-Body {
+    margin-right: 97px;
+  }
+}
+
 .EditableInput-View {
   display: block;
   position: relative;

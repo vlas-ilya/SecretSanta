@@ -44,7 +44,7 @@ export const PlayerInfoSection = ({
 }: PlayerInfoProps) => (
   <Form>
     <FormItem>
-      <Text type="h1">Информация об игроке</Text>
+      <Text type="h1">Информация о вас</Text>
     </FormItem>
     {state === PlayerState.INIT && (
       <Text type="p">Для участия в игре вам необходимо указать информацию о себе</Text>

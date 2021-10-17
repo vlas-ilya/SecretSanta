@@ -113,6 +113,8 @@ export const FormInput = ({
       <div
         className={formInput.element('Body', {
           copied,
+          sync: onSync,
+          togglePassword: type === 'password',
         })}
       >
         <label

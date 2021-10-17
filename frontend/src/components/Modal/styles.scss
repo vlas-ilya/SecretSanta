@@ -9,6 +9,11 @@
   padding-right: 10px;
   overflow-x: auto;
 
+  @media screen and (max-width: 400px) {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .modal {
     font-family: 'Roboto', sans-serif;
 
@@ -16,6 +21,16 @@
     background: white;
     margin: 40px auto;
     position: relative;
+
+    @media screen and (max-width: 400px) {
+      width: 382px;
+      padding: 15px;
+    }
+
+    @media screen and (max-width: 390px) {
+      width: auto;
+      margin: 40px 4px;
+    }
 
     &.width-auto {
       width: fit-content;
