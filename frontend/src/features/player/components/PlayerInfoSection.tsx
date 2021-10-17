@@ -100,7 +100,9 @@ export const PlayerInfoSection = ({
       <>
         {!hasPassword && (
           <FormItem>
-            <Text type="p">Чтобы защитить эту страницу, вы можете установить пин-код</Text>
+            <Text type="p">
+              Чтобы защитить эту страницу, вы можете установить пин-код
+            </Text>
           </FormItem>
         )}
         <div className="actions">

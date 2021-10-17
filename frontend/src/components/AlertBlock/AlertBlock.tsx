@@ -2,12 +2,16 @@ import './styles.scss';
 
 import React, { useEffect, useState } from 'react';
 
-import { selectAlert } from '../../app/store/reducer';
-import { useSelector } from 'react-redux';
+export type AlertBlockTypes = {
+  alert?: {
+    value: string;
+    code: string;
+    date: Date;
+  };
+};
 
-export default function AlertBlock() {
+export default function AlertBlock({ alert }: AlertBlockTypes) {
   const [classNames, setClassNames] = useState('alert');
-  const alert = useSelector(selectAlert);
 
   useEffect(() => {
     if (alert) {
@@ -19,7 +23,7 @@ export default function AlertBlock() {
 
   return (
     <div className="alert-block">
-      <div className={classNames}>{alert}</div>
+      <div className={classNames}>{alert?.value}</div>
     </div>
   );
 }

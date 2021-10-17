@@ -8,11 +8,7 @@ import { GameDescription, GameState, GameTitle } from '../game/GameTypes';
 import { IsEnum, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 
 export class GameShortInfo {
-  constructor(
-    state: GameState,
-    title: GameTitle,
-    description: GameDescription,
-  ) {
+  constructor(state: GameState, title: GameTitle, description: GameDescription) {
     this.state = state;
     this.title = title;
     this.description = description;

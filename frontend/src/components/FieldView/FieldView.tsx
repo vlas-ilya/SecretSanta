@@ -6,7 +6,7 @@ import { bem } from '../../utils/bem';
 export type FieldViewProps = {
   name: string;
   value?: string;
-  empty?: boolean
+  empty?: boolean;
 };
 
 export const FieldView = ({ name, value, empty }: FieldViewProps) => {
@@ -16,9 +16,7 @@ export const FieldView = ({ name, value, empty }: FieldViewProps) => {
       <div className={fieldView.element('ViewContent')}>
         <>
           <span className={fieldView.element('NameLabel')}>{name}</span>
-          <span
-            className={fieldView.element('ValueLabel', { empty })}
-          >
+          <span className={fieldView.element('ValueLabel', { empty })}>
             {value || 'Нет информации'}
           </span>
         </>

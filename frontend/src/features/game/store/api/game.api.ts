@@ -10,9 +10,7 @@ import { validate } from 'class-validator';
 
 export const update = async (
   id: GameId,
-  changes:
-    | GameChangePin
-    | GameChanges,
+  changes: GameChangePin | GameChanges,
 ): Promise<Game> => {
   const response = await fetch(`/api/game/${id}`).put({
     data: changes,

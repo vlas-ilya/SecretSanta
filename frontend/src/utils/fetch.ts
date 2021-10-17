@@ -37,6 +37,7 @@ export type Hooks = {
 export const fetchAction =
   (
     changeLoadingStatus: ActionCreatorWithPayload<LoadingStatus>,
+    changeAlert: ActionCreatorWithPayload<string>,
     action: (dispatch: Dispatch, state: RootState) => Promise<void>,
     hooks?: Hooks,
     shouldReloginOnAuthError: boolean = true,
@@ -51,6 +52,9 @@ export const fetchAction =
     } catch (e) {
       if (e.response?.status === 401 && shouldReloginOnAuthError) {
         dispatch(changeAuthenticationState('SHOULD_LOGIN'));
+      }
+      if (e.response?.data?.statusCode === 400) {
+        dispatch(changeAlert(e.response?.data?.message));
       }
       changeLoadingStatus &&
         dispatch(

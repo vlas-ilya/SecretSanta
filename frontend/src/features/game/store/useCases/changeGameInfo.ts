@@ -10,6 +10,7 @@ import {
 
 import { Game } from 'model';
 import { GameChange } from 'model';
+import { changeAlert } from '../../../home/store/home.reducer';
 import { fetchAction } from '../../../../utils/fetch';
 import { plainToClass } from 'class-transformer';
 import { update } from '../api/game.api';
@@ -29,6 +30,7 @@ const validator = (change: GameChange): ValidationError[] => {
 const action = (changes: GameChange) =>
   fetchAction(
     changeLoadingStatus,
+    changeAlert,
     async (dispatch, state) => {
       if (!state.game.game?.id) {
         return;

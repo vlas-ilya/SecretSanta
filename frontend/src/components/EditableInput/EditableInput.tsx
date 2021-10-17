@@ -12,7 +12,6 @@ import { bem } from '../../utils/bem';
 import { useSharedState } from '../../utils/hooks/useSharedState';
 import { useToggle } from '../../utils/hooks/useToggle';
 
-
 export type EditableInputProps = {
   name: string;
   value?: string;
@@ -121,7 +120,8 @@ export const EditableInput = ({
                 onKeyPress={onPressEnter}
                 onClick={showEditComponentAndUpdateState}
               >
-                {value || "Нет информации"}&nbsp;<Edit className={editableInput.element('ValueIcon')}/>
+                {value || 'Нет информации'}&nbsp;
+                <Edit className={editableInput.element('ValueIcon')} />
               </span>
             </>
           </div>

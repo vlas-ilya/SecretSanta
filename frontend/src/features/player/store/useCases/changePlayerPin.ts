@@ -3,6 +3,7 @@ import { changeLoadingStatus, setPlayer } from '../player.reducer';
 
 import { MutableRefObject } from 'react';
 import { PlayerChangePin } from 'model';
+import { changeAlert } from '../../../home/store/home.reducer';
 import { fetchAction } from '../../../../utils/fetch';
 import { update } from '../api/player.api';
 import { validateSync } from 'class-validator';
@@ -22,7 +23,7 @@ const action = (
   changePinMessage: PlayerChangePin,
   callback?: MutableRefObject<() => void>,
 ) =>
-  fetchAction(changeLoadingStatus, async (dispatch, state) => {
+  fetchAction(changeLoadingStatus, changeAlert, async (dispatch, state) => {
     if (!state.player.player?.id) {
       return;
     }

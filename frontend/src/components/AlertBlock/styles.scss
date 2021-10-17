@@ -11,10 +11,11 @@
     min-width: 200px;
     max-width: 300px;
     padding: 10px 20px;
-    color: white;
-    background: $alert-background;
+    color: $alertTextColor;
+    background: $alertBackgroundColor;
     margin-top: -1000px;
     transition: ease-in 0.2s;
+    border-radius: 0 0 8px 8px;
 
     &.show {
       transition: all 0.3s;

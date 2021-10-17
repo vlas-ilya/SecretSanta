@@ -6,6 +6,11 @@ import { LoadingStatus } from 'model';
 export interface State {
   loadingStatus: LoadingStatus;
   gameId?: GameId;
+  alert?: {
+    value: string;
+    code: string;
+    date: Date;
+  };
 }
 
 export const home = createSlice({
@@ -20,9 +25,16 @@ export const home = createSlice({
     changeGameId: (state: State, action: PayloadAction<GameId>) => {
       state.gameId = action.payload;
     },
+    changeAlert: (state: State, action: PayloadAction<string>) => {
+      state.alert = {
+        value: action.payload,
+        code: action.payload,
+        date: new Date(),
+      };
+    },
   },
 });
 
-export const { changeLoadingStatus, changeGameId } = home.actions;
+export const { changeLoadingStatus, changeGameId, changeAlert } = home.actions;
 
 export default home.reducer;
