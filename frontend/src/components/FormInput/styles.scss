@@ -18,7 +18,7 @@
   }
 
   &-ValidationMessage {
-    color: $ValidationMessage--color;
+    color: darken($errorTextColor, 10);
     white-space: nowrap;
   }
 
@@ -30,7 +30,7 @@
     font-size: 16px;
     top: 16px;
     left: 16px;
-    color: #909090;
+    color: lighten($mainTextColor, 30);
     cursor: auto;
 
     @media not all and (min-resolution: 0.001dpcm) {
@@ -44,20 +44,21 @@
       transition: all 0.1s;
       transform: scale(0.5) translate(0, -30px);
       font-weight: bold;
-      color: #505050;
+      color: lighten($mainTextColor, 10);
     }
   }
 
   &-Input {
     font-family: 'Roboto', sans-serif;
     outline: 0;
-    background: #f2f2f2;
+    background: $editBackgroundColor;
     width: 100%;
-    border: 1px solid $input-border-color;
+    border: 1px solid $editBorderColor;
     padding: 15px 15px 13px;
     box-sizing: border-box;
     font-size: 16px;
     box-shadow: 0 2px 5px 0 rgba(black, 0.2);
+    color: $mainTextColor;
 
     border-radius: 0;
     -webkit-appearance: none;
@@ -65,16 +66,16 @@
     &:hover,
     &:active,
     &:focus {
-      border: 1px solid $input-border-color-hover;
+      border: 1px solid $mainActionColor;
     }
 
     &-invalid {
-      border-color: $ValidationMessage--color;
+      border-color: darken($errorTextColor, 10);
 
       &:hover,
       &:active,
       &:focus {
-        border: 1px solid $ValidationMessage-active--color;
+        border: 1px solid darken($errorTextColor, 10);
       }
     }
 
@@ -95,7 +96,11 @@
     right: 13px;
     top: 13px;
     cursor: pointer;
-    color: $color1;
+    color: $mainActionColor;
+
+    &-invalid {
+      color: darken($errorTextColor, 10);
+    }
   }
 
   &-SyncButton {

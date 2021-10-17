@@ -1,26 +1,18 @@
-$color1: #114b5f;
-$color2: #1a936f;
-$color3: #2fba91;
-$color4: #c6dabf;
-$color5: #f5efe3;
+$mainActionColor: #b3141c;
+$mainActionTextColor: #FFFFFF;
+$secondActionColor: #DEDEDE;
+$secondActionTextColor: #981b22;
 
-$body-background: $color3;
+$backgroundColor: #554183;
+$formBackgroundColor: #FFFFFF;
 
-$form-background: white;
+$mainTextColor: #1F1F1F;
+$emptyTextColor: #909090;
+$errorTextColor: #E00018;
+$secondTextColor: #F1EDE2;
 
-$alert-background: $color1;
+$editBackgroundColor: #F2F2F2;
+$editBorderColor: #F2F2F2;
 
-$list-background: $color3;
-$list-selected-background: darken($list-background, 10);
-$list-color: lighten($color5, 5);
-
-$button-background: $color1;
-$button-color: white;
-$button-background-grey: #dedede;
-$button-color-grey: $color1;
-
-$input-border-color: #f2f2f2;
-$input-border-color-hover: $color1;
-
-$ValidationMessage--color: #bd1d1d;
-$ValidationMessage-active--color: #941111;
+$alertBackgroundColor: #F2E8CF;
+$alertTextColor: #F2E8CF;

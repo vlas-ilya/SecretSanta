@@ -1,10 +1,5 @@
 @import '../../theme';
 
-$fuschia: #ff0081;
-$button-bg: $fuschia;
-$button-text-color: #fff;
-$baby-blue: #f8faff;
-
 .form-button {
   margin: 0 0 15px;
 
@@ -13,23 +8,25 @@ $baby-blue: #f8faff;
   }
 
   button {
-    @mixin button(
-      $background: $button-background,
-      $color: $button-color,
-      $hover-background: darken($background, 10)
-    ) {
+    @mixin button($background: $mainActionColor, $color: $mainActionTextColor) {
       background: $background;
       color: $color;
-      box-shadow: 0 2px 5px 0 rgba(black, 0.26);
 
       &:hover,
-      &:active,
       &:focus {
-        background: $hover-background;
+        background: darken($background, 5);
+      }
+
+      &:active {
+        background: darken($background, 10);
       }
 
       &:active {
         box-shadow: 0 1px 2px 0 rgba(black, 0.46);
+      }
+
+      svg {
+        fill: $color;
       }
     }
 
@@ -46,24 +43,16 @@ $baby-blue: #f8faff;
     transition: all 0.3 ease;
     cursor: pointer;
     position: relative;
+    box-shadow: 0 2px 5px 0 rgba(black, 0.26);
 
     svg {
       margin-top: 1px;
       margin-bottom: -3px;
       width: 18px;
-      fill: $button-color;
     }
 
     &.grey {
-      @include button(
-        $button-background-grey,
-        $button-color-grey,
-        $hover-background: darken($button-background-grey, 5)
-      );
-
-      svg {
-        fill: $button-color-grey;
-      }
+      @include button($secondActionColor, $secondActionTextColor);
     }
   }
 }

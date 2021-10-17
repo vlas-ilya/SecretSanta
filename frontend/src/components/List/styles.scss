@@ -10,8 +10,8 @@
   }
 
   .list-title {
-    background: $list-background;
-    color: $list-color;
+    background: $backgroundColor;
+    color: $secondTextColor;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     font-size: 15px;
     padding: 15px 10px;
@@ -21,27 +21,27 @@
   }
 
   .list-item {
-    background: $list-background;
-    color: $list-color;
+    background: $backgroundColor;
+    color: $secondTextColor;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     font-size: 15px;
     padding: 10px;
-    border-top: 1px dashed rgba($form-background, 0.3);
+    border-top: 1px dashed rgba($formBackgroundColor, 0.3);
     overflow-wrap: break-word;
     word-break: break-word;
 
     &.selected {
-      background: $list-selected-background;
+      background: darken($backgroundColor, 7);
       &:hover {
-        background: darken($list-selected-background, 2);
+        background: darken($backgroundColor, 9);
         &.readonly {
-          background: $list-selected-background;
+          background: darken($backgroundColor, 7);
         }
       }
     }
 
     &:hover {
-      background: darken($list-background, 7);
+      background: darken($backgroundColor, 5);
       transition: 0.1s all ease;
       padding-left: 20px;
     }
@@ -54,10 +54,10 @@
   &.readonly {
     .list-item {
       padding-left: 10px;
-      background: $list-background;
+      background: $backgroundColor;
 
       &.selected {
-        background: $list-selected-background;
+        background: darken($backgroundColor, 5);
       }
     }
   }

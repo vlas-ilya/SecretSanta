@@ -1,3 +1,5 @@
+@import '../../theme';
+
 .EditableInput {
   display: block;
   position: relative;
@@ -17,6 +19,7 @@
 .EditableInput-NameLabel {
   font-weight: bold;
   margin-right: 5px;
+  color: $mainTextColor;
 
   &:after {
     content: ':';
@@ -25,8 +28,9 @@
 
 .EditableInput-ValueLabel {
   cursor: pointer;
-  border-bottom: 1px dashed black;
+  border-bottom: 1px dashed $mainTextColor;;
   position: relative;
+  color: $mainTextColor;
 
   &:after {
     content: url('../../resources/images/edit.svg');

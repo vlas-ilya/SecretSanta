@@ -131,13 +131,17 @@ export const FormInput = ({
         {type === 'password' &&
           (isPasswordHidden ? (
             <Show
-              className={formInput.element('TogglePassword')}
+              className={formInput.element('TogglePassword', {
+                invalid: validMessage,
+              })}
               onClick={hidePasswordAndSetTypePassword}
               role="button"
             />
           ) : (
             <Hide
-              className={formInput.element('TogglePassword')}
+              className={formInput.element('TogglePassword', {
+                invalid: validMessage,
+              })}
               onClick={showPasswordAndSetTypeNumber}
               role="button"
             />
