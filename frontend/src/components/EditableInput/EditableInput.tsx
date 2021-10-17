@@ -3,6 +3,7 @@ import './styles.scss';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { ReactComponent as Back } from '../../resources/images/back.svg';
+import { ReactComponent as Edit } from '../../resources/images/edit.svg';
 import { FieldView } from '../FieldView/FieldView';
 import { FormButton } from '../FormButton/FormButton';
 import { FormInput } from '../FormInput/FormInput';
@@ -10,6 +11,7 @@ import { ReactComponent as Save } from '../../resources/images/save.svg';
 import { bem } from '../../utils/bem';
 import { useSharedState } from '../../utils/hooks/useSharedState';
 import { useToggle } from '../../utils/hooks/useToggle';
+
 
 export type EditableInputProps = {
   name: string;
@@ -119,7 +121,7 @@ export const EditableInput = ({
                 onKeyPress={onPressEnter}
                 onClick={showEditComponentAndUpdateState}
               >
-                {value || "Нет информации"}
+                {value || "Нет информации"}&nbsp;<Edit className={editableInput.element('ValueIcon')}/>
               </span>
             </>
           </div>

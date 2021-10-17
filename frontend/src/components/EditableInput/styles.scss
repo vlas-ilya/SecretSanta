@@ -13,7 +13,6 @@
 .EditableInput-ViewContent {
   display: block;
   position: relative;
-  margin-right: 90px;
 }
 
 .EditableInput-NameLabel {
@@ -31,14 +30,13 @@
   border-bottom: 1px dashed $mainTextColor;;
   position: relative;
   color: $mainTextColor;
+}
 
-  &:after {
-    content: url('../../resources/images/edit.svg');
-    display: inline-block;
-    margin-left: 5px;
-    margin-top: 3px;
-    vertical-align: bottom;
-  }
+.EditableInput-ValueIcon {
+  display: inline-block;
+  vertical-align: baseline;
+  fill: $mainTextColor;
+  margin-bottom: -2px;
 }
 
 .EditableInput-Edit {
