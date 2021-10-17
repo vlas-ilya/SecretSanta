@@ -30,7 +30,7 @@
     font-size: 16px;
     top: 16px;
     left: 16px;
-    color: lighten($mainTextColor, 30);
+    color: darken($editBackgroundColor, 50);
     cursor: auto;
 
     @media not all and (min-resolution: 0.001dpcm) {
