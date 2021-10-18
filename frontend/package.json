@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && gzip -krf build/**/*.{ignored,html,css,js,png}",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "gzip": "gzip -krf build/**/*.{ignored,html,css,js,png}",
+    "brotli": "brotli -kf build/**/*.{ignored,html,css,js,png}",
   },
   "proxy": "http://localhost:8081",
   "eslintConfig": {

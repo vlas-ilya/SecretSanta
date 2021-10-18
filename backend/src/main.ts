@@ -11,7 +11,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(
     '/',
-    expressStaticGzip(join(__dirname, '..', '..', 'client', 'build'), {
+    expressStaticGzip(join(__dirname, '..', '..', 'frontend', 'build'), {
       enableBrotli: true,
     }),
   );
