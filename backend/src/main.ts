@@ -13,6 +13,7 @@ async function bootstrap() {
     '/',
     expressStaticGzip(join(__dirname, '..', '..', 'frontend', 'build'), {
       enableBrotli: true,
+      orderPreference: ['br'],
     }),
   );
   await app.listen(8081);
