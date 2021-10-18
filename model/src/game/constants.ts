@@ -8,6 +8,7 @@ export const GAME_DESCRIPTION_ERROR_MESSAGE = `Описание должно з�
 
 export const GAME_CHANGE_PIN_MIN_LENGTH = 4;
 export const GAME_CHANGE_PIN_MAX_LENGTH = 8;
+export const GAME_CHANGE_PIN_FORMAT_ERROR_MESSAGE = `Пин-код должен содержать только цифры`;
 export const GAME_CHANGE_PIN_ERROR_MESSAGE = `Пин-код должен содержать от ${GAME_CHANGE_PIN_MIN_LENGTH} до ${GAME_CHANGE_PIN_MAX_LENGTH} символов`;
 export const GAME_CHANGE_PIN_INCORRECT_CONFIRMATION_ERROR_MESSAGE =
   'Пин-коды не совпадают';

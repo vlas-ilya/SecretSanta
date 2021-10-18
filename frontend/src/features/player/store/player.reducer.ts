@@ -28,7 +28,8 @@ export const player = createSlice({
       }
     },
     backup: (state: State) => {
-      state.backup = state.player;
+      const [player] = Player.tryCreate({ ...state.player });
+      state.backup = player;
     },
     clearBackup: (state: State) => {
       state.backup = undefined;

@@ -1,27 +1,29 @@
 import {
   GAME_CHANGE_PIN_ERROR_MESSAGE,
+  GAME_CHANGE_PIN_FORMAT_ERROR_MESSAGE,
   GAME_CHANGE_PIN_INCORRECT_CONFIRMATION_ERROR_MESSAGE,
   GAME_CHANGE_PIN_MAX_LENGTH,
   GAME_CHANGE_PIN_MIN_LENGTH,
 } from './constants';
-import { IsDecimal, IsNotEmpty, IsOptional, Length, ValidateIf } from 'class-validator';
+import { ValidateResult, validate } from '../utils/validators/validators';
 
 import { GamePin } from './GameTypes';
-import { Match } from '../utils/matchDecorator';
+import { isBoolean } from '../utils/validators/typechecker/isBoolean';
+import { isDecimal } from '../utils/validators/string/isDecimal';
+import { isNotEmpty } from '../utils/validators/common/isNotEmpty';
+import { length } from '../utils/validators/string/length';
+import { matches } from '../utils/validators/string/matches';
 
 export class GameChangePin {
   constructor(
-    newPin: GamePin,
-    confirmation: GamePin,
-    oldPin?: GamePin,
-    hasPassword?: boolean,
+    public newPin: GamePin,
+    public confirmation: GamePin,
+    public oldPin?: GamePin,
+    public hasPassword?: boolean,
   ) {
-    if (oldPin && oldPin.length > 0) {
-      this.oldPin = oldPin;
+    if (!oldPin || oldPin.length === 0) {
+      this.oldPin = undefined;
     }
-    this.newPin = newPin;
-    this.confirmation = confirmation;
-    this.hasPassword = hasPassword;
   }
 
   static build(
@@ -33,31 +35,52 @@ export class GameChangePin {
     return new GameChangePin(newPin, confirmation, oldPin, hasPassword);
   }
 
-  @ValidateIf((o: GameChangePin) => !!o.hasPassword || !!o.oldPin)
-  @IsNotEmpty()
-  @IsDecimal()
-  @Length(GAME_CHANGE_PIN_MIN_LENGTH, GAME_CHANGE_PIN_MAX_LENGTH, {
-    message: GAME_CHANGE_PIN_ERROR_MESSAGE,
-  })
-  oldPin?: GamePin;
-
-  @IsNotEmpty()
-  @IsDecimal()
-  @Length(GAME_CHANGE_PIN_MIN_LENGTH, GAME_CHANGE_PIN_MAX_LENGTH, {
-    message: GAME_CHANGE_PIN_ERROR_MESSAGE,
-  })
-  newPin: GamePin;
-
-  @IsNotEmpty()
-  @IsDecimal()
-  @Match('newPin', {
-    message: GAME_CHANGE_PIN_INCORRECT_CONFIRMATION_ERROR_MESSAGE,
-  })
-  @Length(GAME_CHANGE_PIN_MIN_LENGTH, GAME_CHANGE_PIN_MAX_LENGTH, {
-    message: GAME_CHANGE_PIN_ERROR_MESSAGE,
-  })
-  confirmation: GamePin;
-
-  @IsOptional()
-  hasPassword?: boolean;
+  public static tryCreate(gameChangePin: any): ValidateResult<GameChangePin> {
+    return validate<GameChangePin>(gameChangePin)
+      .required('newPin', (newPin, check) => {
+        check(isNotEmpty(newPin), GAME_CHANGE_PIN_ERROR_MESSAGE);
+        check(isDecimal(newPin), GAME_CHANGE_PIN_FORMAT_ERROR_MESSAGE);
+        check(
+          length(newPin, GAME_CHANGE_PIN_MIN_LENGTH, GAME_CHANGE_PIN_MAX_LENGTH),
+          GAME_CHANGE_PIN_ERROR_MESSAGE,
+        );
+      })
+      .required('confirmation', (confirmation, check) => {
+        check(isNotEmpty(confirmation), GAME_CHANGE_PIN_ERROR_MESSAGE);
+        check(isDecimal(confirmation), GAME_CHANGE_PIN_FORMAT_ERROR_MESSAGE);
+        check(
+          length(confirmation, GAME_CHANGE_PIN_MIN_LENGTH, GAME_CHANGE_PIN_MAX_LENGTH),
+          GAME_CHANGE_PIN_ERROR_MESSAGE,
+        );
+        check(
+          matches(confirmation, gameChangePin.newPin),
+          GAME_CHANGE_PIN_INCORRECT_CONFIRMATION_ERROR_MESSAGE,
+        );
+      })
+      .required('hasPassword', (hasPassword, check) => {
+        check(isNotEmpty(hasPassword), 'Что-то пошло не так!');
+        check(isBoolean(hasPassword), 'Что-то пошло не так!');
+      })
+      .requiredIf(
+        'oldPin',
+        !!gameChangePin.hasPassword || !!gameChangePin.oldPin,
+        (oldPin, check) => {
+          check(isNotEmpty(oldPin), GAME_CHANGE_PIN_ERROR_MESSAGE);
+          check(isDecimal(oldPin), GAME_CHANGE_PIN_FORMAT_ERROR_MESSAGE);
+          check(
+            length(oldPin, GAME_CHANGE_PIN_MIN_LENGTH, GAME_CHANGE_PIN_MAX_LENGTH),
+            GAME_CHANGE_PIN_ERROR_MESSAGE,
+          );
+        },
+      )
+      .tryToCreate(
+        (value) =>
+          new GameChangePin(
+            value.newPin,
+            value.confirmation,
+            value.oldPin,
+            value.hasPassword,
+          ),
+      );
+  }
 }

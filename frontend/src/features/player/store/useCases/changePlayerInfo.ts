@@ -1,4 +1,3 @@
-import { ValidationError, usecase } from '../../../../utils/usecase/usecase';
 import {
   applyChanges,
   backup,
@@ -12,20 +11,16 @@ import { Player } from 'model';
 import { PlayerChange } from 'model';
 import { changeAlert } from '../../../home/store/home.reducer';
 import { fetchAction } from '../../../../utils/fetch';
-import { plainToClass } from 'class-transformer';
 import { update } from '../api/player.api';
-import { validateSync } from 'class-validator';
+import { usecase } from '../../../../utils/usecase/usecase';
 
 const validator = (change: PlayerChange) => {
-  const player = plainToClass(Player, change.player);
+  const player = Player.tryCreate(change.player)[0]!;
   player.applyChanges(change.changes);
   player.name = player.name?.trim() || player.name;
   player.wish = player.wish?.trim() || player.wish;
   player.taboo = player.taboo?.trim() || player.taboo;
-  const validationErrors = validateSync(player);
-  return validationErrors.map(
-    (error) => new ValidationError(error.property, error.constraints?.isLength || ''),
-  );
+  return Player.tryCreate(player)[1];
 };
 
 const action = (changes: PlayerChange) =>

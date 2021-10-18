@@ -1,4 +1,3 @@
-import { ValidationError, usecase } from '../../../../utils/usecase/usecase';
 import { changeLoadingStatus, setPlayer } from '../player.reducer';
 
 import { MutableRefObject } from 'react';
@@ -6,17 +5,10 @@ import { PlayerChangePin } from 'model';
 import { changeAlert } from '../../../home/store/home.reducer';
 import { fetchAction } from '../../../../utils/fetch';
 import { update } from '../api/player.api';
-import { validateSync } from 'class-validator';
+import { usecase } from '../../../../utils/usecase/usecase';
 
 const validator = (changes: PlayerChangePin) => {
-  const validationErrors = validateSync(changes);
-  return validationErrors.map(
-    (error) =>
-      new ValidationError(
-        error.property,
-        error.constraints?.isLength || error.constraints?.Match || '',
-      ),
-  );
+  return PlayerChangePin.tryCreate(changes)[1];
 };
 
 const action = (

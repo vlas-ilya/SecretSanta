@@ -12,6 +12,7 @@ export const PLAYER_TABOO_ERROR_MESSAGE = `Поле 'Не дарить ни в �
 
 export const PLAYER_CHANGE_PIN_MIN_LENGTH = 4;
 export const PLAYER_CHANGE_PIN_MAX_LENGTH = 8;
+export const PLAYER_CHANGE_PIN_FORMAT_ERROR_MESSAGE = `Пин-код должен содержать только цифры`;
 export const PLAYER_CHANGE_PIN_ERROR_MESSAGE = `Пин-код должен содержать от ${PLAYER_CHANGE_PIN_MIN_LENGTH} до ${PLAYER_CHANGE_PIN_MAX_LENGTH} символов`;
 export const PLAYER_CHANGE_PIN_INCORRECT_CONFIRMATION_ERROR_MESSAGE =
   'Пин-коды не совпадают';
