@@ -30,25 +30,31 @@ export class GameService {
   async update(id: GameId, changes: GameChanges): Promise<Game> {
     const game = await this.get(id);
     const [newVersion, gameWasStarted] = await changes.apply(game);
+    newVersion.players = await this.removeDeletedPlayers(newVersion.players);
     if (gameWasStarted) {
-      await this.removeNotActivePlayers(newVersion.players);
+      newVersion.players = await this.removeNotActivePlayers(newVersion.players);
       newVersion.calculateTargets();
-      await this.savePlayers(newVersion.players);
     }
     await this.storage.update(newVersion);
     return await this.get(id);
   }
 
-  private async removeNotActivePlayers(players: Player[]) {
+  private async removeDeletedPlayers(players: Player[]): Promise<Player[]> {
+    await Promise.all(
+      players
+        .filter((player) => player.state === PlayerState.DELETED)
+        .map((player) => this.playerStorage.delete(player)),
+    );
+    return players.filter((player) => player.state !== PlayerState.DELETED);
+  }
+
+  private async removeNotActivePlayers(players: Player[]): Promise<Player[]> {
     await Promise.all(
       players
         .filter((player) => player.state !== PlayerState.ACTIVE)
         .map((player) => this.playerStorage.delete(player)),
     );
-  }
-
-  private async savePlayers(players: Player[]) {
-    await Promise.all(players.map((player) => this.playerStorage.update(player)));
+    return players.filter((player) => player.state === PlayerState.ACTIVE);
   }
 
   async delete(id: GameId): Promise<void> {

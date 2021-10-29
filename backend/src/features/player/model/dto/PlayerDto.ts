@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { GameDto } from '../../../game/model/dto/GameDto';
 
@@ -6,6 +6,9 @@ import { GameDto } from '../../../game/model/dto/GameDto';
 export class PlayerDto {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ default: '' })
+  publicId: string;
 
   @Column({ default: 'INIT' })
   state: string = 'INIT';

@@ -16,6 +16,7 @@ export class PlayerStorage {
   async create(registrationId: RegistrationId, game: Game): Promise<Player> {
     const player = new PlayerDto();
     player.id = v4();
+    player.publicId = v4();
     player.game = new GameDto();
     player.game.id = game.id.value;
     const persisted = await this.repository.save(player);
@@ -39,6 +40,6 @@ export class PlayerStorage {
   }
 
   async delete(player: Player): Promise<void> {
-    await this.repository.delete(player.toDto());
+    await this.repository.delete(player.id.value);
   }
 }

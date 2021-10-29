@@ -1,10 +1,10 @@
 import { AuthenticationProps, withAuthentication } from '../session/withAuthentication';
+import { GAME_CHANGE_PIN_MAX_LENGTH, PlayerId } from 'model';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { selectGame, selectLoadingStatus } from './store/game.selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ChangePinModal } from '../../components/ChangePinModal/ChangePinModal';
-import { GAME_CHANGE_PIN_MAX_LENGTH } from 'model';
 import { GameChangePin } from 'model';
 import { GameChanges } from 'model';
 import { GameInfoSection } from 'features/game/components/GameInfoSection';
@@ -15,6 +15,7 @@ import { Page } from 'components/Page/Page';
 import { changeGameInfo } from './store/useCases/changeGameInfo';
 import { changeGamePin } from './store/useCases/changeGamePin';
 import { loadGameInfo } from './store/useCases/loadGameInfo';
+import { removePlayer } from './store/useCases/removePlayer';
 import { startGame } from './store/useCases/startGame';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
@@ -75,6 +76,13 @@ const GamePage = ({
     dispatch(startGame());
   }, [dispatch]);
 
+  const onRemovePlayer = useCallback(
+    (id: PlayerId) => {
+      dispatch(removePlayer(id));
+    },
+    [dispatch],
+  );
+
   const showChangeGamePinModalAndClearValidation = useCallback(() => {
     clearValidationErrors();
     showChangePinModal();
@@ -99,7 +107,7 @@ const GamePage = ({
             clearValidationErrors={clearValidationErrors}
             onChange={onChangeGameInfo}
           />
-          <GamePlayersSection players={game.players} />
+          <GamePlayersSection players={game.players} onRemovePlayer={onRemovePlayer} />
           {changePinModal && (
             <ChangePinModal
               hasPassword={game.hasPassword}

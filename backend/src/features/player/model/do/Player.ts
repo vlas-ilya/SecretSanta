@@ -1,7 +1,7 @@
 import {
+  Player as PlayerVo,
   PlayerShortInfo as PlayerShortInfoVo,
   PlayerState as PlayerStateVo,
-  Player as PlayerVo,
   Target as TargetVo,
 } from 'model';
 
@@ -21,6 +21,7 @@ import { notNull } from '../../../../utils/validators';
 export class Player {
   constructor(
     private _id: PlayerId,
+    private _publicId: PlayerId,
     private _state: PlayerState = PlayerState.INIT,
     private _game: Game,
     private _name?: PlayerName,
@@ -35,6 +36,10 @@ export class Player {
 
   get id(): PlayerId {
     return this._id;
+  }
+
+  get publicId(): PlayerId {
+    return this._publicId;
   }
 
   get state(): PlayerState {
@@ -83,7 +88,7 @@ export class Player {
   }
 
   toShortInfoVo(): PlayerShortInfoVo {
-    return new PlayerShortInfoVo(PlayerStateVo[this.state], this.name?.value);
+    return new PlayerShortInfoVo(this.publicId?.value, PlayerStateVo[this.state], this.name?.value);
   }
 
   toTargetVo(): TargetVo {
@@ -98,6 +103,7 @@ export class Player {
   static fromDto(playerDto: PlayerDto, game: Game): Player {
     return new Player(
       new PlayerId(playerDto.id),
+      new PlayerId(playerDto.publicId),
       playerDto.state as PlayerState,
       game,
       ifExist(playerDto.name, (name) => new PlayerName(name)),
@@ -109,6 +115,7 @@ export class Player {
         (target) =>
           new Player(
             new PlayerId(target.id),
+            new PlayerId(target.publicId),
             target.state as PlayerState,
             game,
             ifExist(target.name, (name) => new PlayerName(name)),
@@ -136,5 +143,19 @@ export class Player {
     playerDto.game.id = this.game.id.value;
 
     return playerDto;
+  }
+
+  markAsDeleted(): Player {
+    return new Player(
+      this.id,
+      this.publicId,
+      PlayerState.DELETED,
+      this.game,
+      this.name,
+      this.password,
+      this.wish,
+      this.taboo,
+      this.target,
+    );
   }
 }

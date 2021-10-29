@@ -115,6 +115,7 @@ export class PlayerChanges {
 
     return new Player(
       player.id,
+      player.publicId,
       needToChangeStatusToActive ? PlayerState.ACTIVE : player.state,
       player.game,
       newName,

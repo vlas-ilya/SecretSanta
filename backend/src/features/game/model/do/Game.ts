@@ -13,7 +13,6 @@ import { GameState } from './GameState';
 import { GameTitle } from './GameTitle';
 import { Player } from '../../../player/model/do/Player';
 import { PlayerDto } from '../../../player/model/dto/PlayerDto';
-import { PlayerState } from '../../../player/model/do/PlayerState';
 import { RegistrationId } from './RegistrationId';
 import { ifExist } from '../../../../utils/ifExist';
 import { notNull } from '../../../../utils/validators';
@@ -36,6 +35,10 @@ export class Game {
 
   get players(): Player[] {
     return this._players;
+  }
+
+  set players(players: Player[] ) {
+    this._players = players;
   }
 
   get id(): GameId {
@@ -112,20 +115,20 @@ export class Game {
     gameDto.players = this.players.map((player) => {
       const playerDto = new PlayerDto();
       playerDto.id = player.id.value;
+      playerDto.state = player.state;
       return playerDto;
     });
     return gameDto;
   }
 
   calculateTargets() {
-    const players = this.players.filter((player) => player.state === PlayerState.ACTIVE);
-    const targets = [...players];
+    const targets = [...this.players];
 
     do {
       targets.sort(() => 0.5 - Math.random());
-    } while (this.existCoincidences(targets, players));
+    } while (this.existCoincidences(targets, this.players));
 
-    players.forEach((player, index) => (player.target = targets[index]));
+    this.players.forEach((player, index) => (player.target = targets[index]));
   }
 
   private existCoincidences(targets: Player[], players: Player[]): boolean {

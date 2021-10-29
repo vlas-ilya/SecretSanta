@@ -77,7 +77,7 @@ export const isValidNestedArray = <T>(
     return [undefined, false];
   }
   const result = [] as T[];
-  for (let item in value) {
+  for (let item of value) {
     const [x, errors] = transformer(item);
     if (errors.length > 0 || !x) {
       return [undefined, false];

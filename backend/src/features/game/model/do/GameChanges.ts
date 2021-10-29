@@ -13,11 +13,18 @@ import { GamePassword } from './GamePassword';
 import { GamePin } from './GamePin';
 import { GameState } from './GameState';
 import { GameTitle } from './GameTitle';
+import { PlayerId } from '../../../player/model/do/PlayerId';
 import { PlayerState } from '../../../player/model/do/PlayerState';
 
 export type GameWasStarted = boolean;
 
-const fields: (keyof GameVo | 'newPin')[] = ['title', 'description', 'newPin', 'state'];
+const fields: (keyof GameVo | 'newPin' | 'removedPlayerId')[] = [
+  'title',
+  'description',
+  'newPin',
+  'state',
+  'removedPlayerId',
+];
 const changedFields = (changes: GameChangesVo | GameChangePinVo) =>
   Object.keys(changes).filter((item) => fields.includes(item as keyof GameVo));
 
@@ -30,8 +37,17 @@ type ChangePassword = {
     value: GamePassword;
   };
 };
+type RemovePlayer = {
+  removedPlayerId: PlayerId;
+};
 
-type Changes = {} | ChangeTitle | ChangeDescription | ChangeState | ChangePassword;
+type Changes =
+  | {}
+  | ChangeTitle
+  | ChangeDescription
+  | ChangeState
+  | ChangePassword
+  | RemovePlayer;
 
 export class GameChanges {
   private constructor(
@@ -84,6 +100,9 @@ export class GameChanges {
         value: GameState[changesVo.state.value],
       };
     }
+    if ('removedPlayerId' in changesVo) {
+      (changes as RemovePlayer).removedPlayerId = new PlayerId(changesVo.removedPlayerId);
+    }
     return changes;
   }
 
@@ -122,7 +141,14 @@ export class GameChanges {
       newDescription,
       newPassword,
     );
-    newGame.players.push(...game.players);
+    newGame.players.push(
+      ...game.players.map((player) =>
+        'removedPlayerId' in this.changes &&
+        player.publicId.value === this.changes.removedPlayerId.value
+          ? player.markAsDeleted()
+          : player,
+      ),
+    );
 
     return [newGame, gameWasStarted];
   }

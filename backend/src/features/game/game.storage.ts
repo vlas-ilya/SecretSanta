@@ -47,7 +47,7 @@ export class GameStorage {
   }
 
   async update(game: Game): Promise<Game> {
-    const persisted: GameDto = await this.repository.save(game.toDto());
-    return Game.fromDto(persisted);
+    await this.repository.save(game.toDto());
+    return await this.find(game.id);
   }
 }
