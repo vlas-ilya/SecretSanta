@@ -8,7 +8,7 @@ export const bem = (block: string) => {
         result[`${block}-${modifier}`] = modifiers[modifier];
       }
     }
-    return classNames(block, mixin, modifiers);
+    return classNames(block, mixin, result);
   }
 
   buildBlock.element = function (
