@@ -35,6 +35,7 @@ export class GameService {
       newVersion.players = await this.removeNotActivePlayers(newVersion.players);
       newVersion.calculateTargets();
     }
+    await Promise.all([newVersion.players.map(player => this.playerStorage.update(player))]);
     await this.storage.update(newVersion);
     return await this.get(id);
   }
