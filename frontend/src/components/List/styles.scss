@@ -66,6 +66,11 @@
   }
 }
 
+.List-fixed {
+  max-height: 300px;
+  overflow: auto;
+}
+
 /// List-ItemAction
 .List-ItemAction {
   cursor: pointer;

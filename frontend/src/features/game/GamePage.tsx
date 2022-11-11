@@ -12,14 +12,16 @@ import { GamePlayersSection } from 'features/game/components/GamePlayersSection'
 import { GameTitleSection } from 'features/game/components/GameTitleSection';
 import { MatchIdentifiable } from '../../utils/classes/MatchIdentifiable';
 import { Page } from 'components/Page/Page';
+import { StartGameModal } from '../../components/StartGameModal/StartGameModal';
 import { changeGameInfo } from './store/useCases/changeGameInfo';
 import { changeGamePin } from './store/useCases/changeGamePin';
 import { loadGameInfo } from './store/useCases/loadGameInfo';
 import { removePlayer } from './store/useCases/removePlayer';
 import { startGame } from './store/useCases/startGame';
+import { useHistoryGames } from '../../utils/hooks/useHistoryGames';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
-import { useHistoryGames } from '../../utils/hooks/useHistoryGames';
+import { player } from '../player/store/player.reducer';
 
 const GamePage = ({
   setId,
@@ -34,6 +36,7 @@ const GamePage = ({
   const dispatch = useDispatch();
   const [validationErrors, process, clearValidationErrors] = useUseCaseProcessor();
   const [changePinModal, showChangePinModal, hideChangeModal] = useToggle();
+  const [startGameModal, showStartGameModal, hideStartGameModal] = useToggle();
   const hideChangePinModalRef = useRef(hideChangeModal);
   const { addItem } = useHistoryGames();
 
@@ -42,8 +45,8 @@ const GamePage = ({
       addItem(id, {
         type: 'Game',
         gameName: game.title,
-        playerCount: game.players?.length ?? 0
-      })
+        playerCount: game.players?.length ?? 0,
+      });
     }
   }, [addItem, game]);
 
@@ -86,7 +89,8 @@ const GamePage = ({
 
   const onStartGame = useCallback(() => {
     dispatch(startGame());
-  }, [dispatch]);
+    hideStartGameModal()
+  }, [dispatch, hideStartGameModal]);
 
   const onRemovePlayer = useCallback(
     (id: PlayerId) => {
@@ -108,7 +112,7 @@ const GamePage = ({
             state={game.state}
             registrationId={game.registrationId}
             hasPassword={game.hasPassword}
-            onStartGame={onStartGame}
+            onStartGame={showStartGameModal}
             onChangePin={showChangeGamePinModalAndClearValidation}
           />
           <GameInfoSection
@@ -128,6 +132,13 @@ const GamePage = ({
               onClose={hideChangeModal}
               makeChanges={GameChangePin.build}
               maxLength={GAME_CHANGE_PIN_MAX_LENGTH}
+            />
+          )}
+          {startGameModal && (
+            <StartGameModal
+              onClose={hideStartGameModal}
+              onStartGamePressed={onStartGame}
+              players={game.players}
             />
           )}
         </>

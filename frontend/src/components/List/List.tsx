@@ -11,10 +11,11 @@ export type ListProps = {
   title: string;
   children: ReactNode;
   readonly?: boolean;
+  fixed?: boolean
 };
 
-export const List = ({ title, readonly, children }: ListProps) => (
-  <div className={list({ readonly })}>
+export const List = ({ title, readonly, fixed, children }: ListProps) => (
+  <div className={list({ readonly, fixed })}>
     {title && <div className={list.element('Title')}>{title}</div>}
     {children}
   </div>
