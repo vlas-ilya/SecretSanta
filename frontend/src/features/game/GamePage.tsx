@@ -19,6 +19,7 @@ import { removePlayer } from './store/useCases/removePlayer';
 import { startGame } from './store/useCases/startGame';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
+import { useHistoryGames } from '../../utils/hooks/useHistoryGames';
 
 const GamePage = ({
   setId,
@@ -34,6 +35,17 @@ const GamePage = ({
   const [validationErrors, process, clearValidationErrors] = useUseCaseProcessor();
   const [changePinModal, showChangePinModal, hideChangeModal] = useToggle();
   const hideChangePinModalRef = useRef(hideChangeModal);
+  const { addItem } = useHistoryGames();
+
+  useEffect(() => {
+    if (game) {
+      addItem(id, {
+        type: 'Game',
+        gameName: game.title,
+        playerCount: game.players?.length ?? 0
+      })
+    }
+  }, [addItem, game]);
 
   useEffect(() => {
     gameRef.current = game;

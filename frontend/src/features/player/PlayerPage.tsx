@@ -18,6 +18,7 @@ import { saveToBookmarks } from '../../utils/saveToBookmarks';
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
+import { useHistoryGames } from '../../utils/hooks/useHistoryGames';
 
 const PlayerPage = ({
   setId,
@@ -34,9 +35,20 @@ const PlayerPage = ({
   const [changePinModal, showChangePinModal, hideChangePinModal] = useToggle();
   const hideChangePinModalRef = useRef(hideChangePinModal);
   const [showSaveToBookmarks, setShowSaveToBookmarks] = useLocalStorage(
-    'showSaveToBookmarks',
+    `${id}-showSaveToBookmarks`,
     'true',
   );
+  const { addItem } = useHistoryGames();
+
+  useEffect(() => {
+    if (player) {
+      addItem(id, {
+        type: 'Player',
+        gameName: player.game.title,
+        playerName: player.name,
+      })
+    }
+  }, [addItem, player]);
 
   useEffect(() => {
     playerRef.current = player;

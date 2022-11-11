@@ -1,6 +1,6 @@
 import './styles.scss';
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 
 import { bem } from '../../utils/bem';
 
@@ -24,10 +24,13 @@ export const List = ({ title, readonly, children }: ListProps) => (
 export type ListItemProps = {
   children: ReactNode;
   selected?: boolean;
+  onClick?: () => void;
 };
 
-export const ListItem = ({ children, selected }: ListItemProps) => (
-  <div className={list.element('Item', { selected })}>{children}</div>
+export const ListItem = ({ children, selected, onClick }: ListItemProps) => (
+  <div className={list.element('Item', { selected })} onClick={onClick}>
+    {children}
+  </div>
 );
 
 /// ListItemAction
@@ -36,8 +39,19 @@ export type ListItemActionProps = {
   action: () => void;
 };
 
-export const ListItemAction = ({ title, action }: ListItemActionProps) => (
-  <div className={list.element('ItemAction')} role="button" onClick={action}>
-    {title}
-  </div>
-);
+export const ListItemAction = ({ title, action }: ListItemActionProps) => {
+  const onClickCallback = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      action();
+    },
+    [action],
+  );
+
+  return (
+    <div className={list.element('ItemAction')} role="button" onClick={onClickCallback}>
+      {title}
+    </div>
+  );
+};
