@@ -1,4 +1,5 @@
 import { PlayerChangePin, PlayerId } from 'model';
+import { login, retryWithLogin } from '../../../session/store/api/session.api';
 
 import { AxiosResponse } from 'axios';
 import { INVALID_RESPONSE } from '../../../../utils/constants';
@@ -15,10 +16,12 @@ export const update = async (
   id: PlayerId,
   changes: PlayerChangePin | PlayerChanges,
 ): Promise<Player> => {
-  const response = await fetch(`/api/player/${id}`).put({
-    data: changes,
+  return await retryWithLogin(id, async () => {
+    const response = await fetch(`/api/player/${id}`).put({
+      data: changes,
+    });
+    return extractPlayer(response.data);
   });
-  return extractPlayer(response.data);
 };
 
 const extractPlayer = (data: AxiosResponse) => {

@@ -5,15 +5,18 @@ import { Game } from 'model';
 import { GameChanges } from 'model';
 import { INVALID_RESPONSE } from '../../../../utils/constants';
 import fetch from '../../../../utils/fetch';
+import { retryWithLogin } from '../../../session/store/api/session.api';
 
 export const update = async (
   id: GameId,
   changes: GameChangePin | GameChanges,
 ): Promise<Game> => {
-  const response = await fetch(`/api/game/${id}`).put({
-    data: changes,
+  return await retryWithLogin(id, async () => {
+    const response = await fetch(`/api/game/${id}`).put({
+      data: changes,
+    });
+    return extractGame(response.data);
   });
-  return extractGame(response.data);
 };
 
 export const get = async (id: GameId): Promise<Game> => {

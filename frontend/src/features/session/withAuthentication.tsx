@@ -16,6 +16,8 @@ export type AuthenticationProps = {
   hasSession?: boolean;
 };
 
+let oldDocumentHidden = false;
+
 export const withAuthentication =
   <T extends AuthenticationProps = AuthenticationProps>(
     WrappedComponent: React.ComponentType<T>,
@@ -25,6 +27,19 @@ export const withAuthentication =
     const authenticationState = useSelector(selectAuthenticationState);
     const loadingStatus = useSelector(selectLoadingStatus);
     const [id, setId] = useState<Id | undefined>(undefined);
+
+    useEffect(() => {
+      if (!id) {
+        return;
+      }
+      const interval = setInterval(() => {
+        if (oldDocumentHidden && !document.hidden) {
+          dispatch(checkSession(id));
+        }
+        oldDocumentHidden = document.hidden;
+      }, 300);
+      return () => clearInterval(interval);
+    }, [dispatch, id]);
 
     useEffect(() => {
       if (!id) {

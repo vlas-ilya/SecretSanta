@@ -11,6 +11,18 @@ export const login = async (id: Id, pin: Pin | undefined) => {
   });
 };
 
+export const retryWithLogin = async <T>(id: Id, fun: () => Promise<T>) => {
+  try {
+    return await fun();
+  } catch (e) {
+    if (e.response.status === 401) {
+      await login(id, undefined);
+      return await fun();
+    }
+    throw e;
+  }
+};
+
 export const checkSession = async (id: Id) => {
   await fetch(`/auth/check_session`).post({
     data: {
