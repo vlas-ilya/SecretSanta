@@ -109,9 +109,8 @@ export class PlayerChanges {
     const newTaboo = this.loadValue(player, 'taboo');
     const newPassword = this.loadValue(player, 'password');
 
-    const needToChangeStatusToActive = !(
-      Object.keys(this.changes).length === 1 && 'password' in this.changes
-    );
+    const needToChangeStatusToActive =
+      Object.keys(this.changes).length >= 1 && 'name' in this.changes;
 
     return new Player(
       player.id,
