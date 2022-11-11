@@ -6,13 +6,11 @@ interface State<T> {
   handlers: ((state: T) => void)[];
 }
 
-interface GlobalState {
+const GLOBAL_STATE = {} as {
   [key: string]: State<any>;
-}
+};
 
-const globalState: GlobalState = {};
-
-export function useSharedState<T>(name: string, initState: T): [T, (state: T) => void] {
+export function useSharedState<T>(key: string, initState: T): [T, (nextState: T) => void] {
   const initGlobalState = useMemo<State<T>>(
     () => ({
       state: initState,
@@ -23,41 +21,41 @@ export function useSharedState<T>(name: string, initState: T): [T, (state: T) =>
   );
 
   const [state, setState] = useState<State<T>>(initGlobalState);
-  const oldSetState = useRef<(value: State<T>) => void>(setState);
+  const oldSetStateReference = useRef<(value: State<T>) => void>(setState);
 
   useEffect(() => {
-    oldSetState.current = setState;
-  }, [oldSetState, setState]);
+    oldSetStateReference.current = setState;
+  }, [oldSetStateReference, setState]);
 
   useEffect(() => {
-    globalState[name] = globalState[name] || {
+    GLOBAL_STATE[key] = GLOBAL_STATE[key] || {
       state: initState,
       setState: (state) => {
-        globalState[name] = { ...globalState[name], state };
-        globalState[name].handlers.forEach((handler) => handler(globalState[name]));
+        GLOBAL_STATE[key] = { ...GLOBAL_STATE[key], state };
+        GLOBAL_STATE[key].handlers.forEach((handler) => handler(GLOBAL_STATE[key]));
       },
       handlers: [],
     };
-    setState(globalState[name]);
+    setState(GLOBAL_STATE[key]);
     return () => {
-      globalState[name].handlers = [
-        ...globalState[name].handlers.filter((item) => item !== oldSetState.current),
+      GLOBAL_STATE[key].handlers = [
+        ...GLOBAL_STATE[key].handlers.filter((item) => item !== oldSetStateReference.current),
       ];
-      if (globalState[name].handlers.length === 0) {
-        delete globalState[name];
+      if (GLOBAL_STATE[key].handlers.length === 0) {
+        delete GLOBAL_STATE[key];
       }
     };
-  }, [initState, name]);
+  }, [initState, key]);
 
   useEffect(() => {
-    if (globalState[name]) {
-      globalState[name].handlers = [
+    if (GLOBAL_STATE[key]) {
+      GLOBAL_STATE[key].handlers = [
         setState,
-        ...globalState[name].handlers.filter((item) => item !== oldSetState.current),
+        ...GLOBAL_STATE[key].handlers.filter((item) => item !== oldSetStateReference.current),
       ];
-      oldSetState.current = setState;
+      oldSetStateReference.current = setState;
     }
-  }, [name, setState]);
+  }, [key, setState]);
 
   return [state.state, state.setState];
 }

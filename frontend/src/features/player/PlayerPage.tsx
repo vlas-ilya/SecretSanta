@@ -1,5 +1,5 @@
 import { AuthenticationProps, withAuthentication } from '../session/withAuthentication';
-import { PLAYER_CHANGE_PIN_MAX_LENGTH, PlayerChangePin } from 'model';
+import { PLAYER_CHANGE_PIN_MAX_LENGTH, PlayerChangePin, PlayerChanges } from 'model';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { selectLoadingStatus, selectPlayer } from './store/player.selectors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,12 +8,14 @@ import { ChangePinModal } from '../../components/ChangePinModal/ChangePinModal';
 import { GameInfoSection } from './components/GameInfoSection';
 import { MatchIdentifiable } from '../../utils/classes/MatchIdentifiable';
 import { Page } from '../../components/Page/Page';
-import { PlayerChanges } from 'model';
 import { PlayerInfoSection } from './components/PlayerInfoSection';
+import { SaveToBookmarks } from './components/SaveToBookmarks';
 import { TargetInfoSection } from './components/TargetInfoSection';
 import { changePlayerInfo } from './store/useCases/changePlayerInfo';
 import { changePlayerPin } from './store/useCases/changePlayerPin';
 import { loadPlayerInfo } from './store/useCases/loadPlayerInfo';
+import { saveToBookmarks } from '../../utils/saveToBookmarks';
+import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
 
@@ -31,6 +33,10 @@ const PlayerPage = ({
   const [validationErrors, process, clearValidationErrors] = useUseCaseProcessor();
   const [changePinModal, showChangePinModal, hideChangePinModal] = useToggle();
   const hideChangePinModalRef = useRef(hideChangePinModal);
+  const [showSaveToBookmarks, setShowSaveToBookmarks] = useLocalStorage(
+    'showSaveToBookmarks',
+    'true',
+  );
 
   useEffect(() => {
     playerRef.current = player;
@@ -47,6 +53,15 @@ const PlayerPage = ({
   useEffect(() => {
     hasSession && dispatch(loadPlayerInfo(id));
   }, [dispatch, hasSession, id]);
+
+  const hideShowSaveToBookmarks = useCallback(() => {
+    setShowSaveToBookmarks('false');
+  }, [setShowSaveToBookmarks]);
+
+  const saveToBookmarksCallback = useCallback(() => {
+    saveToBookmarks();
+    //hideShowSaveToBookmarks();
+  }, [hideShowSaveToBookmarks]);
 
   const onChangePlayerInfo = useCallback(
     (changes: PlayerChanges) => {
@@ -78,6 +93,13 @@ const PlayerPage = ({
     <Page className="game-page" loading={loadingStatus.state === 'LOADING'}>
       {player && (
         <>
+          {showSaveToBookmarks === 'true' && (
+            <SaveToBookmarks
+              onSave={saveToBookmarksCallback}
+              onClose={hideShowSaveToBookmarks}
+            />
+          )}
+
           <GameInfoSection game={player?.game} />
           <PlayerInfoSection
             gameState={player?.game.state}
