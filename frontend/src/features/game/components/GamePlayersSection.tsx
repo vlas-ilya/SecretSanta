@@ -17,6 +17,7 @@ export const GamePlayersSection = (props: GamePlayersPageProps) => (
       <Text type="h1">Информация об игроках</Text>
     </FormItem>
     <FormItem>
+      <Text type="p">Количество игроков: {props.players?.length ?? 0}</Text>
       <List title="Список игроков">
         {props.players?.map((player, index) => (
           <ListItem key={index}>
