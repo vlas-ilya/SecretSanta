@@ -32,13 +32,14 @@ export const withAuthentication =
       if (!id) {
         return;
       }
-      const interval = setInterval(() => {
+      const event = (event: Event) => {
         if (oldDocumentHidden && !document.hidden) {
           dispatch(checkSession(id));
         }
         oldDocumentHidden = document.hidden;
-      }, 300);
-      return () => clearInterval(interval);
+      };
+      window.addEventListener('visibilitychange', event);
+      return () => window.removeEventListener('visibilitychange', event);
     }, [dispatch, id]);
 
     useEffect(() => {
