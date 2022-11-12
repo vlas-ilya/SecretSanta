@@ -21,7 +21,6 @@ import { startGame } from './store/useCases/startGame';
 import { useHistoryGames } from '../../utils/hooks/useHistoryGames';
 import { useToggle } from '../../utils/hooks/useToggle';
 import { useUseCaseProcessor } from '../../utils/usecase/hooks/useUseCaseProcessor';
-import { player } from '../player/store/player.reducer';
 
 const GamePage = ({
   setId,

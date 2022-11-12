@@ -5,5 +5,7 @@ export type AuthenticationState =
   | 'SHOULD_LOGIN'
   | 'SHOULD_LOGIN_WITH_PIN'
   | 'AUTHENTICATED'
+  | 'NOT_FOUND'
+  | 'UNKNOWN_ERROR'
   | 'WAS_INCORRECT_PIN'
   | 'WAS_AUTHENTICATE_ERROR';

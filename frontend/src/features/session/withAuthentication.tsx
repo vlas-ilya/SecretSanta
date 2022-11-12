@@ -1,15 +1,14 @@
 import { Id, Pin } from 'model';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  selectAuthenticationState,
-  selectLoadingStatus,
-} from './store/session.selectors';
+import { selectAuthenticationState, selectLoadingStatus } from './store/session.selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { AuthenticationErrorModal } from './components/AuthenticationErrorModal';
 import { InputPinModal } from './components/InputPinModal';
 import { Page } from '../../components/Page/Page';
 import { checkSession } from './store/useCases/checkSession';
 import { login } from './store/useCases/login';
+import { useHistory } from 'react-router-dom';
 
 export type AuthenticationProps = {
   setId: (id: Id) => void;
@@ -27,6 +26,7 @@ export const withAuthentication =
     const authenticationState = useSelector(selectAuthenticationState);
     const loadingStatus = useSelector(selectLoadingStatus);
     const [id, setId] = useState<Id | undefined>(undefined);
+    const history = useHistory();
 
     useEffect(() => {
       if (!id) {
@@ -71,6 +71,33 @@ export const withAuthentication =
           <InputPinModal
             onInputPin={loginWithPin}
             wasIncorrectPin={authenticationState === 'WAS_INCORRECT_PIN'}
+          />
+        </Page>
+      );
+    }
+
+    if (authenticationState == 'UNKNOWN_ERROR') {
+      return (
+        <Page loading={loadingStatus.state === 'LOADING'}>
+          <AuthenticationErrorModal
+            message="Произошла неизвестная ошибка"
+            goHome={() => history.push('/')}
+          />
+        </Page>
+      );
+    }
+
+    if (authenticationState == 'NOT_FOUND') {
+      return (
+        <Page loading={loadingStatus.state === 'LOADING'}>
+          <AuthenticationErrorModal
+            goHome={() => history.push('/')}
+            message={
+              // @ts-ignore
+              props?.match?.path === '/player/:id'
+                ? 'Игрок не найден'
+                : 'Игра не найдена'
+            }
           />
         </Page>
       );
