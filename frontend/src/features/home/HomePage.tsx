@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { selectGameId, selectLoadingStatus } from './store/home.selectors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import { Page } from 'components/Page/Page';
 import { Text } from 'components/Text/Text';
 import { createGame } from './store/useCases/createGame';
 import { useHistoryGames } from '../../utils/hooks/useHistoryGames';
+import { changeAuthenticationState } from '../session/store/session.reducer';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ const HomePage = () => {
   const historyGameList = useMemo(() => list(), [list]);
 
   const onStartGame = useCallback(() => dispatch(createGame()), [dispatch]);
+
+  useEffect(() => {
+    dispatch(changeAuthenticationState('SHOULD_CHECK_SESSION'));
+  }, [dispatch])
 
   const onHistoryGameListItemClick = useCallback((link: string) => {
     history.push(link);
