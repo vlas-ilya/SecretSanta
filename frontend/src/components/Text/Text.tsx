@@ -1,5 +1,5 @@
-import './styles.scss';
-import './styles.scss';
+import './Text.styles.scss';
+import './Text.styles.scss';
 
 import React, { ReactNode } from 'react';
 

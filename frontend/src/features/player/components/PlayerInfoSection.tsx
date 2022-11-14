@@ -74,6 +74,7 @@ export const PlayerInfoSection = ({
         validationMessage={validationErrors['wish']}
         onStartEditing={clearValidationErrors}
         maxLength={PLAYER_WISH_MAX_LENGTH}
+        type="Textarea"
         onChange={(value: PlayerWish) =>
           onChange({
             wish: { value },
@@ -89,6 +90,7 @@ export const PlayerInfoSection = ({
         validationMessage={validationErrors['taboo']}
         onStartEditing={clearValidationErrors}
         maxLength={PLAYER_TABOO_MAX_LENGTH}
+        type="Textarea"
         onChange={(value: PlayerTaboo) =>
           onChange({
             taboo: { value },

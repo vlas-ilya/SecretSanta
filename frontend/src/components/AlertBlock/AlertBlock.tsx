@@ -1,4 +1,4 @@
-import './styles.scss';
+import './AlertBlock.styles.scss';
 
 import React, { useEffect, useState } from 'react';
 

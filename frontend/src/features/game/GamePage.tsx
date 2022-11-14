@@ -12,7 +12,7 @@ import { GamePlayersSection } from 'features/game/components/GamePlayersSection'
 import { GameTitleSection } from 'features/game/components/GameTitleSection';
 import { MatchIdentifiable } from '../../utils/classes/MatchIdentifiable';
 import { Page } from 'components/Page/Page';
-import { StartGameModal } from '../../components/StartGameModal/StartGameModal';
+import { StartGameModal } from './components/StartGameModal';
 import { changeGameInfo } from './store/useCases/changeGameInfo';
 import { changeGamePin } from './store/useCases/changeGamePin';
 import { loadGameInfo } from './store/useCases/loadGameInfo';

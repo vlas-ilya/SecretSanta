@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'components/Form/Form';
 import { FormButton } from 'components/FormButton/FormButton';
 import { FormItem } from 'components/FormItem/FormItem';
-import { GameHistoryList } from './components/GameHistoryList';
+import { GameHistoryList } from './components/GameHistoryList/GameHistoryList';
 import { Page } from 'components/Page/Page';
 import { Text } from 'components/Text/Text';
 import { createGame } from './store/useCases/createGame';

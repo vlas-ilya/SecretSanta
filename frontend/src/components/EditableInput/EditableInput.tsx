@@ -1,4 +1,4 @@
-import './styles.scss';
+import './EditableInput.styles.scss';
 
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -8,6 +8,7 @@ import { FieldView } from '../FieldView/FieldView';
 import { FormButton } from '../FormButton/FormButton';
 import { FormInput } from '../FormInput/FormInput';
 import { ReactComponent as Save } from '../../resources/images/save.svg';
+import { Textarea } from '../Textarea/Textarea';
 import { bem } from '../../utils/bem';
 import { useSharedState } from '../../utils/hooks/useSharedState';
 import { useToggle } from '../../utils/hooks/useToggle';
@@ -20,6 +21,7 @@ export type EditableInputProps = {
   onChange: (value: string) => void;
   maxLength?: number;
   disabled?: boolean;
+  type?: 'Input' | 'Textarea';
 };
 
 /* TODO (feat): Добавить textarea */
@@ -31,6 +33,7 @@ export const EditableInput = ({
   onChange,
   maxLength,
   disabled,
+  type = 'Input',
 }: EditableInputProps) => {
   const editableInput = bem('EditableInput');
   const [isEdit, showEditComponent, showViewComponent] = useToggle();
@@ -79,19 +82,33 @@ export const EditableInput = ({
   return (
     <div className={editableInput()}>
       {isEdit ? (
-        <div className={editableInput.element('Edit')}>
+        <div className={`${editableInput.element('Edit')} ${type}`}>
           <div className={editableInput.element('ViewContent')}>
-            <FormInput
-              className={editableInput.element('ValueEdit')}
-              name={name}
-              label={name}
-              value={newValue}
-              onChange={setNewValue}
-              validMessage={validationMessage}
-              onEnter={apply}
-              autoFocus
-              maxLength={maxLength}
-            />
+            {type == 'Input' ? (
+              <FormInput
+                className={editableInput.element('ValueEdit')}
+                name={name}
+                label={name}
+                value={newValue}
+                onChange={setNewValue}
+                validMessage={validationMessage}
+                onEnter={apply}
+                autoFocus
+                maxLength={maxLength}
+              />
+            ) : (
+              <Textarea
+                className={editableInput.element('ValueEdit')}
+                name={name}
+                label={name}
+                value={newValue}
+                onChange={setNewValue}
+                validMessage={validationMessage}
+                onEnter={apply}
+                autoFocus
+                maxLength={maxLength}
+              />
+            )}
           </div>
           <FormButton
             classNameContainer={editableInput.element('ShowViewButton')}

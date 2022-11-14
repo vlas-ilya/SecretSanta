@@ -1,4 +1,4 @@
-import './styles.scss';
+import './Page.styles.scss';
 
 import React, { ReactNode, UIEventHandler } from 'react';
 

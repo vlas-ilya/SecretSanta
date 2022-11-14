@@ -1,4 +1,4 @@
-import './styles.scss';
+import './List.styles.scss';
 
 import React, { ReactNode, useCallback } from 'react';
 

@@ -1,11 +1,11 @@
-import { List, ListItem, ListItemAction } from '../List/List';
+import { List, ListItem, ListItemAction } from '../../../components/List/List';
 
-import { FormButton } from '../FormButton/FormButton';
-import { FormItem } from '../FormItem/FormItem';
-import Modal from '../Modal/Modal';
+import { FormButton } from '../../../components/FormButton/FormButton';
+import { FormItem } from '../../../components/FormItem/FormItem';
+import Modal from '../../../components/Modal/Modal';
 import { PlayerShortInfo } from 'model';
 import React from 'react';
-import { Text } from '../Text/Text';
+import { Text } from '../../../components/Text/Text';
 
 export type StartGameModalProps = {
   onClose: () => void;

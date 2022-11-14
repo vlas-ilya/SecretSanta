@@ -67,3 +67,18 @@
 .EditableInput-ApplyButton {
   right: 49px;
 }
+
+.EditableInput-Edit.Textarea textarea {
+  max-height: 100px;
+  padding-right: 48px;
+}
+
+.EditableInput-Edit.Textarea .EditableInput-ShowViewButton {
+  top: 1px;
+  right: 1px;
+}
+
+.EditableInput-Edit.Textarea .EditableInput-ApplyButton {
+  top: 50px;
+  right: 1px;
+}

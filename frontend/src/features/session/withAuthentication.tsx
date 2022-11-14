@@ -32,7 +32,7 @@ export const withAuthentication =
       if (!id) {
         return;
       }
-      const event = (event: Event) => {
+      const event = () => {
         if (oldDocumentHidden && !document.hidden) {
           dispatch(checkSession(id));
         }

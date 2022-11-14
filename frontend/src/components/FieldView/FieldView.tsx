@@ -1,4 +1,4 @@
-import './styles.scss';
+import './FieldView.styles.scss';
 
 import React from 'react';
 import { bem } from '../../utils/bem';

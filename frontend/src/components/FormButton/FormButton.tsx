@@ -1,4 +1,4 @@
-import './styles.scss';
+import './FormButton.styles.scss';
 
 import React, { MouseEventHandler, ReactNode } from 'react';
 

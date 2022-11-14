@@ -1,4 +1,4 @@
-import './styles.scss';
+import './FormItem.styles.scss';
 
 import React, { ReactNode } from 'react';
 

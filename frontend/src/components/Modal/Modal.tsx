@@ -1,4 +1,4 @@
-import './styles.scss';
+import './Modal.styles.scss';
 
 import React, { ReactNode } from 'react';
 

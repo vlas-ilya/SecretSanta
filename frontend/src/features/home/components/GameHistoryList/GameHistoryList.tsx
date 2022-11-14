@@ -1,9 +1,9 @@
 import './GameHistoryList.styles.scss';
 
-import { HistoryGame, HistoryGames } from '../../../utils/hooks/useHistoryGames';
-import { List, ListItem, ListItemAction } from '../../../components/List/List';
+import { HistoryGame, HistoryGames } from '../../../../utils/hooks/useHistoryGames';
+import { List, ListItem, ListItemAction } from '../../../../components/List/List';
 
-import { Form } from '../../../components/Form/Form';
+import { Form } from '../../../../components/Form/Form';
 import React from 'react';
 
 export type GameHistoryListProps = {
