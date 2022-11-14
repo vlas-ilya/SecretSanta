@@ -67,7 +67,6 @@ export const PlayerInfoSection = ({
       </FormItem>
     </FormItem>
     <FormItem>
-      {/* TODO (feat): Переделать на textarea */}
       <EditableInput
         name="Пожелания"
         value={wish}
@@ -83,7 +82,6 @@ export const PlayerInfoSection = ({
       />
     </FormItem>
     <FormItem>
-      {/* TODO (feat): Переделать на textarea */}
       <EditableInput
         name="Не дарить ни в коем случае"
         value={taboo}

@@ -137,7 +137,13 @@ export const EditableInput = ({
                 onKeyPress={onPressEnter}
                 onClick={showEditComponentAndUpdateState}
               >
-                {value || 'Нет информации'}&nbsp;
+                {value?.split('\n').map((item, index) => (
+                  <>
+                    {index != 0 && <br />}
+                    {item}
+                  </>
+                )) || 'Нет информации'}
+                &nbsp;
                 <Edit className={editableInput.element('ValueIcon')} />
               </span>
             </>
