@@ -24,7 +24,6 @@ export type EditableInputProps = {
   type?: 'Input' | 'Textarea';
 };
 
-/* TODO (feat): Добавить textarea */
 export const EditableInput = ({
   name,
   value,
