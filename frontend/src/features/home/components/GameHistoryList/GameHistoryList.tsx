@@ -21,7 +21,7 @@ export const GameHistoryList = ({ onRemove, onClick, list }: GameHistoryListProp
             <ListItem
               key={key}
               onClick={() =>
-                onClick(`${value.type == 'Game' ? 'game' : 'player'}/${key}`)
+                onClick(`${value.type === 'Game' ? 'game' : 'player'}/${key}`)
               }
             >
               <GameHistoryItem item={value} />
@@ -42,7 +42,7 @@ const GameHistoryItem = ({
   item: { type, gameName, playerName, playerCount },
 }: GameHistoryItemProps) => (
   <div>
-    {type == 'Game'
+    {type === 'Game'
       ? `Игра: ${gameName ?? 'Нет названия'}, Количество игроков: ${playerCount ?? 0}`
       : `Игра: ${gameName ?? 'Нет названия'}, Игрок: ${playerName ?? 'Нет имени'}`}
   </div>

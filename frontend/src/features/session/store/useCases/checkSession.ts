@@ -15,9 +15,9 @@ export const checkSession = (id: Id) =>
         await api.checkSession(id);
         dispatch(changeAuthenticationState('AUTHENTICATED'));
       } catch (e) {
-        if (e.response.status == 401) {
+        if (e.response.status === 401) {
           dispatch(changeAuthenticationState('SHOULD_LOGIN'));
-        } else if (e.response.status == 404) {
+        } else if (e.response.status === 404) {
           dispatch(changeAuthenticationState('NOT_FOUND'));
         } else {
           dispatch(changeAuthenticationState('UNKNOWN_ERROR'));

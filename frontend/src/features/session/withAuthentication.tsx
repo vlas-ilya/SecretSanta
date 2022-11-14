@@ -76,7 +76,7 @@ export const withAuthentication =
       );
     }
 
-    if (authenticationState == 'UNKNOWN_ERROR') {
+    if (authenticationState === 'UNKNOWN_ERROR') {
       return (
         <Page loading={loadingStatus.state === 'LOADING'}>
           <AuthenticationErrorModal
@@ -87,7 +87,7 @@ export const withAuthentication =
       );
     }
 
-    if (authenticationState == 'NOT_FOUND') {
+    if (authenticationState === 'NOT_FOUND') {
       return (
         <Page loading={loadingStatus.state === 'LOADING'}>
           <AuthenticationErrorModal

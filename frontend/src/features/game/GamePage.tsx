@@ -47,7 +47,7 @@ const GamePage = ({
         playerCount: game.players?.length ?? 0,
       });
     }
-  }, [addItem, game]);
+  }, [id, addItem, game]);
 
   useEffect(() => {
     gameRef.current = game;

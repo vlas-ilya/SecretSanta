@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemAction } from '../../../components/List/List';
+import { List, ListItem } from '../../../components/List/List';
 
 import { FormButton } from '../../../components/FormButton/FormButton';
 import { FormItem } from '../../../components/FormItem/FormItem';
@@ -33,7 +33,9 @@ export function StartGameModal({
       title="Начать игру"
     >
       <FormItem>
-        <Text type="span">После начала игры новые игроки не смогут добавиться в игру</Text>
+        <Text type="span">
+          После начала игры новые игроки не смогут добавиться в игру
+        </Text>
       </FormItem>
       <FormItem>
         <Text type="p">Количество игроков: {players?.length ?? 0}</Text>

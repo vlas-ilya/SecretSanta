@@ -15,7 +15,7 @@ export function canSaveToBookmarks() {
 
 export function howToSave() {
   return (
-    (navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Command/Cmd' : 'CTRL') +
+    (navigator.userAgent.toLowerCase().indexOf('mac') !== -1 ? 'Command/Cmd' : 'CTRL') +
     ' + D'
   );
 }
@@ -50,7 +50,7 @@ export function saveToBookmarks() {
 
     alert(
       'You can add this page to your bookmarks by pressing ' +
-        (navigator.userAgent.toLowerCase().indexOf('mac') != -1
+        (navigator.userAgent.toLowerCase().indexOf('mac') !== -1
           ? 'Command/Cmd'
           : 'CTRL') +
         ' + D on your keyboard.',

@@ -1,11 +1,9 @@
-import { PlayerChangePin, PlayerId } from 'model';
-import { login, retryWithLogin } from '../../../session/store/api/session.api';
+import { Player, PlayerChangePin, PlayerChanges, PlayerId } from 'model';
 
 import { AxiosResponse } from 'axios';
 import { INVALID_RESPONSE } from '../../../../utils/constants';
-import { Player } from 'model';
-import { PlayerChanges } from 'model';
 import fetch from '../../../../utils/fetch';
+import { retryWithLogin } from '../../../session/store/api/session.api';
 
 export const get = async (id: PlayerId): Promise<Player> => {
   const response = await fetch(`/api/player/${id}`).get();

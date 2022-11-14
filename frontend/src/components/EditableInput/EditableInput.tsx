@@ -83,7 +83,7 @@ export const EditableInput = ({
       {isEdit ? (
         <div className={`${editableInput.element('Edit')} ${type}`}>
           <div className={editableInput.element('ViewContent')}>
-            {type == 'Input' ? (
+            {type === 'Input' ? (
               <FormInput
                 className={editableInput.element('ValueEdit')}
                 name={name}
@@ -137,10 +137,10 @@ export const EditableInput = ({
                 onClick={showEditComponentAndUpdateState}
               >
                 {value?.split('\n').map((item, index) => (
-                  <>
-                    {index != 0 && <br />}
+                  <span key={index}>
+                    {index !== 0 && <br />}
                     {item}
-                  </>
+                  </span>
                 )) || 'Нет информации'}
                 &nbsp;
                 <Edit className={editableInput.element('ValueIcon')} />

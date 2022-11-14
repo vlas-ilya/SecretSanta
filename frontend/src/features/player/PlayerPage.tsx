@@ -48,7 +48,7 @@ const PlayerPage = ({
         playerName: player.name,
       })
     }
-  }, [addItem, player]);
+  }, [id, addItem, player]);
 
   useEffect(() => {
     playerRef.current = player;
@@ -72,7 +72,7 @@ const PlayerPage = ({
 
   const saveToBookmarksCallback = useCallback(() => {
     saveToBookmarks();
-    //hideShowSaveToBookmarks();
+    hideShowSaveToBookmarks();
   }, [hideShowSaveToBookmarks]);
 
   const onChangePlayerInfo = useCallback(

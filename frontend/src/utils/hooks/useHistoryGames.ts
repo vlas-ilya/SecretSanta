@@ -25,7 +25,7 @@ export function useHistoryGames() {
       delete history[key];
       setValue(JSON.stringify(history));
     },
-    [value, setValue],
+    [list, setValue],
   );
 
   const addItem = useCallback(
@@ -34,7 +34,7 @@ export function useHistoryGames() {
       history[key] = value;
       setValue(JSON.stringify(history));
     },
-    [value, setValue],
+    [list, setValue],
   );
 
   return {

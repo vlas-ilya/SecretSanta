@@ -30,7 +30,7 @@ const HomePage = () => {
 
   const onHistoryGameListItemClick = useCallback((link: string) => {
     history.push(link);
-  }, []);
+  }, [history]);
 
   const onHistoryGameListRemoveItemClick = useCallback(
     (key: string) => {
