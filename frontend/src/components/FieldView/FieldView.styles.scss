@@ -27,6 +27,7 @@
   &-ValueLabel {
     position: relative;
     color: $mainTextColor;
+    word-wrap: break-word;
 
     &-empty {
       color: $emptyTextColor;

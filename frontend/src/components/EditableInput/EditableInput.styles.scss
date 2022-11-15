@@ -36,6 +36,7 @@
   border-bottom: 1px dashed $mainTextColor;
   position: relative;
   color: $mainTextColor;
+  word-wrap: break-word;
 }
 
 .EditableInput-ValueIcon {
