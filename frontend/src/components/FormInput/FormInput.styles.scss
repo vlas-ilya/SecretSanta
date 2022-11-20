@@ -59,7 +59,7 @@
 
     @media not all and (min-resolution: 0.001dpcm) {
       @supports (-webkit-appearance: none) {
-        top: 18px;
+        top: 26px;
       }
     }
 
@@ -123,7 +123,7 @@
     }
 
     &-togglePassword {
-      padding-right: 45px;
+      padding-right: 50px;
     }
   }
 

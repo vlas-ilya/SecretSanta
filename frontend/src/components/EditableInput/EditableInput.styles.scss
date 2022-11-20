@@ -51,7 +51,6 @@
 
 .Input .EditableInput-Actions {
   display: flex;
-  margin-top: -0.5px;
 }
 
 .Textarea .EditableInput-Actions {
@@ -64,7 +63,7 @@
 }
 
 .EditableInput-Edit.Textarea textarea {
-  max-height: 99px;
+  max-height: 98px;
   padding-right: 48px;
 }
 
