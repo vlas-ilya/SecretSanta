@@ -54,6 +54,7 @@ export const GameInfoSection = ({
       <EditableInput
         name="Описание игры"
         value={description}
+        type="Textarea"
         validationMessage={validationErrors['description']}
         onStartEditing={clearValidationErrors}
         maxLength={GAME_DESCRIPTION_MAX_LENGTH}

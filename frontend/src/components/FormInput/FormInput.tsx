@@ -122,11 +122,15 @@ export const FormInput = ({
           })}
           htmlFor={name}
         >
-          {validMessage ? (
-            <span className={formInput.element('ValidationMessage')}>{validMessage}</span>
-          ) : (
-            label
-          )}
+          <div>
+            {validMessage ? (
+              <span className={formInput.element('ValidationMessage')}>
+                {validMessage}
+              </span>
+            ) : (
+              label
+            )}
+          </div>
         </label>
 
         {type === 'password' &&

@@ -1,18 +1,17 @@
 import { AuthenticationProps, withAuthentication } from '../session/withAuthentication';
-import { GAME_CHANGE_PIN_MAX_LENGTH, PlayerId } from 'model';
+import { GAME_CHANGE_PIN_MAX_LENGTH, GameChangePin, GameChanges, PlayerId } from 'model';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { selectGame, selectLoadingStatus } from './store/game.selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ChangePinModal } from '../../components/ChangePinModal/ChangePinModal';
-import { GameChangePin } from 'model';
-import { GameChanges } from 'model';
 import { GameInfoSection } from 'features/game/components/GameInfoSection';
 import { GamePlayersSection } from 'features/game/components/GamePlayersSection';
 import { GameTitleSection } from 'features/game/components/GameTitleSection';
 import { MatchIdentifiable } from '../../utils/classes/MatchIdentifiable';
 import { Page } from 'components/Page/Page';
 import { StartGameModal } from './components/StartGameModal';
+import { changeAlert } from '../home/store/home.reducer';
 import { changeGameInfo } from './store/useCases/changeGameInfo';
 import { changeGamePin } from './store/useCases/changeGamePin';
 import { loadGameInfo } from './store/useCases/loadGameInfo';
@@ -88,7 +87,7 @@ const GamePage = ({
 
   const onStartGame = useCallback(() => {
     dispatch(startGame());
-    hideStartGameModal()
+    hideStartGameModal();
   }, [dispatch, hideStartGameModal]);
 
   const onRemovePlayer = useCallback(
@@ -103,6 +102,14 @@ const GamePage = ({
     showChangePinModal();
   }, [clearValidationErrors, showChangePinModal]);
 
+  const onShowStartGameModal = useCallback(() => {
+    if (game?.players && game.players.length >= 2) {
+      showStartGameModal();
+    } else {
+      dispatch(changeAlert('GAME_NOT_ENOUGH_PLAYERS'));
+    }
+  }, [dispatch, showStartGameModal, game]);
+
   return (
     <Page className="game-page" loading={loadingStatus.state === 'LOADING'}>
       {game && (
@@ -111,7 +118,7 @@ const GamePage = ({
             state={game.state}
             registrationId={game.registrationId}
             hasPassword={game.hasPassword}
-            onStartGame={showStartGameModal}
+            onStartGame={onShowStartGameModal}
             onChangePin={showChangeGamePinModalAndClearValidation}
           />
           <GameInfoSection

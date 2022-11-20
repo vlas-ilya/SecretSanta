@@ -71,14 +71,14 @@ export class Game {
       .optional('title', (title, check) => {
         check(isString(title), GAME_TITLE_ERROR_MESSAGE);
         check(
-          length(title, GAME_TITLE_MIN_LENGTH, GAME_TITLE_MAX_LENGTH),
+          length(title.trim(), GAME_TITLE_MIN_LENGTH, GAME_TITLE_MAX_LENGTH),
           GAME_TITLE_ERROR_MESSAGE,
         );
       })
       .optional('description', (description, check) => {
         check(isString(description), GAME_DESCRIPTION_ERROR_MESSAGE);
         check(
-          length(description, GAME_DESCRIPTION_MIN_LENGTH, GAME_DESCRIPTION_MAX_LENGTH),
+          length(description.trim(), GAME_DESCRIPTION_MIN_LENGTH, GAME_DESCRIPTION_MAX_LENGTH),
           GAME_DESCRIPTION_ERROR_MESSAGE,
         );
       })

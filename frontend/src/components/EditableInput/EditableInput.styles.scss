@@ -5,12 +5,6 @@
   position: relative;
 }
 
-.EditableInput {
-  .FormInput-Body {
-    margin-right: 97px;
-  }
-}
-
 .EditableInput-View {
   display: block;
   position: relative;
@@ -19,6 +13,7 @@
 .EditableInput-ViewContent {
   display: block;
   position: relative;
+  flex: 1;
 }
 
 .EditableInput-NameLabel {
@@ -47,30 +42,29 @@
 }
 
 .EditableInput-Edit {
-  display: block;
+  display: flex;
 }
 
 .EditableInput-ValueEdit {
   margin-right: 98px;
 }
 
-.EditableInput-ShowViewButton,
-.EditableInput-ApplyButton {
-  width: 49px;
-  position: absolute;
-  top: 0;
+.Input .EditableInput-Actions {
+  display: flex;
+  margin-top: -0.5px;
 }
 
-.EditableInput-ShowViewButton {
-  right: 0;
+.Textarea .EditableInput-Actions {
+  display: flex;
+  flex-direction: column;
 }
 
-.EditableInput-ApplyButton {
-  right: 49px;
+.Textarea .EditableInput-Actions .form-button {
+  margin: 0;
 }
 
 .EditableInput-Edit.Textarea textarea {
-  max-height: 100px;
+  max-height: 99px;
   padding-right: 48px;
 }
 

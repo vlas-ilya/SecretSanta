@@ -71,21 +71,21 @@ export class Player {
       .optional('name', (name, check) => {
         check(isString(name), PLAYER_NAME_ERROR_MESSAGE);
         check(
-          length(name, PLAYER_NAME_MIN_LENGTH, PLAYER_NAME_MAX_LENGTH),
+          length(name.trim(), PLAYER_NAME_MIN_LENGTH, PLAYER_NAME_MAX_LENGTH),
           PLAYER_NAME_ERROR_MESSAGE,
         );
       })
       .optional('wish', (wish, check) => {
         check(isString(wish), PLAYER_WISH_ERROR_MESSAGE);
         check(
-          length(wish, PLAYER_WISH_MIN_LENGTH, PLAYER_WISH_MAX_LENGTH),
+          length(wish.trim(), PLAYER_WISH_MIN_LENGTH, PLAYER_WISH_MAX_LENGTH),
           PLAYER_WISH_ERROR_MESSAGE,
         );
       })
       .optional('taboo', (taboo, check) => {
         check(isString(taboo), PLAYER_TABOO_ERROR_MESSAGE);
         check(
-          length(taboo, PLAYER_TABOO_MIN_LENGTH, PLAYER_TABOO_MAX_LENGTH),
+          length(taboo.trim(), PLAYER_TABOO_MIN_LENGTH, PLAYER_TABOO_MAX_LENGTH),
           PLAYER_TABOO_ERROR_MESSAGE,
         );
       })

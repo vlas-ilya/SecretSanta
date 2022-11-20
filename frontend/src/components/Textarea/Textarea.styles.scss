@@ -1,6 +1,6 @@
 @import '../../theme';
 
-.textarea {
+.Textarea {
   position: relative;
   margin: 0 0 15px;
 
@@ -8,11 +8,41 @@
     margin: 0;
   }
 
-  &.filled {
-    label {
+  &-Body {
+    position: relative;
+    margin-top: -10px;
+    padding-top: 10px;
+    overflow: hidden;
+  }
+
+  &-ValidationMessage {
+    color: darken($errorTextColor, 10);
+    white-space: nowrap;
+  }
+
+  &-Label {
+    transform-origin: left;
+    transition: all 0.2s;
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    font-size: 16px;
+    top: 26px;
+    left: 16px;
+    color: darken($editBackgroundColor, 50);
+    cursor: auto;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+
+    @media not all and (min-resolution: 0.001dpcm) {
+      @supports (-webkit-appearance: none) {
+        top: 18px;
+      }
+    }
+
+    &-filled {
       position: absolute;
       transition: all 0.1s;
-
       padding-left: 6px;
       padding-right: 6px;
       background: linear-gradient(
@@ -25,19 +55,12 @@
       transform: scale(0.8) translate(0, -33px);
       font-weight: bold;
       color: lighten($mainTextColor, 25);
-    }
-  }
 
-  label {
-    transform-origin: left;
-    transition: all 0.2s;
-    font-family: 'Roboto', sans-serif;
-    position: absolute;
-    font-size: 16px;
-    top: 16px;
-    left: 16px;
-    color: lighten($mainTextColor, 30);
-    cursor: auto;
+      div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
   }
 
   textarea {

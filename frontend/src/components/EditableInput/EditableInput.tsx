@@ -109,19 +109,21 @@ export const EditableInput = ({
               />
             )}
           </div>
-          <FormButton
-            classNameContainer={editableInput.element('ShowViewButton')}
-            className="grey"
-            onClick={showViewComponent}
-          >
-            <Back />
-          </FormButton>
-          <FormButton
-            classNameContainer={editableInput.element('ApplyButton')}
-            onClick={apply}
-          >
-            <Save />
-          </FormButton>
+          <div className="EditableInput-Actions">
+            <FormButton
+              classNameContainer={editableInput.element('ShowViewButton')}
+              className="grey"
+              onClick={showViewComponent}
+            >
+              <Back />
+            </FormButton>
+            <FormButton
+              classNameContainer={editableInput.element('ApplyButton')}
+              onClick={apply}
+            >
+              <Save />
+            </FormButton>
+          </div>
         </div>
       ) : (
         <div className={editableInput.element('View')}>

@@ -10,6 +10,9 @@
 
   &-Body {
     position: relative;
+    margin-top: -10px;
+    padding-top: 10px;
+    overflow: hidden;
 
     &-copied {
       margin-right: 49px;
@@ -22,7 +25,7 @@
       height: 47px;
       display: block;
       position: absolute;
-      top: 1px;
+      top: 11px;
       right: 1px;
       background: $editBackgroundColor;
     }
@@ -46,10 +49,13 @@
     font-family: 'Roboto', sans-serif;
     position: absolute;
     font-size: 16px;
-    top: 16px;
+    top: 26px;
     left: 16px;
     color: darken($editBackgroundColor, 50);
     cursor: auto;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
 
     @media not all and (min-resolution: 0.001dpcm) {
       @supports (-webkit-appearance: none) {
@@ -72,6 +78,11 @@
       transform: scale(0.8) translate(0, -33px);
       font-weight: bold;
       color: lighten($mainTextColor, 25);
+
+      div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 
@@ -123,7 +134,7 @@
     width: 25px;
     height: 25px;
     right: 13px;
-    top: 13px;
+    top: 23px;
     cursor: pointer;
     color: $mainActionColor;
 
@@ -139,7 +150,7 @@
     width: 25px;
     height: 25px;
     right: 13px;
-    top: 13px;
+    top: 23px;
     cursor: pointer;
 
     &-rotation {
@@ -163,7 +174,7 @@
     &-copied {
       width: 49px;
       position: absolute;
-      top: 0;
+      top: 10px;
       right: 0;
     }
   }
