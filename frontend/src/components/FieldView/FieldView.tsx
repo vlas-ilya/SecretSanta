@@ -17,7 +17,12 @@ export const FieldView = ({ name, value, empty }: FieldViewProps) => {
         <>
           <span className={fieldView.element('NameLabel')}>{name}</span>
           <span className={fieldView.element('ValueLabel', { empty })}>
-            {value || 'Нет информации'}
+            {value?.split('\n').map((item, index) => (
+              <span key={index}>
+                {index !== 0 && <br />}
+                {item}
+              </span>
+            )) || 'Нет информации'}
           </span>
         </>
       </div>
