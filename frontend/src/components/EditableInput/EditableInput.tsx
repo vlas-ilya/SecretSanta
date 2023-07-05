@@ -12,6 +12,7 @@ import { Textarea } from '../Textarea/Textarea';
 import { bem } from '../../utils/bem';
 import { useSharedState } from '../../utils/hooks/useSharedState';
 import { useToggle } from '../../utils/hooks/useToggle';
+import { TextFormat } from '../TextFormat/TextFormat';
 
 export type EditableInputProps = {
   name: string;
@@ -138,12 +139,7 @@ export const EditableInput = ({
                 onKeyPress={onPressEnter}
                 onClick={showEditComponentAndUpdateState}
               >
-                {value?.split('\n').map((item, index) => (
-                  <span key={index}>
-                    {index !== 0 && <br />}
-                    {item}
-                  </span>
-                )) || 'Нет информации'}
+                <TextFormat value={value}/>
                 &nbsp;
                 <Edit className={editableInput.element('ValueIcon')} />
               </span>

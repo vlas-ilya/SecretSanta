@@ -2,6 +2,7 @@ import './FieldView.styles.scss';
 
 import React from 'react';
 import { bem } from '../../utils/bem';
+import { TextFormat } from '../TextFormat/TextFormat';
 
 export type FieldViewProps = {
   name: string;
@@ -17,12 +18,7 @@ export const FieldView = ({ name, value, empty }: FieldViewProps) => {
         <>
           <span className={fieldView.element('NameLabel')}>{name}</span>
           <span className={fieldView.element('ValueLabel', { empty })}>
-            {value?.split('\n').map((item, index) => (
-              <span key={index}>
-                {index !== 0 && <br />}
-                {item}
-              </span>
-            )) || 'Нет информации'}
+            <TextFormat value={value}/>
           </span>
         </>
       </div>
